@@ -10,4 +10,7 @@
     <LocalDebuggerEnvironment>PATH=$(SolutionDir)\external\SFML-2.6.1\bin;$([System.Environment]::GetEnvironmentVariable('PATH'));%(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup>
+    <ShowAllFiles>false</ShowAllFiles>
+  </PropertyGroup>
 </Project>
