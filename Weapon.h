@@ -16,7 +16,7 @@ class Weapon
 public:
 	Weapon(WeaponType, sf::RectangleShape);
 	void Shoot();
-	void CheckProjectiles();
+	void CheckProjectiles(float);
 
 private:
 	int _fireRate, _bulletSpeed, _fireTime;
