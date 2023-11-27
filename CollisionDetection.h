@@ -7,9 +7,12 @@
 class CollisionDetection
 {
 public :
-	bool CircleIsInSquare(sf::CircleShape, sf::RectangleShape);
 
-	void ClampCircleOutsideRectangles(sf::CircleShape&, std::list<sf::RectangleShape>);
+	bool CircleIsInSquare(sf::CircleShape, sf::RectangleShape, sf::Vector2f, sf::Vector2f);
+
+	sf::Vector2f ClampCircleOutsideRectangles(sf::CircleShape&, std::list<sf::RectangleShape>, sf::Vector2f, sf::Vector2f);
+
+	sf::Vector2f ClampCircleInsideRectangle(sf::CircleShape&, sf::RectangleShape, sf::Vector2f, sf::Vector2f);
 
 	std::list<sf::RectangleShape> rectList;
 };

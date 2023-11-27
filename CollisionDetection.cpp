@@ -1,7 +1,7 @@
 #include "CollisionDetection.h"
 
 
-bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleShape rect)
+bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleShape rect, sf::Vector2f nextPosition, sf::Vector2f currentPosition)
 {
 	float rw = rect.getSize().x;
 	float rh = rect.getSize().y;
@@ -10,8 +10,8 @@ bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleS
 	float ryTR = rect.getPosition().y + (rh / 2);
 
 
-	float cx = circle.getPosition().x;
-	float cy = circle.getPosition().y;
+	float cx = nextPosition.x;
+	float cy = nextPosition.y;
 
 	float cr = circle.getRadius();
 
@@ -22,7 +22,7 @@ bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleS
 	return false;
 }
 
-void CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& circle, std::list<sf::RectangleShape> listRect)
+sf::Vector2f CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& circle, std::list<sf::RectangleShape> listRect, sf::Vector2f nextPosition, sf::Vector2f currentPosition)
 {
 	listRect = CollisionDetection::rectList;
 
@@ -30,13 +30,23 @@ void CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& circle, s
 
 	while (it != listRect.end())
 	{
-		bool isInSquare = CollisionDetection::CircleIsInSquare(circle, *it);
+		bool isInSquare = CollisionDetection::CircleIsInSquare(circle, *it, nextPosition, currentPosition);
 		if (isInSquare)
 		{
 			std::cout << "One is in square" << std::endl;
 
-			// Bloquer le circle
-			/* circle.setPosition(circle.getPosition()); */
+			return currentPosition;
 		}
 	}
+	return nextPosition;
+}
+
+sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& circle, sf::RectangleShape rect, sf::Vector2f nextPosition, sf::Vector2f currentPosition)
+{
+	if (CollisionDetection::CircleIsInSquare(circle, rect, nextPosition, currentPosition))
+	{
+		// Bloquer circle dans rect
+		return nextPosition;
+	}
+	return currentPosition;
 }
