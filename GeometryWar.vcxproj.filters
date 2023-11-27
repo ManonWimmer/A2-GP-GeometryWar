@@ -18,20 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="CollisionDetection.cpp">
-=======
-    <ClCompile Include="AI_Agent.cpp">
->>>>>>> Stashed changes
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <ClInclude Include="CollisionDetection.h">
-=======
-    <ClInclude Include="AI_Agent.h">
->>>>>>> Stashed changes
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
