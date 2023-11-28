@@ -1,12 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
-class AI_Agent
+#include "Entity.cpp"
+class AI_Agent : public Entity
 {
 
 public:
 	void InitializedAgent(int particleID, float radius, sf::Vector2f spawnPosition);
-	void Update(sf::RenderWindow& window, float& deltaTime);
+	void Update(sf::RenderWindow& window, float& deltaTime) override;
 
 
 	bool IsSuperPosed(sf::CircleShape& shape1, sf::CircleShape& shape2);

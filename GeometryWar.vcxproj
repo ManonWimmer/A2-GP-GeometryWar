@@ -88,13 +88,16 @@
   <ItemGroup>
     <ClCompile Include="AI_Agent.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ManagerEntity.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI_Agent.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="ManagerEntity.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
