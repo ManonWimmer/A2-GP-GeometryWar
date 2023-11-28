@@ -26,7 +26,7 @@ void Weapon::Shoot()
 	sf::Vector2i mousePosition = sf::Mouse::getPosition();
 	sf::Vector2f bulletOrigin = _rectangle.getPosition();
 	
-	sf::Vector2f bulletDirection;
+	//sf::Vector2f bulletDirection;
 
 	// Calcul de la direction du projectile
 	sf::Vector2f bulletDirection = static_cast<sf::Vector2f>(mousePosition) - bulletOrigin;

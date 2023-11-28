@@ -8,10 +8,13 @@ void AI_Agent::InitializedAgent(int particleID, float radius, sf::Vector2f spawn
 	_circle.setOrigin(_circle.getRadius(), _circle.getRadius());
 	_circle.setPosition(spawnPosition);
 }
+
 void AI_Agent::Update(sf::RenderWindow& window, float& deltaTime)
 {
+	std::cout << "AI Agent Entity Working" << std::endl;
 	window.draw(_circle);
 }
+
 void AI_Agent::SetTarget(sf::CircleShape& target) {
 	_target = target;
 }

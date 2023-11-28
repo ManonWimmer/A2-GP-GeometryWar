@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "ManagerEntity.h"
 
 constexpr float cubeSpeed = 500.f;
 
@@ -18,9 +19,11 @@ int main()
 	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::Clock frameClock;
+	ManagerEntity& managerEntity = ManagerEntity::Instance();
 
 	while (window.isOpen())
 	{
+		
 		// Gérer les événéments survenus depuis le dernier tour de boucle
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -66,7 +69,7 @@ int main()
 		// Tout le rendu va se dérouler ici
 		window.draw(rectangle);
 
-
+		managerEntity.Update(window, deltaTime);
 
 		// On présente la fenêtre sur l'écran
 		window.display();

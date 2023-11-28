@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Entity.cpp"
+#include "Entity.h"
 class AI_Agent : public Entity
 {
 
