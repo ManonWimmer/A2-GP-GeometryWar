@@ -73,6 +73,46 @@ bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::Rect
 	return false;
 }
 
+bool CollisionDetection::CircleIsPartiallyInCircle(sf::CircleShape circle, sf::CircleShape circleColl, sf::Vector2f nextPosition)
+{
+	float clw = circleColl.getRadius() * 2;
+	float clh = circleColl.getRadius() * 2;
+
+	//float rxTL = rect.getPosition().x - (rw / 2);
+	float clxTL = circleColl.getPosition().x;
+	//float ryTR = rect.getPosition().y + (rh / 2);
+	float clyTR = circleColl.getPosition().y;
+
+
+	float cr = circle.getRadius();
+
+	//float cx = nextPosition.x;
+	float cx = nextPosition.x + cr;
+	//float cy = nextPosition.y;
+	float cy = nextPosition.y + cr;
+
+
+
+	if ((cx - cr >= clxTL && cx - cr <= clxTL + clw) && (cy - cr >= clyTR && cy - cr <= clyTR + clh))	// Si point gauche haut cercle dans rectangle
+	{
+		return true;
+	}
+	else if ((cx + cr >= clxTL && cx + cr <= clxTL + clw) && (cy - cr >= clyTR && cy - cr <= clyTR + clh))	// Si point droit haut cercle dans rectangle
+	{
+		return true;
+	}
+	else if ((cx - cr >= clxTL && cx - cr <= clxTL + clw) && (cy + cr >= clyTR && cy + cr <= clyTR + clh))	// Si point bas gauche cercle dans rectangle
+	{
+		return true;
+	}
+	else if ((cx + cr >= clxTL && cx + cr <= clxTL + clw) && (cy + cr >= clyTR && cy + cr <= clyTR + clh))	// Si point bas droit cercle dans rectangle
+	{
+		return true;
+	}
+
+	return false;
+}
+
 sf::Vector2f CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& circle, std::list<sf::RectangleShape> listRect, sf::Vector2f nextPosition, sf::Vector2f currentPosition)
 {
 	listRect = CollisionDetection::rectList;
@@ -97,4 +137,38 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 		return nextPosition;
 	}
 	return currentPosition;
+}
+
+
+bool CollisionDetection::BulletTouchWall(Projectile& bullet)
+{
+	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
+	while (it != this->rectList.end())
+	{
+		/*if (CirclePartialyInSquare(bullet.shape, *it, bullet.shape.getPosition()))
+		{
+			return true;
+		}
+		else 
+		{
+			it++;
+		}*/
+	}
+
+	return false;
+}
+
+void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
+{
+	std::list<Projectile*>::iterator it = bulletsList.begin();
+
+	while (it != bulletsList.end())
+	{
+		if (BulletTouchWall(*(*(it))))
+		{
+			// Detruire bullet
+		}
+
+		it++;
+	}
 }
