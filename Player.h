@@ -13,6 +13,17 @@ public :
 
 	sf::Vector2f MovePlayer(CollisionDetection, float, float);
 
+	
+	void CheckInvincibility(float);
+
 	sf::CircleShape circleShape;
+
+	int pv;
+
+	float invincibilityCooldown;
+
+	float invincibilityTime;
+
+	bool isInvincible;
 };
 

@@ -13,6 +13,12 @@ Player::Player()
 
 	this->circleShape = tempShape;
 
+	this->pv = 4;
+
+	this->invincibilityCooldown = 2;
+	this->invincibilityTime = this->invincibilityCooldown;
+
+	this->isInvincible = false;
 }
 
 sf::Vector2f Player::MovePlayer(CollisionDetection collManager, float deltaTime, float cubeSpeed)
@@ -50,4 +56,24 @@ sf::Vector2f Player::MovePlayer(CollisionDetection collManager, float deltaTime,
 	pos.y = collisionManager.ClampCircleOutsideRectangles(this->circleShape, collisionManager.rectList, sf::Vector2f(pos.x, pos.y + dir.y), pos).y;
 
 	return pos;
+}
+
+
+void Player::CheckInvincibility(float deltaTime)
+{
+	if (this->isInvincible)
+	{
+		this->invincibilityCooldown -= deltaTime;
+		if (invincibilityCooldown < 0)
+		{
+			this->isInvincible = false;
+		}
+	}
+	else
+	{
+		if (this->invincibilityCooldown < 0)
+		{
+			this->invincibilityCooldown = this->invincibilityTime;
+		}
+	}
 }

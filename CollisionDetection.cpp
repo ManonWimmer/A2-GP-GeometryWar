@@ -181,6 +181,7 @@ void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Proje
 	{
 		//if (CircleIsPartiallyInCircle((*it)->shape, player.circleShape, (*it)->shape.getPosition())
 		//{
+		//  // Check invincibilité du player
 		//	// Mort du player
 		//}
 
