@@ -25,7 +25,5 @@ public :
 
 	std::list<sf::RectangleShape> rectList;
 
-
-	//
 };
 
