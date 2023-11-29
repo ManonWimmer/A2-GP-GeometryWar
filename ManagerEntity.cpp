@@ -1,19 +1,25 @@
+#include "Entity.h"
 #include "ManagerEntity.h"
-#include <iostream>
-#include <SFML/Graphics.hpp>
 
-//ManagerEntity& Instance() {
-//	static ManagerEntity _instance;
-//	return _instance;
-//}
+ManagerEntity::ManagerEntity() {}
 
-ManagerEntity& ManagerEntity::Instance()
-{
-	static ManagerEntity _instance;
-	return _instance;
+void ManagerEntity::AddEntity(Entity* entity) {
+    entityDictionary[entity] = true;
 }
 
-void ManagerEntity::Update(sf::RenderWindow& window, float& deltaTime)
-{
-	std::cout << "Manager Entity Working" << std::endl;
+void ManagerEntity::RemoveEntity(Entity* entity) {
+    entityDictionary.erase(entity);
+}
+
+bool ManagerEntity::IsEntityActive(Entity* entity) {
+    auto it = entityDictionary.find(entity);
+    return it != entityDictionary.end() && it->second;
+}
+
+void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime) {
+    for (auto& pair : entityDictionary) {
+        if (pair.second) {
+            pair.first->Update(window, deltaTime);
+        }
+    }
 }

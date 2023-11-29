@@ -1,12 +1,20 @@
-#pragma once
-#include <list>
-#include <SFML/Graphics.hpp>
-#include "Entity.h"
-class ManagerEntity: public Entity
-{
-public:
-	std::list<Entity*> entityList;
-	static ManagerEntity& Instance();
-	void Update(sf::RenderWindow& window, float& deltaTime) override;
+#ifndef MANAGERENTITY_H
+#define MANAGERENTITY_H
 
+#include <unordered_map>
+
+class Entity;
+
+class ManagerEntity {
+public:
+    ManagerEntity();
+    void AddEntity(Entity* entity);
+    void RemoveEntity(Entity* entity);
+    bool IsEntityActive(Entity* entity);
+    void UpdateAllEntities(sf::RenderWindow& window, float deltaTime);
+
+private:
+    std::unordered_map<Entity*, bool> entityDictionary;
 };
+
+#endif

@@ -19,7 +19,7 @@ int main()
 	rectangle.setSize(sf::Vector2f(128, 128));
 
 	sf::Clock frameClock;
-	ManagerEntity& managerEntity = ManagerEntity::Instance();
+	ManagerEntity& entityManager = (*new ManagerEntity());
 
 	while (window.isOpen())
 	{
@@ -46,7 +46,7 @@ int main()
 
 		// Logique
 		sf::Vector2f pos = rectangle.getPosition();
-		
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
 			pos.x = pos.x - deltaTime * cubeSpeed;
 
@@ -69,7 +69,7 @@ int main()
 		// Tout le rendu va se dérouler ici
 		window.draw(rectangle);
 
-		managerEntity.Update(window, deltaTime);
+		entityManager.UpdateAllEntities(window, deltaTime);
 
 		// On présente la fenêtre sur l'écran
 		window.display();
