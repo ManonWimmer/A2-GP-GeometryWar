@@ -46,6 +46,8 @@ sf::Vector2f Player::MovePlayer(CollisionDetection collManager, float deltaTime,
 	}
 	dir *= cubeSpeed * deltaTime;
 
+	pos.x = collisionManager.ClampCircleOutsideRectangles(this->circleShape, collisionManager.rectList, sf::Vector2f(pos.x + dir.x, pos.y), pos).x;
+	pos.y = collisionManager.ClampCircleOutsideRectangles(this->circleShape, collisionManager.rectList, sf::Vector2f(pos.x, pos.y + dir.y), pos).y;
 
-	return pos + dir;
+	return pos;
 }
