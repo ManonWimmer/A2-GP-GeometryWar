@@ -3,6 +3,7 @@
 #include <list>
 #include "Projectile.h"
 
+
 enum WeaponType
 {
 	Pistol,
@@ -14,12 +15,16 @@ enum WeaponType
 class Weapon
 {
 public:
-	Weapon(WeaponType, sf::RectangleShape);
-	void Shoot();
-	void CheckProjectiles(float);
-
+	Weapon(WeaponType, sf::CircleShape&);
+	void Shoot(sf::RenderWindow&, sf::Vector2f);
+	void CheckProjectiles(sf::RenderWindow&, float);
+	void CheckRotationAim(sf::RectangleShape&, sf::RenderWindow&);
+	std::list<Projectile*> WeaponPtrProjectiles;
+	int FireTime;
+	float FireRate;
+	sf::CircleShape Player;
+	
 private:
-	int _fireRate, _bulletSpeed, _fireTime;
-	std::list<Projectile*> _weaponPtrProjectiles;
-	sf::RectangleShape _rectangle;
+	int _bulletSpeed;
+	
 };

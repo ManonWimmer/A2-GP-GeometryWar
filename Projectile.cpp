@@ -7,11 +7,13 @@ Projectile::Projectile(sf::Vector2f origin, sf::Vector2f direction, float curren
 	this->_direction = direction;
 	this->CurrentTime = currentTime;
 	this->_speed = speed;
-	this->_projectileShape = projectileShape;
+	this->ProjectileShape = projectileShape;
 }
 
 void Projectile::MoveProjectile(float deltaTime) 
 {
+	//std::cout << "move projectile" << std::endl;
 	sf::Vector2f movement = _direction * static_cast<float>(_speed) * deltaTime;
-	_projectileShape.move(movement);
+	ProjectileShape.move(movement);
+	//std::cout << "new pos proj" << ProjectileShape.getPosition().x << " " << ProjectileShape.getPosition().y << std::endl;
 }
