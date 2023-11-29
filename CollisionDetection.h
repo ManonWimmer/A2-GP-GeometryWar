@@ -8,6 +8,13 @@ class CollisionDetection
 {
 public :
 
+	CollisionDetection(std::list<sf::RectangleShape> rectListTemp)
+	{
+		rectList = rectListTemp;
+	}
+
+	/*bool PointInsideSquare(float, float, sf::RectangleShape)*/;
+
 	bool CircleIsInSquare(sf::CircleShape, sf::RectangleShape, sf::Vector2f);
 
 	bool CirclePartialyInSquare(sf::CircleShape, sf::RectangleShape, sf::Vector2f);
