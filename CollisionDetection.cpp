@@ -172,3 +172,35 @@ void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
 		it++;
 	}
 }
+
+void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& enemyBullets)
+{
+	std::list<Projectile*>::iterator it = enemyBullets.begin();
+
+	while (it != enemyBullets.end())
+	{
+		//if (CircleIsPartiallyInCircle((*it)->shape, player.circleShape, (*it)->shape.getPosition())
+		//{
+		//	// Mort du player
+		//}
+
+		it++;
+	}
+}
+
+void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Projectile*>& playerBullets)
+{
+	std::list<Projectile*>::iterator it = playerBullets.end();
+
+	while (it != playerBullets.end())
+	{
+		//if (CircleIsPartiallyInCircle((*it)->shape, enemy.GetCircle(), (*it)->shape))
+		//{
+		//	// Tuer l'ennemis
+		//}
+
+		it++;
+	}
+}
+
+

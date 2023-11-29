@@ -4,6 +4,8 @@
 #include <iostream>
 #include <list>
 #include "Projectile.h"
+#include "Player.h"
+#include "AI_Agent.h"
 
 class CollisionDetection
 {
@@ -30,6 +32,11 @@ public :
 	//bool BulletTouchWall(Projectile&);
 
 	void BulletsCollideWall(std::list<Projectile*>&);
+
+
+	void BulletsTouchPlayerCheck(Player&, std::list<Projectile*>&);
+
+	void BulletsTouchEnemyCheck(AI_Agent&, std::list<Projectile*>&);
 
 
 	std::list<sf::RectangleShape> rectList;
