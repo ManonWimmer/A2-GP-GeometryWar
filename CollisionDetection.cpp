@@ -183,8 +183,10 @@ void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Proje
 	{
 		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, player.circleShape, (*it)->ProjectileShape.getPosition()))
 		{
-		    // Check invincibilité du player
-			// Mort du player
+			if (!(player.isInvincible))
+			{
+				player.pv -= 10;
+			}
 		}
 
 		it++;
@@ -199,8 +201,7 @@ void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Proje
 	{
 		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, enemy.GetCircle(), (*it)->ProjectileShape.getPosition()))
 		{
-			// Appliquer dégat
-			// Tuer l'ennemis
+			enemy.DecreaseLife(34);
 		}
 	
 		it++;
