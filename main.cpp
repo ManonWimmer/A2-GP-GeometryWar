@@ -2,7 +2,8 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include "ManagerEntity.h"
-
+#include "CollisionDetection.h"
+#include "Player.h"
 constexpr float cubeSpeed = 500.f;
 
 int main()
@@ -12,27 +13,31 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Geometry Wars");
 	window.setVerticalSyncEnabled(true);
 
-	// DÃ©but de la boucle de jeu
-	sf::RectangleShape rectangle;
-	rectangle.setFillColor(sf::Color::Red);
-	rectangle.setPosition(640, 360);
-	rectangle.setSize(sf::Vector2f(128, 128));
+
 
 	sf::Clock frameClock;
-	ManagerEntity& entityManager = (*new ManagerEntity());
+	ManagerEntity entityManager;
+	CollisionDetection collisionDetection;
+	Player player(entityManager, collisionDetection);
+	entityManager.AddEntity(&player);
+
+	entityManager.DebugEntities(entityManager, collisionDetection, player);
+
+
+
 
 	while (window.isOpen())
 	{
 		
-		// GÃ©rer les Ã©vÃ©nÃ©ments survenus depuis le dernier tour de boucle
+		// Gérer les événéments survenus depuis le dernier tour de boucle
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			// On gÃ¨re l'Ã©vÃ©nÃ©ment
+			// On gère l'événément
 			switch (event.type)
 			{
 				case sf::Event::Closed:
-					// L'utilisateur a cliquÃ© sur la croix => on ferme la fenÃªtre
+					// L'utilisateur a cliqué sur la croix => on ferme la fenêtre
 					window.close();
 					break;
 
@@ -42,36 +47,18 @@ int main()
 		}
 
 		float deltaTime = frameClock.restart().asSeconds();
-		std::cout << 1.f / deltaTime << " FPS" << std::endl;
 
-		// Logique
-		sf::Vector2f pos = rectangle.getPosition();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-			pos.x = pos.x - deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			pos.x = pos.x + deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-			pos.y = pos.y - deltaTime * cubeSpeed;
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			pos.y = pos.y + deltaTime * cubeSpeed;
-
-		rectangle.setPosition(pos);
-
-		// Affichage
 		
-		// Remise au noir de toute la fenÃªtre
+		// Remise au noir de toute la fenêtre
 		window.clear();
 
-		// Tout le rendu va se dÃ©rouler ici
-		window.draw(rectangle);
 
+		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime);
 
-		// On prÃ©sente la fenÃªtre sur l'Ã©cran
+
+		// On présente la fenêtre sur l'écran
 		window.display();
 	}
 }
