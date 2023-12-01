@@ -16,11 +16,12 @@ public:
     void CheckGameEnd(); // A changer plus tard par CheckLevelEnd ?
     void StartLevel(int);
 
+    std::list<AI_Agent*> _enemies;
+
 private:
     ManagerEntity _managerEntity;
     CollisionDetection _collisionDetection;
     Player _player;
-    std::list<AI_Agent*> _enemies;
     bool _allEnemiesDead;
     bool _playerDead;
     bool _gameWon;

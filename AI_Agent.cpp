@@ -321,6 +321,7 @@ void AI_Agent::SetLife(int value)
 
 void AI_Agent::DecreaseLife(int value)
 {
+    std::cout << "Damaged" << std::endl;
     _life = ClampInteger(_life -= value, 0, 100);
 
     if (_life <= 0 && !isDead) {

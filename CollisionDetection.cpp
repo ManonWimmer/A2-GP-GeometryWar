@@ -228,18 +228,23 @@ void CollisionDetection::WeaponBulletsTouchPlayerCheck(Player& player, std::list
 // Fin bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // Gestion BulletsEnnemy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, Weapon* playerWeapon)
+void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, Weapon& playerWeapon)
 {
-	std::list<Projectile*>::iterator it = playerWeapon->WeaponPtrProjectiles.end();
+	std::cout << "projectiles : " << playerWeapon.WeaponPtrProjectiles.size() << std::endl;
+
+	std::list<Projectile*>::iterator it = playerWeapon.WeaponPtrProjectiles.end();
 	
-	while (it != playerWeapon->WeaponPtrProjectiles.end())
+	while (it != playerWeapon.WeaponPtrProjectiles.end())
 	{
+		std::cout << "Pas encore dans le cercle" << std::endl;
+
 		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, enemy.GetCircle(), (*it)->ProjectileShape.getPosition()))
 		{
+			std::cout << "Rentre dans le cercle" << std::endl;
 			// reduire pv enemy
 			enemy.DecreaseLife(34);
 
-			it = playerWeapon->WeaponPtrProjectiles.erase(it);
+			it = playerWeapon.WeaponPtrProjectiles.erase(it);
 		}
 	
 		it++;

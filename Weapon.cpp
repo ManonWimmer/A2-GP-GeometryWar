@@ -65,6 +65,9 @@ void Weapon::CheckProjectiles(sf::RenderWindow& window, float deltaTime)
 	//std::cout << "taille liste " << WeaponPtrProjectiles.size() << std::endl;
 	// For chaque projectile dans la liste de ptr
 	std::list<Projectile*>::iterator it = WeaponPtrProjectiles.begin();
+
+	//std::cout << "projectiles : " << WeaponPtrProjectiles.size() << std::endl;
+
 	while (it != WeaponPtrProjectiles.end())
 	{
 

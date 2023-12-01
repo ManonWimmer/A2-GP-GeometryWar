@@ -37,7 +37,7 @@ public :
 	void WeaponBulletsTouchPlayerCheck(Player&, std::list<Weapon*> enemyWeapons);
 	bool BulletsTouchPlayerCheck(Player&, std::list<Projectile*>& bulletsList);
 
-	void BulletsTouchEnemyCheck(AI_Agent&, Weapon*);
+	void BulletsTouchEnemyCheck(AI_Agent&, Weapon&);
 
 
 	std::list<sf::RectangleShape> rectList;

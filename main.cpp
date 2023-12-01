@@ -45,7 +45,7 @@ int main()
 
 
 
-
+	
 
 	while (window.isOpen())
 	{
@@ -107,6 +107,12 @@ int main()
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime);
 
+		std::list<AI_Agent*>::iterator it = gameManager._enemies.begin();
+		while (it != gameManager._enemies.end())
+		{
+			collisionDetection.BulletsTouchEnemyCheck(*(*it), (*ptrPistol));
+			it++;
+		}
 
 		// On présente la fenêtre sur l'écran
 		window.display();
