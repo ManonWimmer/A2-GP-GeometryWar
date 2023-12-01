@@ -355,6 +355,11 @@ void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
         Chase(deltaTime);
         UpdateFieldView();
         DrawAgentRenderer(window);
+
+        currentShootTimer += deltaTime;
+        if (currentShootTimer >= coolDown) {
+
+        }
     }
     
 

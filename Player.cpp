@@ -3,6 +3,8 @@
 #include <list>
 #include "ManagerEntity.h"
 
+
+
 Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection) : Entity(managerEntity, collisionDetection)
 {
 	sf::CircleShape tempShape;

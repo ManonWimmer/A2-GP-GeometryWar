@@ -12,7 +12,6 @@ class ManagerEntity;
 class Player: public Entity
 {
 public :
-
 	Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
 
 	sf::Vector2f MovePlayer(sf::RenderWindow& window, CollisionDetection, float, float);
