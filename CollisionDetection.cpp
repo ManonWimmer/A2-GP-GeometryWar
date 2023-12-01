@@ -1,4 +1,7 @@
 #include "CollisionDetection.h"
+#include "Player.h"		// -> re include dans le cpp car class incomplet
+#include "AI_Agent.h"	// -> re include dans le cpp car class incomplet
+
 
 //bool CollisionDetection::PointInsideSquare(float x, float y, sf::RectangleShape rect)
 //{
@@ -10,23 +13,22 @@ bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleS
 	float rw = rect.getSize().x;
 	float rh = rect.getSize().y;
 
-	//float rxTL = rect.getPosition().x - (rw / 2);
+
 	float rxTL = rect.getPosition().x;
-	//float ryTR = rect.getPosition().y + (rh / 2);
+	
 	float ryTR = rect.getPosition().y;
 
 
 	float cr = circle.getRadius();
 
-	//float cx = nextPosition.x;
+	
 	float cx = nextPosition.x + cr;
-	//float cy = nextPosition.y;
+	
 	float cy = nextPosition.y + cr;
 
 
 
 	if ((cx - cr >= rxTL && cx + cr <= rxTL + rw) && (cy - cr >= ryTR && cy + cr <= ryTR + rh))		// Si coordonnées dans rectangle
-	//if ((cx - cr >= rxTL && cx + cr <= rxTL + rw) && (cy - cr <= ryTR && cy + cr >= ryTR - rh))	// a utiliser si réferentiel pas retourné
 	{
 		return true;
 	}
@@ -39,17 +41,17 @@ bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::Rect
 	float rw = rect.getSize().x;
 	float rh = rect.getSize().y;
 
-	//float rxTL = rect.getPosition().x - (rw / 2);
+	
 	float rxTL = rect.getPosition().x;
-	//float ryTR = rect.getPosition().y + (rh / 2);
+	
 	float ryTR = rect.getPosition().y;
 
 
 	float cr = circle.getRadius();
 
-	//float cx = nextPosition.x;
+	
 	float cx = nextPosition.x + cr;
-	//float cy = nextPosition.y;
+	
 	float cy = nextPosition.y + cr;
 
 
@@ -78,17 +80,17 @@ bool CollisionDetection::CircleIsPartiallyInCircle(sf::CircleShape circle, sf::C
 	float clw = circleColl.getRadius() * 2;
 	float clh = circleColl.getRadius() * 2;
 
-	//float rxTL = rect.getPosition().x - (rw / 2);
+	
 	float clxTL = circleColl.getPosition().x;
-	//float ryTR = rect.getPosition().y + (rh / 2);
+	
 	float clyTR = circleColl.getPosition().y;
 
 
 	float cr = circle.getRadius();
 
-	//float cx = nextPosition.x;
+	
 	float cx = nextPosition.x + cr;
-	//float cy = nextPosition.y;
+	
 	float cy = nextPosition.y + cr;
 
 
@@ -140,68 +142,69 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 }
 
 
-//bool CollisionDetection::BulletTouchWall(Projectile& bullet)
-//{
-//	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
-//	while (it != this->rectList.end())
-//	{
-//		/*if (CirclePartialyInSquare(bullet.shape, *it, bullet.shape.getPosition()))
-//		{
-//			return true;
-//		}
-//		else 
-//		{
-//			it++;
-//		}*/
-//	}
-//
-//	return false;
-//}
-//
-//void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
-//{
-//	std::list<Projectile*>::iterator it = bulletsList.begin();
-//
-//	while (it != bulletsList.end())
-//	{
-//		if (BulletTouchWall(*(*(it))))
-//		{
-//			// Detruire bullet
-//		}
-//
-//		it++;
-//	}
-//}
+bool CollisionDetection::BulletTouchWall(Projectile& bullet)
+{
+	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
+	while (it != this->rectList.end())
+	{
+		/*if (CirclePartialyInSquare(bullet.shape, *it, bullet.shape.getPosition()))
+		{
+			return true;
+		}
+		else 
+		{
+			it++;
+		}*/
+	}
 
-//void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& enemyBullets)
-//{
-//	std::list<Projectile*>::iterator it = enemyBullets.begin();
-//
-//	while (it != enemyBullets.end())
-//	{
-//		//if (CircleIsPartiallyInCircle((*it)->shape, player.circleShape, (*it)->shape.getPosition())
-//		//{
-//		//  // Check invincibilité du player
-//		//	// Mort du player
-//		//}
-//
-//		it++;
-//	}
-//}
+	return false;
+}
 
-//void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Projectile*>& playerBullets)
-//{
-//	std::list<Projectile*>::iterator it = playerBullets.end();
-//
-//	while (it != playerBullets.end())
-//	{
-//		//if (CircleIsPartiallyInCircle((*it)->shape, enemy.GetCircle(), (*it)->shape))
-//		//{
-//		//	// Tuer l'ennemis
-//		//}
-//
-//		it++;
-//	}
-//}
+void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
+{
+	std::list<Projectile*>::iterator it = bulletsList.begin();
+
+	while (it != bulletsList.end())
+	{
+		if (BulletTouchWall(*(*(it))))
+		{
+			// Detruire bullet
+		}
+
+		it++;
+	}
+}
+
+void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& enemyBullets)
+{
+	std::list<Projectile*>::iterator it = enemyBullets.begin();
+
+	while (it != enemyBullets.end())
+	{
+		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, player.circleShape, (*it)->ProjectileShape.getPosition()))
+		{
+		    // Check invincibilité du player
+			// Mort du player
+		}
+
+		it++;
+	}
+}
+
+void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Projectile*>& playerBullets)
+{
+	std::list<Projectile*>::iterator it = playerBullets.end();
+	
+	while (it != playerBullets.end())
+	{
+		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, enemy.GetCircle(), (*it)->ProjectileShape.getPosition()))
+		{
+			// Appliquer dégat
+			// Tuer l'ennemis
+		}
+	
+		it++;
+	}
+}
 
 
