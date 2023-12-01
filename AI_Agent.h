@@ -3,26 +3,46 @@
 
 #include "Entity.h"
 #include <SFML/Graphics.hpp>
+#include "Player.h"
 
 class AI_Agent : public Entity {
 public:
-    AI_Agent(ManagerEntity& managerEntity, float radius, sf::Vector2f spawnPosition, float speed);
+    AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, float radius, sf::Vector2f spawnPosition, float speed, Player& player);
 
+
+    bool CheckFieldOfViewCorners();
+    bool CheckFieldOfViewEdges();
+    void UpdateFieldView();
+    void DrawAgentRenderer(sf::RenderWindow& window);
     void SetTarget(sf::CircleShape* target);
+    float GetAngle(sf::Vector2f targetedVector);
+    float GetPositif(float value);
     void Chase(float deltaTime);
-
+    float GetMagnitude(sf::Vector2f vector);
+    float GetDistanceFromAgent(sf::Vector2f vector);
+    float GetDistanceBetweenVectors(sf::Vector2f vector1, sf::Vector2f vector2);
+    sf::Vector2f GetFieldViewPointWorldCoordinates(sf::Vector2f point);
     sf::Vector2f NormalizedVector(sf::Vector2f source);
     sf::CircleShape& GetCircle();
     sf::Vector2f& GetDirection();
+    Player& currentPlayer;
 
     // function update
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
 private:
     sf::CircleShape _circle;
+    sf::ConvexShape fieldView;
     sf::Vector2f _direction;
     sf::CircleShape* _target = nullptr;
     float _speed;
+    float _rotationSpeed;
+    float _currentFieldViewRotation;
+
+    sf::CircleShape fvCorner1;
+    sf::CircleShape fvCorner2;
+    sf::CircleShape fvCorner3;
+
 };
 
 #endif
