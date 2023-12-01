@@ -51,6 +51,8 @@ private:
     sf::CircleShape fvCorner3;
 
     int _life;
+    float coolDown;
+    float currentShootTimer;
 
 public: 
     bool isDead;

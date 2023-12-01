@@ -8,6 +8,10 @@
 AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
     : Entity(managerEntity, collisionDetection), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
 {
+
+    coolDown = 3.0f;
+    currentShootTimer = 0.0f;
+
     _circle.setFillColor(sf::Color::White);
     _circle.setRadius(radius);
     _circle.setOrigin(_circle.getRadius(), _circle.getRadius());
@@ -30,8 +34,8 @@ AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDe
     fieldView.setOrigin(fieldView.getPoint(0));
     fieldView.setPosition(_circle.getPosition());
 
-    _target = new sf::CircleShape();
-    _target->setPosition(640, 360);
+    _target = nullptr;
+    //_target->setPosition(640, 360);
 
 
     fvCorner1.setRadius(7.0f);
@@ -230,7 +234,7 @@ void AI_Agent::Chase(float deltaTime) {
             }
             else {
                 //_circle.setRotation(interpolatedRotation);
-                std::cout << interpolatedRotation << std::endl;
+                //std::cout << interpolatedRotation << std::endl;
 
                 //_currentFieldViewRotation = interpolatedRotation;
                 sf::Transform rotationTransform;
@@ -349,10 +353,8 @@ void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
     if (!isDead) {
         Chase(deltaTime);
-    //std::cout << "AI Agent got updated" << std::endl;
-
-    UpdateFieldView();
-    DrawAgentRenderer(window);
+        UpdateFieldView();
+        DrawAgentRenderer(window);
     }
     
 

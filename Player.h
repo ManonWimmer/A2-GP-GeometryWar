@@ -1,17 +1,22 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
 #include "CollisionDetection.h"
+#include "Entity.h"
 
-class Player
+class ManagerEntity;
+
+class Player: public Entity
 {
 public :
 
-	Player();
+	Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
 
-	sf::Vector2f MovePlayer(CollisionDetection, float, float);
+	sf::Vector2f MovePlayer(sf::RenderWindow& window, CollisionDetection, float, float);
+	virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
 	
 	void CheckInvincibility(float);
@@ -27,3 +32,6 @@ public :
 	bool isInvincible;
 };
 
+
+
+#endif
