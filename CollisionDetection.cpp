@@ -157,7 +157,7 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 //
 //	return false;
 //}
-
+//
 //void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
 //{
 //	std::list<Projectile*>::iterator it = bulletsList.begin();
