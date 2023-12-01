@@ -4,11 +4,11 @@
 #include "ManagerEntity.h"
 
 
-GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player) 
+GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player) : _player(player)
 {
 	this->_managerEntity = managerEntity;
 	this->_collisionDetection = collisionDetection;
-	this->_player = player;
+	//this->_player = player;
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
@@ -22,7 +22,7 @@ void GameManager::CheckEnemiesLife()
 {
 	if (_enemies.size() > 0)
 	{
-		std::list<AI_Agent*>::iterator it = _enemies.end();
+		std::list<AI_Agent*>::iterator it = _enemies.begin();
 		_allEnemiesDead = true;
 
 		while (it != _enemies.end())
@@ -60,3 +60,28 @@ void GameManager::CheckGameEnd()
 
 
 
+void GameManager::StartLevel(int levelNumber)
+{
+	std::cout << "start level " << levelNumber << std::endl;
+	switch (levelNumber) {
+	case 1:
+		std::cout << "case 1" << std::endl;
+		_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
+		break;
+	}
+
+	std::cout << _enemiesStartPositions.size() << std::endl;
+
+
+	if (_enemiesStartPositions.size() > 0)
+	{
+		std::list<sf::Vector2f>::iterator it = _enemiesStartPositions.begin();
+
+		while (it != _enemiesStartPositions.end())
+		{
+			std::cout << "while" << std::endl;
+			SpawnEnemy(10, *it, 200);
+			it++;
+		}
+	}
+}
