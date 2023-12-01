@@ -19,9 +19,10 @@ public:
     std::list<AI_Agent*> _enemies;
 
 private:
-    ManagerEntity _managerEntity;
-    CollisionDetection _collisionDetection;
-    Player _player;
+    ManagerEntity& _managerEntity;
+    CollisionDetection& _collisionDetection;
+    Player& _player;
+
     bool _allEnemiesDead;
     bool _playerDead;
     bool _gameWon;

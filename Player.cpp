@@ -7,11 +7,17 @@
 
 Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection) : Entity(managerEntity, collisionDetection)
 {
+
+	ptrPistol = new Weapon(WeaponType::Pistol, circleShape);
+
 	sf::CircleShape tempShape;
 
 	tempShape.setRadius(20);
 	tempShape.setPosition(640, 360);
-	tempShape.setFillColor(sf::Color::Red);
+	tempShape.setFillColor(sf::Color(255, 255, 255, 180));
+
+	tempShape.setOutlineThickness(20 / 5);
+	tempShape.setOutlineColor(sf::Color::White);
 
 	this->circleShape = tempShape;
 
@@ -67,9 +73,11 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 
 void Player::Update(sf::RenderWindow& window, float deltaTime)
 {
+	ptrPistol->UpdateWeapon(window, deltaTime);
+
 	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 100.0f));
-	
 	window.draw(circleShape);
+
 }
 
 

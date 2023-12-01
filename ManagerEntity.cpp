@@ -31,4 +31,7 @@ void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime)
 void ManagerEntity::DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player)
 {
     AddEntity(new AI_Agent(managerEntity, collisionDetection, 17.0f, sf::Vector2f(600, 600), 75.0f, player));
+
+    //AddEntity(new AI_Agent(managerEntity, collisionDetection, 17.0f, sf::Vector2f(700, 600), 75.0f, player));
+
 }

@@ -16,18 +16,14 @@ public :
 
 	sf::Vector2f MovePlayer(sf::RenderWindow& window, CollisionDetection, float, float);
 	virtual void Update(sf::RenderWindow& window, float deltaTime) override;
+	Weapon* ptrPistol;
 
 	
 	void CheckInvincibility(float);
-
 	sf::CircleShape circleShape;
-
 	int pv;
-
 	float invincibilityCooldown;
-
 	float invincibilityTime;
-
 	bool isInvincible;
 };
 

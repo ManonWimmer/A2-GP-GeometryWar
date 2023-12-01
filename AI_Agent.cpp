@@ -8,11 +8,11 @@
 AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
     : Entity(managerEntity, collisionDetection), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
 {
-
+    _life = 100;
     coolDown = 3.0f;
     currentShootTimer = 0.0f;
 
-    _circle.setFillColor(sf::Color::White);
+    _circle.setFillColor(sf::Color::Black);
     _circle.setRadius(radius);
     _circle.setOrigin(_circle.getRadius(), _circle.getRadius());
 
@@ -335,7 +335,8 @@ int AI_Agent::ClampInteger(int value, int minimum, int maximum)
     if (value > maximum) {
         value = maximum;
     }
-    else if (value < minimum) {
+    
+    if (value < minimum) {
         value = minimum;
     }
 

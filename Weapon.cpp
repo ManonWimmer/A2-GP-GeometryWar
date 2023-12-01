@@ -1,7 +1,7 @@
 #include "Weapon.h"
 #include <math.h>
 
-Weapon::Weapon(WeaponType weaponType, sf::CircleShape& player)
+Weapon::Weapon(WeaponType weaponType, sf::CircleShape& ownerObject)
 {
 	switch (weaponType)
 	{
@@ -9,14 +9,20 @@ Weapon::Weapon(WeaponType weaponType, sf::CircleShape& player)
 		this->FireRate = 0.25;
 		this->_bulletSpeed = 800;
 		this->FireTime = 2;
-		this->Player = player;
+		this->ownerObject = &ownerObject;
+
+		aimRectangle.setFillColor(sf::Color::White);
+		aimRectangle.setPosition(640, 360);
+		aimRectangle.setSize(sf::Vector2f(20, 50));
+		aimRectangle.setOrigin(aimRectangle.getSize().x / 2, 0);
+
 		break;
 
 	default:
 		this->FireRate = 0.5;
 		this->_bulletSpeed = 0;
 		this->FireTime = 0;
-		this->Player = player;
+		this->ownerObject = &ownerObject;
 		break;
 	}
 }
@@ -34,7 +40,7 @@ void Weapon::Shoot(sf::RenderWindow &window, sf::Vector2f posPlayer)
 
 	// Get positions
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-	sf::Vector2f bulletOrigin = sf::Vector2f(posPlayer.x + Player.getRadius() - projectileShape.getRadius(), posPlayer.y + Player.getRadius() - projectileShape.getRadius());
+	sf::Vector2f bulletOrigin = sf::Vector2f(posPlayer.x + ownerObject->getRadius() - projectileShape.getRadius(), posPlayer.y + ownerObject->getRadius() - projectileShape.getRadius());
 
 	//std::cout << "mouse " << mousePosition.x << " " << mousePosition.y << " origin " << bulletOrigin.x << " " << bulletOrigin.y << std::endl;
 	
@@ -136,5 +142,36 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 	float rotation = (atan2(dy, dx)) * 180 / PI;
 
 	aimShape.setRotation(rotation + 90);
+}
+
+void Weapon::UpdateWeapon(sf::RenderWindow& window, float deltaTime)
+{
+	CheckProjectiles(window, deltaTime);
+	window.draw(aimRectangle);
+
+	aimRectangle.setPosition(ownerObject->getPosition().x + ownerObject->getRadius(), ownerObject->getPosition().y + ownerObject->getRadius());
+
+
+	// Verif si il peut tirer (en fonction de fire rate)
+	if (shootPressed)
+	{
+		timeSinceLastShoot += deltaTime;
+		if (timeSinceLastShoot >= FireRate)
+		{
+			shootPressed = false;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (!shootPressed)
+		{
+			shootPressed = true;
+			timeSinceLastShoot = 0;
+			Shoot(window, ownerObject->getPosition());
+		}
+	}
+
+	CheckRotationAim(aimRectangle, window);
 }
 

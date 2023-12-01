@@ -4,15 +4,14 @@
 #include "ManagerEntity.h"
 
 
-GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player) : _player(player)
+GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player) : _managerEntity(managerEntity), _collisionDetection(collisionDetection), _player(player)
 {
-	this->_managerEntity = managerEntity;
-	this->_collisionDetection = collisionDetection;
-	//this->_player = player;
+
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
 {
+	//AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, radius, spawnPosition, speed, _player);
 	AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, radius, spawnPosition, speed, _player);
 	_managerEntity.AddEntity(ptrEnemy);
 	_enemies.push_back(ptrEnemy); 
@@ -75,12 +74,14 @@ void GameManager::StartLevel(int levelNumber)
 
 	if (_enemiesStartPositions.size() > 0)
 	{
+		std::cout << "Test enemies start positions" << std::endl;
+
 		std::list<sf::Vector2f>::iterator it = _enemiesStartPositions.begin();
 
 		while (it != _enemiesStartPositions.end())
 		{
 			std::cout << "while" << std::endl;
-			SpawnEnemy(10, *it, 200);
+			SpawnEnemy(15.0f, *it, 75.0f);
 			it++;
 		}
 	}

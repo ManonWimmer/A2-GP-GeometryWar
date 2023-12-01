@@ -25,26 +25,9 @@ int main()
 
 	entityManager.AddEntity(&player);
 
-	entityManager.DebugEntities(entityManager, collisionDetection, player);
+	//entityManager.DebugEntities(entityManager, collisionDetection, player);
 
 	gameManager.StartLevel(1);
-
-
-
-
-	Weapon* ptrPistol = new Weapon(WeaponType::Pistol, player.circleShape);
-
-	bool shootPressed = false;
-	float timeSinceLastShoot = 0;
-
-	sf::RectangleShape aimRectangle;
-	aimRectangle.setFillColor(sf::Color::White);
-	aimRectangle.setPosition(640, 360);
-	aimRectangle.setSize(sf::Vector2f(20, 50));
-	aimRectangle.setOrigin(aimRectangle.getSize().x / 2, 0);
-
-
-
 	
 
 	while (window.isOpen())
@@ -73,36 +56,7 @@ int main()
 		
 		// Remise au noir de toute la fenêtre
 		window.clear();
-
-
-		ptrPistol->CheckProjectiles(window, deltaTime);
-		window.draw(aimRectangle);
-
-		aimRectangle.setPosition(player.circleShape.getPosition().x + player.circleShape.getRadius(), player.circleShape.getPosition().y + player.circleShape.getRadius());
-
-
-
-		// Verif si il peut tirer (en fonction de fire rate)
-		if (shootPressed)
-		{
-			timeSinceLastShoot += deltaTime;
-			if (timeSinceLastShoot >= ptrPistol->FireRate)
-			{
-				shootPressed = false;
-			}
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			if (!shootPressed)
-			{
-				shootPressed = true;
-				timeSinceLastShoot = 0;
-				ptrPistol->Shoot(window, player.circleShape.getPosition());
-			}
-		}
-
-		ptrPistol->CheckRotationAim(aimRectangle, window);
+		
 
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime);
@@ -110,7 +64,7 @@ int main()
 		std::list<AI_Agent*>::iterator it = gameManager._enemies.begin();
 		while (it != gameManager._enemies.end())
 		{
-			collisionDetection.BulletsTouchEnemyCheck(*(*it), (*ptrPistol));
+			collisionDetection.BulletsTouchEnemyCheck(*(*it), (*player.ptrPistol));
 			it++;
 		}
 
