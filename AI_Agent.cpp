@@ -346,13 +346,15 @@ void AI_Agent::Death()
 
 void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
-    Chase(deltaTime);
+
+    if (!isDead) {
+        Chase(deltaTime);
     //std::cout << "AI Agent got updated" << std::endl;
-
-
 
     UpdateFieldView();
     DrawAgentRenderer(window);
+    }
+    
 
 
     //collisionDetection.ClampCircleOutsideRectangles(_circle, , sf::Vector2f(_circle.getPosition().x, _circle.getPosition().y));
