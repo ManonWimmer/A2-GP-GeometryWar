@@ -27,6 +27,11 @@ public:
     sf::Vector2f& GetDirection();
     Player& currentPlayer;
 
+    int GetLife();
+    void SetLife(int value);
+    void DecreaseLife(int value);
+    int ClampInteger(int value, int minimum, int maximum);
+
     // function update
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
@@ -42,6 +47,12 @@ private:
     sf::CircleShape fvCorner1;
     sf::CircleShape fvCorner2;
     sf::CircleShape fvCorner3;
+
+    int _life;
+
+public: 
+    bool isDead;
+
 
 };
 

@@ -3,6 +3,7 @@
 #include "CollisionDetection.h" 
 #include "Player.h"
 #include <math.h>
+#include <cmath>
 
 AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
     : Entity(managerEntity, collisionDetection), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
@@ -299,6 +300,49 @@ sf::Vector2f& AI_Agent::GetDirection() {
 
     return _direction;
 }
+
+int AI_Agent::GetLife()
+{
+    return _life;
+}
+
+void AI_Agent::SetLife(int value)
+{
+    _life = ClampInteger(value, 0, value);
+
+    if (_life <= 0 && !isDead) {
+        Death();
+    }
+}
+
+void AI_Agent::DecreaseLife(int value)
+{
+    _life = ClampInteger(_life -= value, 0, 100);
+
+    if (_life <= 0 && !isDead) {
+        Death();
+    }
+}
+
+int AI_Agent::ClampInteger(int value, int minimum, int maximum)
+{
+
+    if (value > maximum) {
+        value = maximum;
+    }
+    else if (value < minimum) {
+        value = minimum;
+    }
+
+    return value;
+}
+
+void AI_Agent::Death()
+{
+    isDead = true;
+}
+
+
 
 void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
