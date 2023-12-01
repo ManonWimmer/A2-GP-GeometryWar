@@ -141,25 +141,24 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 	return currentPosition;
 }
 
-
+// gestion bullet walls !!!!!!!!!!!!!!!!!!!!!!
 bool CollisionDetection::BulletTouchWall(Projectile& bullet)
 {
 	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
 	while (it != this->rectList.end())
 	{
-		/*if (CirclePartialyInSquare(bullet.shape, *it, bullet.shape.getPosition()))
+		if (CirclePartialyInSquare(bullet.ProjectileShape, *it, bullet.ProjectileShape.getPosition()))
 		{
 			return true;
 		}
 		else 
 		{
 			it++;
-		}*/
+		}
 	}
 
 	return false;
 }
-
 void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
 {
 	std::list<Projectile*>::iterator it = bulletsList.begin();
@@ -169,22 +168,56 @@ void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
 		if (BulletTouchWall(*(*(it))))
 		{
 			// Detruire bullet
+			it = bulletsList.erase(it);
 		}
 
 		it++;
 	}
 }
-
-void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& enemyBullets)
+void CollisionDetection::WeaponBulletsCollideWall(std::list<Weapon*> weaponsList)
 {
-	std::list<Projectile*>::iterator it = enemyBullets.begin();
+	std::list<Weapon*>::iterator it = weaponsList.begin();
 
-	while (it != enemyBullets.end())
+	while (it != weaponsList.end())
+	{
+		BulletsCollideWall((*it)->WeaponPtrProjectiles);
+
+		it++;
+	}
+}
+// Fin bulletwalls!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// Gestion bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+bool CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& bulletsList)
+{
+	std::list<Projectile*>::iterator it = bulletsList.begin();
+
+	while (it != bulletsList.end())
 	{
 		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, player.circleShape, (*it)->ProjectileShape.getPosition()))
 		{
 			if (!(player.isInvincible))
 			{
+				it = bulletsList.erase(it);
+				return true;
+			}
+		}
+
+		it++;
+	}
+	return false;
+}
+void CollisionDetection::WeaponBulletsTouchPlayerCheck(Player& player, std::list<Weapon*> enemyWeapons)
+{
+	std::list<Weapon*>::iterator it = enemyWeapons.begin();
+
+	while (it != enemyWeapons.end())
+	{
+		if (BulletsTouchPlayerCheck(player, (*it)->WeaponPtrProjectiles))
+		{
+			if (!(player.isInvincible))
+			{
+				// reduire pv player
 				player.pv -= 10;
 			}
 		}
@@ -192,20 +225,25 @@ void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Proje
 		it++;
 	}
 }
+// Fin bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Projectile*>& playerBullets)
+// Gestion BulletsEnnemy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, Weapon* playerWeapon)
 {
-	std::list<Projectile*>::iterator it = playerBullets.end();
+	std::list<Projectile*>::iterator it = playerWeapon->WeaponPtrProjectiles.end();
 	
-	while (it != playerBullets.end())
+	while (it != playerWeapon->WeaponPtrProjectiles.end())
 	{
 		if (CircleIsPartiallyInCircle((*it)->ProjectileShape, enemy.GetCircle(), (*it)->ProjectileShape.getPosition()))
 		{
+			// reduire pv enemy
 			enemy.DecreaseLife(34);
+
+			it = playerWeapon->WeaponPtrProjectiles.erase(it);
 		}
 	
 		it++;
 	}
 }
-
+// Fin bulletsEnnemy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

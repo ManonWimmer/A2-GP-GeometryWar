@@ -4,6 +4,7 @@
 #include <iostream>
 #include <list>
 #include "Projectile.h"
+#include "Weapon.h"
 
 class Player;
 class AI_Agent;
@@ -30,11 +31,13 @@ public :
 
 
 	void BulletsCollideWall(std::list<Projectile*>&);
+	void WeaponBulletsCollideWall(std::list<Weapon*>);
 
 
-	void BulletsTouchPlayerCheck(Player&, std::list<Projectile*>&);
+	void WeaponBulletsTouchPlayerCheck(Player&, std::list<Weapon*> enemyWeapons);
+	bool BulletsTouchPlayerCheck(Player&, std::list<Projectile*>& bulletsList);
 
-	void BulletsTouchEnemyCheck(AI_Agent&, std::list<Projectile*>&);
+	void BulletsTouchEnemyCheck(AI_Agent&, Weapon*);
 
 
 	std::list<sf::RectangleShape> rectList;
