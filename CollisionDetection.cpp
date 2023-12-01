@@ -140,68 +140,68 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 }
 
 
-bool CollisionDetection::BulletTouchWall(Projectile& bullet)
-{
-	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
-	while (it != this->rectList.end())
-	{
-		/*if (CirclePartialyInSquare(bullet.shape, *it, bullet.shape.getPosition()))
-		{
-			return true;
-		}
-		else 
-		{
-			it++;
-		}*/
-	}
+//bool CollisionDetection::BulletTouchWall(Projectile& bullet)
+//{
+//	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
+//	while (it != this->rectList.end())
+//	{
+//		/*if (CirclePartialyInSquare(bullet.shape, *it, bullet.shape.getPosition()))
+//		{
+//			return true;
+//		}
+//		else 
+//		{
+//			it++;
+//		}*/
+//	}
+//
+//	return false;
+//}
 
-	return false;
-}
+//void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
+//{
+//	std::list<Projectile*>::iterator it = bulletsList.begin();
+//
+//	while (it != bulletsList.end())
+//	{
+//		if (BulletTouchWall(*(*(it))))
+//		{
+//			// Detruire bullet
+//		}
+//
+//		it++;
+//	}
+//}
 
-void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
-{
-	std::list<Projectile*>::iterator it = bulletsList.begin();
+//void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& enemyBullets)
+//{
+//	std::list<Projectile*>::iterator it = enemyBullets.begin();
+//
+//	while (it != enemyBullets.end())
+//	{
+//		//if (CircleIsPartiallyInCircle((*it)->shape, player.circleShape, (*it)->shape.getPosition())
+//		//{
+//		//  // Check invincibilité du player
+//		//	// Mort du player
+//		//}
+//
+//		it++;
+//	}
+//}
 
-	while (it != bulletsList.end())
-	{
-		if (BulletTouchWall(*(*(it))))
-		{
-			// Detruire bullet
-		}
-
-		it++;
-	}
-}
-
-void CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& enemyBullets)
-{
-	std::list<Projectile*>::iterator it = enemyBullets.begin();
-
-	while (it != enemyBullets.end())
-	{
-		//if (CircleIsPartiallyInCircle((*it)->shape, player.circleShape, (*it)->shape.getPosition())
-		//{
-		//  // Check invincibilité du player
-		//	// Mort du player
-		//}
-
-		it++;
-	}
-}
-
-void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Projectile*>& playerBullets)
-{
-	std::list<Projectile*>::iterator it = playerBullets.end();
-
-	while (it != playerBullets.end())
-	{
-		//if (CircleIsPartiallyInCircle((*it)->shape, enemy.GetCircle(), (*it)->shape))
-		//{
-		//	// Tuer l'ennemis
-		//}
-
-		it++;
-	}
-}
+//void CollisionDetection::BulletsTouchEnemyCheck(AI_Agent& enemy, std::list<Projectile*>& playerBullets)
+//{
+//	std::list<Projectile*>::iterator it = playerBullets.end();
+//
+//	while (it != playerBullets.end())
+//	{
+//		//if (CircleIsPartiallyInCircle((*it)->shape, enemy.GetCircle(), (*it)->shape))
+//		//{
+//		//	// Tuer l'ennemis
+//		//}
+//
+//		it++;
+//	}
+//}
 
 

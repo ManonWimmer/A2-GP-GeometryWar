@@ -3,9 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
-#include "Projectile.h"
-#include "Player.h"
-#include "AI_Agent.h"
+//#include "Projectile.h"
+//#include "Player.h"
+//#include "AI_Agent.h"
 
 class CollisionDetection
 {
@@ -31,12 +31,12 @@ public :
 
 	//bool BulletTouchWall(Projectile&);
 
-	void BulletsCollideWall(std::list<Projectile*>&);
+	//void BulletsCollideWall(std::list<Projectile*>&);
 
 
-	void BulletsTouchPlayerCheck(Player&, std::list<Projectile*>&);
+	//void BulletsTouchPlayerCheck(Player&, std::list<Projectile*>&);
 
-	void BulletsTouchEnemyCheck(AI_Agent&, std::list<Projectile*>&);
+	//void BulletsTouchEnemyCheck(AI_Agent&, std::list<Projectile*>&);
 
 
 	std::list<sf::RectangleShape> rectList;
@@ -48,6 +48,6 @@ private:
 
 	bool CirclePartialyInSquare(sf::CircleShape, sf::RectangleShape, sf::Vector2f);
 
-	bool BulletTouchWall(Projectile&);
+	//bool BulletTouchWall(Projectile&);
 };
 
