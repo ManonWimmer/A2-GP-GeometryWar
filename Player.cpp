@@ -2,13 +2,15 @@
 #include "CollisionDetection.h"
 #include <list>
 #include "ManagerEntity.h"
+#include "GameManager.h"
+#include "Weapon.h"
 
-
-
-Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection) : Entity(managerEntity, collisionDetection)
+Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
 {
 
-	ptrPistol = new Weapon(WeaponType::Pistol, circleShape);
+	ptrPistol = new Weapon(managerEntity, collisionDetection, EntityType::Weapon_Entity, entityFaction, CollisionType::None_CollisionType, WeaponType::Pistol, circleShape);
+	managerEntity.AddEntity(ptrPistol);
 
 	sf::CircleShape tempShape;
 
@@ -73,7 +75,6 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 
 void Player::Update(sf::RenderWindow& window, float deltaTime)
 {
-	ptrPistol->UpdateWeapon(window, deltaTime);
 
 	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 100.0f));
 	window.draw(circleShape);

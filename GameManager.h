@@ -6,6 +6,8 @@
 
 class ManagerEntity;
 
+
+
 class GameManager
 {
 public:
@@ -16,7 +18,7 @@ public:
     void CheckGameEnd(); // A changer plus tard par CheckLevelEnd ?
     void StartLevel(int);
 
-    std::list<AI_Agent*> _enemies;
+    //std::list<AI_Agent*> _enemies;
 
 private:
     ManagerEntity& _managerEntity;

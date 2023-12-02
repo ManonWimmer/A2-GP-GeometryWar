@@ -11,15 +11,14 @@ GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& colli
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
 {
-	//AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, radius, spawnPosition, speed, _player);
-	AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, radius, spawnPosition, speed, _player);
+	AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, radius, spawnPosition, speed, _player);
 	_managerEntity.AddEntity(ptrEnemy);
-	_enemies.push_back(ptrEnemy); 
+	//_enemies.push_back(ptrEnemy); 
 }
 
 void GameManager::CheckEnemiesLife()
 {
-	if (_enemies.size() > 0)
+	/*if (_enemies.size() > 0)
 	{
 		std::list<AI_Agent*>::iterator it = _enemies.begin();
 		_allEnemiesDead = true;
@@ -32,7 +31,7 @@ void GameManager::CheckEnemiesLife()
 			}
 			it++;
 		}
-	}
+	}*/
 }
 
 void GameManager::CheckPlayerLife() 
@@ -42,7 +41,7 @@ void GameManager::CheckPlayerLife()
 
 void GameManager::CheckGameEnd()
 {
-	CheckEnemiesLife();
+	//CheckEnemiesLife();
 	CheckPlayerLife();
 
 	if (_playerDead) 

@@ -1,7 +1,10 @@
 #include "Weapon.h"
+#include "CollisionDetection.h" 
+
 #include <math.h>
 
-Weapon::Weapon(WeaponType weaponType, sf::CircleShape& ownerObject)
+Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
 {
 	switch (weaponType)
 	{
@@ -59,43 +62,25 @@ void Weapon::Shoot(sf::RenderWindow &window, sf::Vector2f posPlayer)
 	// Nouveau projectile
 	projectileShape.setPosition(bulletOrigin.x, bulletOrigin.y);
 	window.draw(projectileShape);
-	Projectile* ptrNewProjectile = new Projectile(bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape);
-
-	// Ajout à la liste des projectiles
-	WeaponPtrProjectiles.push_back(ptrNewProjectile);
-	//std::cout << "taille apres push back " << WeaponPtrProjectiles.size() << std::endl;
-}
-
-void Weapon::CheckProjectiles(sf::RenderWindow& window, float deltaTime)
-{
-	//std::cout << "taille liste " << WeaponPtrProjectiles.size() << std::endl;
-	// For chaque projectile dans la liste de ptr
-	std::list<Projectile*>::iterator it = WeaponPtrProjectiles.begin();
-
-	//std::cout << "projectiles : " << WeaponPtrProjectiles.size() << std::endl;
-
-	while (it != WeaponPtrProjectiles.end())
+	
+	switch (entityFaction)
 	{
+		case Faction::PlayerFaction:
+			//Projectile* ptrNewPlayerProjectile = new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::PlayerFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape);
+			managerEntity.AddEntity(new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::PlayerFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape));
+			break;
 
-		// Ajouter à son current time le delta time passé
-		(*(*it)).CurrentTime += deltaTime;
+		case Faction::EnemiesFaction:
+			//Projectile* ptrNewEnemyProjectile = new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::EnemiesFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape);
+			managerEntity.AddEntity(new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::EnemiesFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape));
+			break;
 
-		window.draw((* (*it)).ProjectileShape);
+		default:
+			break;
+	}
 
-		// Si supérieur à son fireTime -> on le delete
-		if ((*(*it)).CurrentTime > this->FireTime)
-		{
-			it = WeaponPtrProjectiles.erase(it);
-		}
-		// Sinon, on déplace le projectile
-		else 
-		{
-			(*(*it)).MoveProjectile(deltaTime);
-			it++;
-		}
-		
-	}		
 }
+
 
 void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& window)
 {
@@ -144,11 +129,11 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 	aimShape.setRotation(rotation + 90);
 }
 
-void Weapon::UpdateWeapon(sf::RenderWindow& window, float deltaTime)
-{
-	CheckProjectiles(window, deltaTime);
-	window.draw(aimRectangle);
 
+
+void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
+
+	window.draw(aimRectangle);
 	aimRectangle.setPosition(ownerObject->getPosition().x + ownerObject->getRadius(), ownerObject->getPosition().y + ownerObject->getRadius());
 
 
@@ -173,5 +158,6 @@ void Weapon::UpdateWeapon(sf::RenderWindow& window, float deltaTime)
 	}
 
 	CheckRotationAim(aimRectangle, window);
+
 }
 

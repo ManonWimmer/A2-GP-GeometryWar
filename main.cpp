@@ -11,16 +11,13 @@ constexpr float cubeSpeed = 500.f;
 int main()
 {
 	// Initialisation
-
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Geometry Wars");
 	window.setVerticalSyncEnabled(true);
-
-
 
 	sf::Clock frameClock;
 	ManagerEntity entityManager;
 	CollisionDetection collisionDetection;
-	Player player(entityManager, collisionDetection);
+	Player player(entityManager, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle);
 	GameManager gameManager(entityManager, collisionDetection, player);
 
 	entityManager.AddEntity(&player);
@@ -60,13 +57,14 @@ int main()
 
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime);
+		collisionDetection.CheckAllEntitiesCollisions(entityManager);
 
-		std::list<AI_Agent*>::iterator it = gameManager._enemies.begin();
+		/*std::list<AI_Agent*>::iterator it = gameManager._enemies.begin();
 		while (it != gameManager._enemies.end())
 		{
 			collisionDetection.BulletsTouchEnemyCheck(*(*it), (*player.ptrPistol));
 			it++;
-		}
+		}*/
 
 		// On présente la fenêtre sur l'écran
 		window.display();

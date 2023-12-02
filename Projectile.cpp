@@ -1,7 +1,8 @@
 #include "projectile.h"
 #include <SFML/Graphics.hpp>
 
-Projectile::Projectile(sf::Vector2f origin, sf::Vector2f direction, float currentTime, int speed, sf::CircleShape projectileShape)
+Projectile::Projectile(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f origin, sf::Vector2f direction, float currentTime, int speed, sf::CircleShape projectileShape)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
 {
 	this->_origin = origin;
 	this->_direction = direction;
@@ -10,10 +11,22 @@ Projectile::Projectile(sf::Vector2f origin, sf::Vector2f direction, float curren
 	this->ProjectileShape = projectileShape;
 }
 
-void Projectile::MoveProjectile(float deltaTime) 
+void Projectile::Update(sf::RenderWindow& window, float deltaTime)
 {
-	//std::cout << "move projectile" << std::endl;
+	MoveProjectile(deltaTime);
+	window.draw(ProjectileShape);
+}
+
+sf::CircleShape& Projectile::GetEntityCircleShape()
+{
+	return ProjectileShape;
+}
+
+void Projectile::MoveProjectile(float deltaTime)
+{
 	sf::Vector2f movement = _direction * static_cast<float>(_speed) * deltaTime;
+
+
+
 	ProjectileShape.move(movement);
-	//std::cout << "new pos proj" << ProjectileShape.getPosition().x << " " << ProjectileShape.getPosition().y << std::endl;
 }

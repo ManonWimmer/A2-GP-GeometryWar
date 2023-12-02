@@ -5,14 +5,17 @@
 #include <iostream>
 #include <list>
 #include "CollisionDetection.h"
+#include "EntityEnums.h"
 #include "Entity.h"
 
 class ManagerEntity;
+class Weapon;
+
 
 class Player: public Entity
 {
 public :
-	Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
+	Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType);
 
 	sf::Vector2f MovePlayer(sf::RenderWindow& window, CollisionDetection, float, float);
 	virtual void Update(sf::RenderWindow& window, float deltaTime) override;

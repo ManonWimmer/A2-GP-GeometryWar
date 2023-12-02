@@ -3,11 +3,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <list>
-#include "Projectile.h"
-#include "Weapon.h"
+
+#include "EntityEnums.h"
 
 class Player;
 class AI_Agent;
+class Projectile;
+class Weapon;
+class ManagerEntity;
+class Entity;
 
 class CollisionDetection
 {
@@ -22,11 +26,11 @@ public :
 		rectList = rectListTemp;
 	}
 
+	void CheckAllEntitiesCollisions(ManagerEntity& managerEntity);
 	//bool PointInsideSquare(float, float, sf::RectangleShape);
 
 
 	sf::Vector2f ClampCircleOutsideRectangles(sf::CircleShape&, std::list<sf::RectangleShape>, sf::Vector2f, sf::Vector2f);
-
 	sf::Vector2f ClampCircleInsideRectangle(sf::CircleShape&, sf::RectangleShape, sf::Vector2f, sf::Vector2f);
 
 
@@ -37,12 +41,23 @@ public :
 	void WeaponBulletsTouchPlayerCheck(Player&, std::list<Weapon*> enemyWeapons);
 	bool BulletsTouchPlayerCheck(Player&, std::list<Projectile*>& bulletsList);
 
-	void BulletsTouchEnemyCheck(AI_Agent&, Weapon&);
-
+	bool BulletsTouchEnemyCheck(Entity& enemy, Entity& projectile);
 
 	std::list<sf::RectangleShape> rectList;
 
+	std::list<sf::CircleShape> playerBullets;
+	std::list<sf::CircleShape> enemiesBullets;
+
+
 private:
+
+
+	bool CircleIsInCircle(sf::CircleShape circle1, sf::CircleShape circle2);
+	void KeepCircleOutsideRectangle(sf::CircleShape circle, sf::RectangleShape rectangle);
+
+
+
+
 	bool CircleIsPartiallyInCircle(sf::CircleShape, sf::CircleShape, sf::Vector2f);
 
 	bool CircleIsInSquare(sf::CircleShape, sf::RectangleShape, sf::Vector2f);

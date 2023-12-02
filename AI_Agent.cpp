@@ -5,8 +5,8 @@
 #include <math.h>
 #include <cmath>
 
-AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
-    : Entity(managerEntity, collisionDetection), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
+AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
+    : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
 {
     _life = 100;
     coolDown = 3.0f;
@@ -345,7 +345,8 @@ int AI_Agent::ClampInteger(int value, int minimum, int maximum)
 
 void AI_Agent::Death()
 {
-    isDead = true;
+    //isDead = true;
+    managerEntity.RemoveEntity(this);
 }
 
 
@@ -367,4 +368,9 @@ void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
 
     //collisionDetection.ClampCircleOutsideRectangles(_circle, , sf::Vector2f(_circle.getPosition().x, _circle.getPosition().y));
+}
+
+sf::CircleShape& AI_Agent::GetEntityCircleShape()
+{
+    return _circle;
 }

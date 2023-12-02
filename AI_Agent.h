@@ -4,10 +4,11 @@
 #include "Entity.h"
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "ManagerEntity.h"
 
 class AI_Agent : public Entity {
 public:
-    AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, float radius, sf::Vector2f spawnPosition, float speed, Player& player);
+    AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, float radius, sf::Vector2f spawnPosition, float speed, Player& player);
 
 
     bool CheckFieldOfViewCorners();
@@ -36,6 +37,9 @@ public:
 
     // function update
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
+
+    //Function coming from Entity
+    sf::CircleShape& GetEntityCircleShape() override;
 
 private:
     sf::CircleShape _circle;
