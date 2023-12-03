@@ -87,7 +87,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AI_Agent.cpp" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="EditeurManager.cpp" />
     <ClCompile Include="EnemyBulletCollision.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -99,7 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI_Agent.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="EditeurManager.h" />
     <ClInclude Include="EnemyBulletCollision.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityEnums.h" />

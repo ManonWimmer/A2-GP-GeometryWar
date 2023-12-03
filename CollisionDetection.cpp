@@ -190,7 +190,7 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 				}
 			}
 
-			if (i->first->GetEntityType() == EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Wall_Entity)
+			if (i->first->GetEntityType() == EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Building_Entity)
 			{
 				if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
 					std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
@@ -204,7 +204,7 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 			}
 			
 			
-			if (i->first->GetEntityType() != EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Wall_Entity) {
+			if (i->first->GetEntityType() != EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Building_Entity) {
 
 				if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
 					std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;

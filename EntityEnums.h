@@ -7,7 +7,7 @@ enum EntityType
     Weapon_Entity,
     Projectile_Entity,
     Objectif_Entity,
-    Wall_Entity,
+    Building_Entity,
     None_Entity,
 };
 

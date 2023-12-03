@@ -6,12 +6,13 @@
 #include "Player.h"
 #include "GameManager.h"
 #include "Weapon.h"
+#include "EditeurManager.h"
 constexpr float cubeSpeed = 500.f;
 
 int main()
 {
 	// Initialisation
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Geometry Wars");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Geometry Wars");
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
@@ -22,9 +23,11 @@ int main()
 
 	entityManager.AddEntity(&player);
 
+	EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+
 	//entityManager.DebugEntities(entityManager, collisionDetection, player);
 
-	gameManager.StartLevel(1);
+	//gameManager.StartLevel(1);
 	
 
 	while (window.isOpen())
@@ -59,12 +62,7 @@ int main()
 		entityManager.UpdateAllEntities(window, deltaTime);
 		collisionDetection.CheckAllEntitiesCollisions(entityManager);
 
-		/*std::list<AI_Agent*>::iterator it = gameManager._enemies.begin();
-		while (it != gameManager._enemies.end())
-		{
-			collisionDetection.BulletsTouchEnemyCheck(*(*it), (*player.ptrPistol));
-			it++;
-		}*/
+		editeurManager.Update(window, deltaTime);
 
 		// On présente la fenêtre sur l'écran
 		window.display();
