@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="AI_Agent.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="EditeurManager.cpp" />
     <ClCompile Include="EnemyBulletCollision.cpp" />
