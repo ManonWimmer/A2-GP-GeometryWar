@@ -4,9 +4,15 @@
 #include "ManagerEntity.h"
 
 
-GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player) : _managerEntity(managerEntity), _collisionDetection(collisionDetection), _player(player)
+GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player& player) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection), _player(player)
 {
+	
+}
 
+void GameManager::Update(sf::RenderWindow& window, float deltaTime) 
+{
+	//_shake = true;
+	if (_shake) window.setPosition(sf::Vector2i(100 + rand() % 25, 100 + rand() % 25));
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)

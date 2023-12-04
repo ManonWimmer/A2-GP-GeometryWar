@@ -20,8 +20,9 @@ int main()
 	ManagerEntity entityManager;
 	CollisionDetection collisionDetection;
 	Player player(entityManager, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle);
-	GameManager gameManager(entityManager, collisionDetection, player);
+	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType, player);
 
+	entityManager.AddEntity(&gameManager);
 	entityManager.AddEntity(&player);
 
 	EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);

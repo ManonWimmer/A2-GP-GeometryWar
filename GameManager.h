@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "ManagerEntity.h"
+#include "EntityEnums.h"
+#include "Entity.h"
+
 #include "AI_Agent.h"
 #include <list>
 
@@ -8,10 +11,12 @@ class ManagerEntity;
 
 
 
-class GameManager
+class GameManager : public Entity
 {
 public:
-    GameManager(ManagerEntity&, CollisionDetection&, Player&);
+    GameManager(ManagerEntity&, CollisionDetection&, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player&);
+    virtual void Update(sf::RenderWindow& window, float deltaTime) override;
+
     void SpawnEnemy(float, sf::Vector2f, float);
     void CheckEnemiesLife();
     void CheckPlayerLife();
@@ -30,4 +35,5 @@ private:
     bool _gameWon;
     bool _gameLose;
     std::list<sf::Vector2f> _enemiesStartPositions;
+    bool _shake;
 };
