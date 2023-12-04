@@ -5,6 +5,7 @@
 
 class Particle
 {
+public:
 	Particle();
 	Particle(int);
 	Particle(int, int);
