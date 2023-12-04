@@ -155,6 +155,8 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 
 	for (auto i = managerEntity.GetEntityDictionary().begin(); i != managerEntity.GetEntityDictionary().end(); ++i) 
 	{
+		if (managerEntity.GetEntityGarbage().find(i->first) != managerEntity.GetEntityGarbage().end()) continue;
+
 		// Check if the current entity should be simulated
 		if (i->first->GetEntityCollisionType() == CollisionType::None_CollisionType) continue;
 
@@ -164,13 +166,12 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 
 		for (auto x = managerEntity.GetEntityDictionary().begin(); x != managerEntity.GetEntityDictionary().end(); ++x)
 		{
+			if (managerEntity.GetEntityGarbage().find(x->first) != managerEntity.GetEntityGarbage().end()) continue;
+
 			// Check if the current entity is simulating with itself
 			if (i->first == x->first) continue;
-
 			// Check if the second entity have collision
 			if (x->first->GetEntityCollisionType() == CollisionType::None_CollisionType) continue;
-
-
 			// Check if entities are from the same faction
 			if (i->first->GetEntityFaction() == x->first->GetEntityFaction()) continue;
 
@@ -185,7 +186,8 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 				if (CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape()))
 				{
 					std::cout << "Rentre dans le cercle" << std::endl;
-					managerEntity.RemoveEntity(i->first);
+					//delete i->first;
+					managerEntity.RemoveEntity(i);
 					break;
 				}
 			}
@@ -348,11 +350,7 @@ void CollisionDetection::WeaponBulletsTouchPlayerCheck(Player& player, std::list
 // Gestion BulletsEnnemy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 bool CollisionDetection::BulletsTouchEnemyCheck(Entity& enemy, Entity& projectile)
 {
-	//std::cout << "projectiles : " << playerWeapon.WeaponPtrProjectiles.size() << std::endl;
 
-	//std::cout << enemy.GetEntityCircleShape().getPosition().x << " ; " << enemy.GetEntityCircleShape().getPosition().y << std::endl;
-
-	//std::cout << "TEST" << std::endl;
 
 	if (CircleIsInCircle(projectile.GetEntityCircleShape(), enemy.GetEntityCircleShape()))
 	{
@@ -360,38 +358,5 @@ bool CollisionDetection::BulletsTouchEnemyCheck(Entity& enemy, Entity& projectil
 		return true;
 		//enemy.DecreaseLife(34);
 	}
-
-	//for (const Projectile* projectile : playerWeapon.WeaponPtrProjectiles)
-	//{
-
-	//	if (CircleIsPartiallyInCircle(projectile->ProjectileShape, enemy.GetCircle(), projectile->ProjectileShape.getPosition()))
-	//	{
-	//		std::cout << "Rentre dans le cercle" << std::endl;
-
-	//		// reduire pv enemy
-	//		enemy.DecreaseLife(34);
-	//	}
-
-	//}
-
-
-	//std::list<Projectile*>::iterator it = playerWeapon.WeaponPtrProjectiles.end();
-
-	//while (it != playerWeapon.WeaponPtrProjectiles.end())
-	//{
-	//	std::cout << "Pas encore dans le cercle" << std::endl;
-
-	//	if (CircleIsPartiallyInCircle((*it)->ProjectileShape, enemy.GetCircle(), (*it)->ProjectileShape.getPosition()))
-	//	{
-	//		std::cout << "Rentre dans le cercle" << std::endl;
-	//		// reduire pv enemy
-	//		enemy.DecreaseLife(34);
-
-	//		it = playerWeapon.WeaponPtrProjectiles.erase(it);
-	//	}
-	//
-	//	it++;
-	//}
 }
-// Fin bulletsEnnemy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

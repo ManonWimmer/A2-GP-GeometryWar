@@ -3,14 +3,30 @@
 #include "AI_Agent.h"
 #include "CollisionDetection.h" 
 
-ManagerEntity::ManagerEntity() {}
+ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection) {
+    collisionDetection = collisionDetection;
+}
 
 void ManagerEntity::AddEntity(Entity* entity) {
     entityDictionary[entity] = true;
 }
 
-void ManagerEntity::RemoveEntity(Entity* entity) {
-    entityDictionary.erase(entity);
+std::unordered_map<Entity*, bool>::iterator ManagerEntity::GetPair(Entity* entity)
+{
+    auto it = entityDictionary.find(entity);
+
+    if (it != entityDictionary.end()) {
+        return it;  // Dereference the iterator to get the value (std::pair<Entity*, bool>)
+    }
+    else {
+        //Error
+        return it;
+    }
+}
+
+void ManagerEntity::RemoveEntity(std::unordered_map<Entity*, bool>::iterator& iterator) {
+    //iterator = entityDictionary.erase(iterator);
+    entityGarbage[iterator->first] = true;
 }
 
 bool ManagerEntity::IsEntityActive(Entity* entity) {
@@ -18,10 +34,27 @@ bool ManagerEntity::IsEntityActive(Entity* entity) {
     return it != entityDictionary.end() && it->second;
 }
 
-void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime) {
+void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity) {
     for (auto& pair : entityDictionary) {
         pair.first->Update(window, deltaTime);
         pair.first->UpdateBaseEntity(window, deltaTime);
+    }
+
+    collisionDetection->CheckAllEntitiesCollisions(managerEntity);
+    
+    ClearEntityGarbage();
+}
+
+void ManagerEntity::ClearEntityGarbage()
+{
+    for (auto& pair : entityGarbage) {
+
+        entityDictionary.erase(pair.first);
+
+        if (pair.first != nullptr) {
+            delete pair.first;
+        }
+        entityGarbage.erase(pair.first);
     }
 }
 
@@ -34,4 +67,9 @@ void ManagerEntity::DebugEntities(ManagerEntity& managerEntity, CollisionDetecti
 std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityDictionary()
 {
     return entityDictionary;
+}
+
+std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityGarbage()
+{
+    return entityGarbage;
 }

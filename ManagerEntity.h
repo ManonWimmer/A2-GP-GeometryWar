@@ -19,16 +19,21 @@ class Player;
 
 class ManagerEntity {
 public:
-    ManagerEntity();
+    ManagerEntity(CollisionDetection* collisionDetection);
     void AddEntity(Entity* entity);
-    void RemoveEntity(Entity* entity);
+    std::unordered_map<Entity*, bool>::iterator GetPair(Entity* entity);
+    void RemoveEntity(std::unordered_map<Entity*, bool>::iterator& iterator);
     bool IsEntityActive(Entity* entity);
-    void UpdateAllEntities(sf::RenderWindow& window, float deltaTime);
+    void UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity);
+    void ClearEntityGarbage();
     void DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player);
     std::unordered_map<Entity*, bool>& GetEntityDictionary();
+    std::unordered_map<Entity*, bool>& GetEntityGarbage();
 
 private:
+    CollisionDetection* collisionDetection;
     std::unordered_map<Entity*, bool> entityDictionary;
+    std::unordered_map<Entity*, bool> entityGarbage;
 };
 
 #endif

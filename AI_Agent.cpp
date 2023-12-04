@@ -346,7 +346,8 @@ int AI_Agent::ClampInteger(int value, int minimum, int maximum)
 void AI_Agent::Death()
 {
     //isDead = true;
-    managerEntity.RemoveEntity(this);
+    //managerEntity.RemoveEntity(this);
+
 }
 
 
@@ -364,10 +365,6 @@ void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
         }
     }
-    
-
-
-    //collisionDetection.ClampCircleOutsideRectangles(_circle, , sf::Vector2f(_circle.getPosition().x, _circle.getPosition().y));
 }
 
 sf::CircleShape& AI_Agent::GetEntityCircleShape()

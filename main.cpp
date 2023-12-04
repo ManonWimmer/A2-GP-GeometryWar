@@ -17,19 +17,19 @@ int main()
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
-	ManagerEntity entityManager;
 	CollisionDetection collisionDetection;
+	ManagerEntity entityManager(&collisionDetection);
 	Player player(entityManager, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle);
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType, player);
 
 	entityManager.AddEntity(&gameManager);
 	entityManager.AddEntity(&player);
 
-	EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	//entityManager.DebugEntities(entityManager, collisionDetection, player);
 
-	//gameManager.StartLevel(1);
+	gameManager.StartLevel(1);
 	
 
 	while (window.isOpen())
@@ -61,15 +61,10 @@ int main()
 		
 
 		// Affichage
-		entityManager.UpdateAllEntities(window, deltaTime);
-		collisionDetection.CheckAllEntitiesCollisions(entityManager);
+		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
+		//collisionDetection.CheckAllEntitiesCollisions(entityManager);
 
-		editeurManager.Update(window, deltaTime);
-
-
-
-
-
+		//editeurManager.Update(window, deltaTime);
 
 
 		// On présente la fenêtre sur l'écran
