@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <fstream>
 #include "ManagerEntity.h"
 #include "CollisionDetection.h"
 #include "Player.h"
@@ -63,6 +64,12 @@ int main()
 		collisionDetection.CheckAllEntitiesCollisions(entityManager);
 
 		editeurManager.Update(window, deltaTime);
+
+
+
+
+
+
 
 		// On présente la fenêtre sur l'écran
 		window.display();

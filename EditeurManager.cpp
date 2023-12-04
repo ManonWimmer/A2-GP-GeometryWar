@@ -10,96 +10,239 @@ EditeurManager::EditeurManager(ManagerEntity& managerEntity, CollisionDetection&
 
 void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 {
-	std::list<Building*>::iterator it;
 
-	for (it = buildings.begin(); it != buildings.end(); it++)
-	{
-		(*it)->UpdateBuilding(window, deltaTime);
+	// Clique Gauche pour sélectionner.
+	// Maintenir clique gauche pour drag un objet.
+	// R pour spawn un rectangle.
+	// C pour spawn un cercle.
+	// S en ayant un objet sélectionner pour resize.
+	// S + Shift en ayant un objet sélectionner pour resize uniformément.
+	// F en ayant un objet de sélectionner pour supprimer.
+	// P pour sauvegarder la Map
+	// M pour charger la Map
+
+
+	// IMPORTANT
+	// Le chargement de la map fonctionne pas !! Regarder du côté de la récupération des données depuis le txt.
+
+	BaseEditeurStuff(window, deltaTime);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+		mapManager.SaveToTxt(buildings, "MapTest1");
 	}
 
-	HoveringAnObject(window);
-	SpawningAnObject(window);
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+		buildings = mapManager.LoadFromTxt("MapTest1", managerEntity, collisionDetection);
+	}*/
+
+
+
+	if (draggedBuilding == nullptr) {
+		HoveringAnObject(window);
+		SpawningAnObject(window);
+
+		if (hoveredBuilding != nullptr) {
+			SelectingAnObject(window);
+		}
+
+		if (selectedBuilding != nullptr) {
+			ResizeAnObject(window, deltaTime);
+			StartDraggingAnObject(window, deltaTime);
+			DeletingAnObject();
+		}
+
+	}
+	else {
+		DraggingAnObject(window, deltaTime);
+	}
+	
+
+	EndOfUpdateStuff(window, deltaTime);
+}
+
+void EditeurManager::DeletingAnObject()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && selectedBuilding != nullptr) {
+
+		for (auto it = buildings.begin(); it != buildings.end();) {
+			if (*it == selectedBuilding) {
+				delete* it; 
+				it = buildings.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+
+		selectedBuilding = nullptr;
+	}
+	
 }
 
 void EditeurManager::SpawningAnObject(sf::RenderWindow& window)
 {
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Mouse::getPosition(window))));
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && currentPressKeyTime >= pressKeyCoolDown) {
+		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Mouse::getPosition(window)), "CircularWall"));
+		PressedAKey();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Mouse::getPosition(window))));
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && currentPressKeyTime >= pressKeyCoolDown) {
+		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Mouse::getPosition(window)), "RectangularWall"));
+		PressedAKey();
 	}
 }
 
-void EditeurManager::HoldingAnObject()
+void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
 {
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+
+		if (cursor.loadFromSystem(sf::Cursor::NotAllowed)) {
+			window.setMouseCursor(cursor);
+		}
+
+		sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+
+		switch (draggedBuilding->GetEntityCollisionType()) {
+			case CollisionType::Circle:
+				draggedBuilding->GetEntityCircleShape().setPosition(mousePosition);
+				break;
+			case CollisionType::Rectangle:
+				draggedBuilding->GetEntityRectangleShape().setPosition(mousePosition);
+				break;
+		}
+	}
+	else {
+		selectedBuilding = draggedBuilding;
+		draggedBuilding = nullptr;
+		std::cout << "End Dragging working" << std::endl;
+	}
+
+}
+
+void EditeurManager::StartDraggingAnObject(sf::RenderWindow& window, float deltaTime)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		draggingCurrentTime += deltaTime;
+
+		if (draggingCurrentTime >= draggingMinTime) {
+			draggingCurrentTime = 0;
+
+			draggedBuilding = selectedBuilding;
+			selectedBuilding = nullptr;
+		}
+	}
+	else {
+		draggingCurrentTime = 0;
+	}
+}
+
+void EditeurManager::SelectingAnObject(sf::RenderWindow& window)
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+
+		if (cursor.loadFromSystem(sf::Cursor::Hand)) {
+			window.setMouseCursor(cursor);
+		}
+
+		if(selectedBuilding != nullptr) selectedBuilding->ResetColor();
+
+		hoveredBuilding->ResetColor();
+
+		selectedBuilding = hoveredBuilding;
+		hoveredBuilding = nullptr;
+
+		sf::CircleShape* circleShape;
+		sf::RectangleShape* rectangleShape;
+
+		switch (selectedBuilding->GetEntityCollisionType())
+		{
+			case CollisionType::Circle:
+				circleShape = &selectedBuilding->GetEntityCircleShape();
+				circleShape->setOutlineColor(selectedOutlineColor);
+				break;
+
+			case CollisionType::Rectangle:
+				rectangleShape = &selectedBuilding->GetEntityRectangleShape();
+				rectangleShape->setOutlineColor(selectedOutlineColor);
+				break;
+		}
+
+		
+	}
 }
 
 void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 {
+
 	if (buildings.size() <= 0) return;
 
+	if (hoveredBuilding != nullptr) {
+		hoveredBuilding->ResetColor();
+	}
+
+	std::list<Building*> hoveredBuildings;
 	std::list<Building*>::iterator it;
 	float closerDistance = FLT_MAX;
 	sf::Vector2f mousePosition(sf::Mouse::getPosition(window));
 
 
+	// Taking only hovered Buildings.
 	for (it = buildings.begin(); it != buildings.end(); it++)
 	{
-		float currentDistance = FLT_MAX;
-
-		sf::Vector2f circleShapePosition;
-		sf::Vector2f rectangleShapePosition;
-
-
 		switch ((*it)->GetEntityCollisionType())
 		{
 			case CollisionType::Circle:
-				
 				if (IsPointInsideCircle((*it)->GetEntityCircleShape(), mousePosition)) {
-
-					std::cout << "Is inside circle " << std::endl;
-
-					circleShapePosition = (*it)->GetEntityCircleShape().getPosition();
-					currentDistance = GetDistance(circleShapePosition, mousePosition);
+					hoveredBuildings.push_back((*it));
 				}
 				break;
 
 			case CollisionType::Rectangle:
-
 				if (IsPointInsideRectangle((*it)->GetEntityRectangleShape(), mousePosition)) {
-
-					std::cout << "Is inside Rectangle " << std::endl;
-
-					rectangleShapePosition = (*it)->GetEntityRectangleShape().getPosition();
-					currentDistance = GetDistance(rectangleShapePosition, mousePosition);
+					hoveredBuildings.push_back((*it));
 				}
 				break;
+		}
 
-			default:
-				currentDistance = 10000;
+	}
+
+	if (hoveredBuildings.size() <= 0) return;
+
+	for (it = buildings.begin(); it != buildings.end(); it++)
+	{
+		float currentDistance = FLT_MAX;
+		sf::Vector2f circleShapePosition;
+		sf::Vector2f rectangleShapePosition;
+
+		switch ((*it)->GetEntityCollisionType())
+		{
+			case CollisionType::Circle:
+					circleShapePosition = (*it)->GetEntityCircleShape().getPosition();
+					currentDistance = GetDistance(circleShapePosition, mousePosition);
+				break;
+
+			case CollisionType::Rectangle:
+					rectangleShapePosition = (*it)->GetEntityRectangleShape().getPosition();
+					currentDistance = GetDistance(rectangleShapePosition, mousePosition);
 				break;
 		}
 
 		currentDistance = GetPositiveFloat(currentDistance);
 
-		if (currentDistance < closerDistance) {
-
-			std::cout << "New Closer Building" << std::endl;
-
+		if (currentDistance < closerDistance) 
+		{
 			closerDistance = currentDistance;
-
-			if (hoveredBuilding != nullptr) {
-				hoveredBuilding->ResetColor();
-			}
-
 			hoveredBuilding = (*it);
 		}
 
 	}
 
+
+	if (hoveredBuilding == selectedBuilding) {
+		hoveredBuilding = nullptr;
+		return;
+	}
 
 	if (hoveredBuilding != nullptr) {
 
@@ -110,18 +253,115 @@ void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 		{
 			case CollisionType::Circle:
 				circleShape = &hoveredBuilding->GetEntityCircleShape();
-				circleShape->setOutlineColor(sf::Color::Green);
-				circleShape->setOutlineThickness(circleShape->getRadius() / 7.0f);
+				circleShape->setOutlineColor(hoveredOutlineColor);
+				//circleShape->setOutlineThickness(circleShape->getRadius() / 7.0f);
 				break;
 
 			case CollisionType::Rectangle:
 				rectangleShape = &hoveredBuilding->GetEntityRectangleShape();
-				rectangleShape->setOutlineColor(sf::Color::Green);
-				rectangleShape->setOutlineThickness((rectangleShape->getSize().x / 2 + rectangleShape->getSize().y / 2) / 7.0f);
+				rectangleShape->setOutlineColor(hoveredOutlineColor);
+				//rectangleShape->setOutlineThickness((rectangleShape->getSize().x / 2 + rectangleShape->getSize().y / 2) / 7.0f);
 				break;
 		}
 	}
 	
+}
+
+void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
+{
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		sf::CircleShape* circleShape;
+		sf::RectangleShape* rectangleShape;
+		sf::Vector2f incrementScale;
+		float resizeSpeed = 9.0f;
+		bool isNearer;
+
+		float distance = FLT_MAX;
+		float scaleChange = FLT_MAX;
+		float newRadius = FLT_MAX;
+
+		switch (selectedBuilding->GetEntityCollisionType())
+		{
+			case CollisionType::Circle:
+				circleShape = &selectedBuilding->GetEntityCircleShape();
+
+				distance = GetDistance(framePassedMousePosition, sf::Vector2f(sf::Mouse::getPosition(window)));
+				scaleChange = distance * deltaTime * resizeSpeed;
+				newRadius = circleShape->getRadius() + (sf::Mouse::getPosition(window).x < framePassedMousePosition.x ? -scaleChange : scaleChange);
+
+				circleShape->setRadius(std::max(newRadius, 0.0f));
+
+				//Actualizing the origin position based on the new radius.
+				circleShape->setOrigin(circleShape->getRadius(), circleShape->getRadius());
+				break;
+
+			case CollisionType::Rectangle:
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+				{
+					rectangleShape = &selectedBuilding->GetEntityRectangleShape();
+					scaleChange = GetDistance(framePassedMousePosition, sf::Vector2f(sf::Mouse::getPosition(window))) * deltaTime * resizeSpeed;
+
+					// vérifie si le souris s'approche ou s'éloigne
+					isNearer = GetDistance(sf::Vector2f(sf::Mouse::getPosition(window)), rectangleShape->getPosition()) < GetDistance(framePassedMousePosition, rectangleShape->getPosition());
+
+					if (isNearer)
+					{
+						incrementScale = sf::Vector2f(-scaleChange, -scaleChange);
+						rectangleShape->setSize(rectangleShape->getSize() + incrementScale);
+					}
+					else
+					{
+						incrementScale = sf::Vector2f(scaleChange, scaleChange);
+						rectangleShape->setSize(rectangleShape->getSize() + incrementScale);
+					}
+
+				}
+				else {
+					rectangleShape = &selectedBuilding->GetEntityRectangleShape();
+					incrementScale = (sf::Vector2f(sf::Mouse::getPosition(window)) - framePassedMousePosition) * deltaTime * resizeSpeed;
+					rectangleShape->setSize(rectangleShape->getSize() + incrementScale);
+				}
+
+				//Actualizing the origin position based on the new radius.
+				rectangleShape->setOrigin(rectangleShape->getSize().x / 2, rectangleShape->getSize().y / 2);
+
+				break;
+		}
+	}
+
+}
+
+void EditeurManager::EndOfUpdateStuff(sf::RenderWindow& window, float deltaTime)
+{
+	framePassedMousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+}
+
+void EditeurManager::BaseEditeurStuff(sf::RenderWindow& window, float deltaTime)
+{
+	currentPressKeyTime += deltaTime;
+	cursorActualisation += deltaTime;
+
+	if (cursorActualisation >= 0.3f) {
+		cursorActualisation = 0;
+		if (cursor.loadFromSystem(sf::Cursor::Arrow)) {
+			window.setMouseCursor(cursor);
+		}
+	}
+	
+
+	std::list<Building*>::iterator it;
+
+	for (it = buildings.begin(); it != buildings.end(); it++)
+	{
+		(*it)->UpdateBuilding(window, deltaTime);
+	}
+}
+
+void EditeurManager::PressedAKey()
+{
+	currentPressKeyTime = 0;
 }
 
 float EditeurManager::GetPositiveFloat(float value)
@@ -150,13 +390,6 @@ bool EditeurManager::IsPointInsideCircle(sf::CircleShape& circle, sf::Vector2f p
 
 bool EditeurManager::IsPointInsideRectangle(sf::RectangleShape& rectangle, sf::Vector2f point)
 {
-	/*sf::Vector2f rectanglePosition = rectangle.getPosition();
-	sf::Vector2f rectangleSize = rectangle.getSize();
-	
-	bool result = point.x >= rectanglePosition.x && point.x <= rectanglePosition.x + rectangleSize.x && point.y >= rectanglePosition.y && point.y <= rectanglePosition.y + rectangleSize.y;
-	
-	return result;
-	*/
 
 	sf::FloatRect rectBounds = rectangle.getGlobalBounds();
 	return rectBounds.contains(point);
