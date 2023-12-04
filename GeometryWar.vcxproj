@@ -103,6 +103,7 @@
   <ItemGroup>
     <ClInclude Include="AI_Agent.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="EditeurManager.h" />
     <ClInclude Include="EnemyBulletCollision.h" />
