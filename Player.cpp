@@ -76,7 +76,7 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 void Player::Update(sf::RenderWindow& window, float deltaTime)
 {
 
-	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 100.0f));
+	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 500.0f));
 	window.draw(circleShape);
 
 }
