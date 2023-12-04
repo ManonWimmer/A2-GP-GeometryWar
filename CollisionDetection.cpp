@@ -188,6 +188,7 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 					std::cout << "Rentre dans le cercle" << std::endl;
 					//delete i->first;
 					managerEntity.RemoveEntity(i);
+					x->first->DecreaseLife(34);
 					break;
 				}
 			}

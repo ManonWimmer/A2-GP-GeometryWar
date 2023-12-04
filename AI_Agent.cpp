@@ -305,43 +305,7 @@ sf::Vector2f& AI_Agent::GetDirection() {
     return _direction;
 }
 
-int AI_Agent::GetLife()
-{
-    return _life;
-}
 
-void AI_Agent::SetLife(int value)
-{
-    _life = ClampInteger(value, 0, value);
-
-    if (_life <= 0 && !isDead) {
-        Death();
-    }
-}
-
-void AI_Agent::DecreaseLife(int value)
-{
-    std::cout << "Damaged" << std::endl;
-    _life = ClampInteger(_life -= value, 0, 100);
-
-    if (_life <= 0 && !isDead) {
-        Death();
-    }
-}
-
-int AI_Agent::ClampInteger(int value, int minimum, int maximum)
-{
-
-    if (value > maximum) {
-        value = maximum;
-    }
-    
-    if (value < minimum) {
-        value = minimum;
-    }
-
-    return value;
-}
 
 void AI_Agent::Death()
 {
@@ -365,6 +329,11 @@ void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
         }
     }
+}
+
+void AI_Agent::OnDestroy()
+{
+
 }
 
 sf::CircleShape& AI_Agent::GetEntityCircleShape()

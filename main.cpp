@@ -30,7 +30,6 @@ int main()
 	//entityManager.DebugEntities(entityManager, collisionDetection, player);
 
 	gameManager.StartLevel(1);
-	
 
 	while (window.isOpen())
 	{

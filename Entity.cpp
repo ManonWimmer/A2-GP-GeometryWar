@@ -38,4 +38,49 @@ sf::RectangleShape& Entity::GetEntityRectangleShape()
     return (*new sf::RectangleShape);
 }
 
+int Entity::GetLife()
+{
+    return _life;
+}
+
+void Entity::SetLife(int value)
+{
+    _life = ClampInteger(value, 0, value);
+
+    if (_life <= 0) {
+        DestroyItSelf();
+    }
+}
+
+void Entity::DecreaseLife(int value)
+{
+    std::cout << "Damaged" << std::endl;
+    _life = ClampInteger(_life -= value, 0, 100);
+
+    if (_life <= 0) {
+
+        DestroyItSelf();
+    }
+}
+
+int Entity::ClampInteger(int value, int minimum, int maximum)
+{
+
+    if (value > maximum) {
+        value = maximum;
+    }
+
+    if (value < minimum) {
+        value = minimum;
+    }
+
+    return value;
+}
+
+void Entity::DestroyItSelf()
+{
+    std::unordered_map<Entity*, bool>::iterator it = managerEntity.GetEntityDictionary().find(this);
+    managerEntity.RemoveEntity(it);
+}
+
 Entity::~Entity() {}

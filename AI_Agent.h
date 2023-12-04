@@ -26,22 +26,20 @@ public:
     sf::Vector2f NormalizedVector(sf::Vector2f source);
     sf::CircleShape& GetCircle();
     sf::Vector2f& GetDirection();
-    Player& currentPlayer;
 
-    int GetLife();
-    void SetLife(int value);
-    void DecreaseLife(int value);
-    int ClampInteger(int value, int minimum, int maximum);
     void Death();
 
 
     // function update
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
+    virtual void OnDestroy() override;
 
     //Function coming from Entity
     sf::CircleShape& GetEntityCircleShape() override;
 
 private:
+    Player& currentPlayer;
+    Weapon* _ptrPistol;
     sf::CircleShape _circle;
     sf::ConvexShape fieldView;
     sf::Vector2f _direction;
@@ -54,7 +52,6 @@ private:
     sf::CircleShape fvCorner2;
     sf::CircleShape fvCorner3;
 
-    int _life;
     float coolDown;
     float currentShootTimer;
 
