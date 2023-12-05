@@ -1,5 +1,8 @@
 #include "Particle.h"
 
+#include <cstdlib>
+#include <ctime>
+
 Particle::Particle()
 {
 	this->lifeTime = 5;
@@ -13,7 +16,7 @@ Particle::Particle()
 
 	this->dir = sf::Vector2f(0,1);
 }
-Particle::Particle(int speed)
+Particle::Particle(float speed)
 {
 	this->lifeTime = 5;
 
@@ -26,7 +29,7 @@ Particle::Particle(int speed)
 
 	this->dir = sf::Vector2f(0, 1);
 }
-Particle::Particle(int speed, int lifeTime)
+Particle::Particle(float speed, float lifeTime)
 {
 	this->lifeTime = lifeTime;
 
@@ -39,25 +42,30 @@ Particle::Particle(int speed, int lifeTime)
 
 	this->dir = sf::Vector2f(0, 1);
 }
-Particle::Particle(int speed, int lifeTime, int size, sf::Color color)
+Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color)
 {
 	this->lifeTime = lifeTime;
 
 	sf::CircleShape circle;
 	circle.setFillColor(color);
 	circle.setRadius(size);
+	circle.setPosition(position);
 
 	this->circleShape = circle;
 	this->currenLifeTime = 0;
 
 	this->speed = speed;
 
-	this->dir = sf::Vector2f(0, 1);
+	std::srand(std::time(nullptr));
+	float randomValue1 = 0.1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.5 - 0.1)));
+	float randomValue2 = 0.1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.5 - 0.1)));
+
+	this->dir = sf::Vector2f(randomValue1, randomValue2);
 }
 
-void Particle::Move()
+void Particle::Move(float deltaTime)
 {
-	dir *= speed;
+	dir *= speed * deltaTime;
 	sf::Vector2f pos = this->circleShape.getPosition();
 	pos += this->dir;
 	this->circleShape.setPosition(pos);

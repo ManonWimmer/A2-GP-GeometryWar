@@ -3,15 +3,16 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+
 class Particle
 {
 public:
 	Particle();
-	Particle(int);
-	Particle(int, int);
-	Particle(int, int, int, sf::Color);
+	Particle(float);
+	Particle(float, float);
+	Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color);
 
-	void Move();
+	void Move(float deltaTime);
 
 	sf::CircleShape circleShape;
 
