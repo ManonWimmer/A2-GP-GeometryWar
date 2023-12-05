@@ -56,9 +56,11 @@ Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float siz
 
 	this->speed = speed;
 
-	std::srand(std::time(nullptr));
-	float randomValue1 = 0.1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.5 - 0.1)));
-	float randomValue2 = 0.1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1.5 - 0.1)));
+	//srand((unsigned int)time(NULL));	// !!!! Attention celle déclaration est appelé une seule fois dans le main sinon le rand sera bloqué sur une constante
+	//std::srand(std::time(nullptr));
+
+	float randomValue1 = 1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1 - (-1))));
+	float randomValue2 = 1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1 - (-1))));
 
 	this->dir = sf::Vector2f(randomValue1, randomValue2);
 }
