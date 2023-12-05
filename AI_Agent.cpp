@@ -353,7 +353,7 @@ void AI_Agent::Update(sf::RenderWindow& window, float deltaTime) {
 
     DrawAgentRenderer(window);
 
-    if (isChasing) {
+    if (isChasing && _target != nullptr) {
         Chase(window, deltaTime);
 
         currentShootTimer += deltaTime;
