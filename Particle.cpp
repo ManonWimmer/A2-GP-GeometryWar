@@ -65,6 +65,9 @@ Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float siz
 
 void Particle::Move(float deltaTime)
 {
+	float lenght = dir.x * dir.x + dir.y * dir.y;
+	dir.x = dir.x / lenght;
+	dir.y = dir.y / lenght;
 	dir *= speed * deltaTime;
 	sf::Vector2f pos = this->circleShape.getPosition();
 	pos += this->dir;

@@ -42,8 +42,6 @@ void ParticleSystem::MoveParticles(std::list<Particle*>& particlesList, float de
 
 void ParticleSystem::Update(sf::RenderWindow& window, float deltaTime)
 {
-	std::cout << "Update !!!!!!!" << std::endl;
-
 	std::list<std::list<Particle*>*>::iterator it = this->burstLists.begin();
 
 	while (it != this->burstLists.end())
