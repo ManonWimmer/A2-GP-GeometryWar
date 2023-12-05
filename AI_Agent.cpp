@@ -1,9 +1,13 @@
 #include "AI_Agent.h"
+
 #include <iostream>
-#include "CollisionDetection.h" 
-#include "Player.h"
 #include <math.h>
 #include <cmath>
+
+#include "CollisionDetection.h" 
+#include "Player.h"
+
+#include "Weapon.h"
 
 AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
     : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
@@ -311,6 +315,13 @@ void AI_Agent::Death()
 {
     //isDead = true;
     //managerEntity.RemoveEntity(this);
+
+}
+
+void AI_Agent::GetWeapon()
+{
+    _ptrPistol = new Weapon(managerEntity, collisionDetection, EntityType::Weapon_Entity, entityFaction, CollisionType::None_CollisionType, WeaponType::Pistol, _circle);
+    managerEntity.AddEntity(_ptrPistol);
 
 }
 

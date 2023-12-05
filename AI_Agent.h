@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "ManagerEntity.h"
 
+class Weapon;
+
 class AI_Agent : public Entity {
 public:
     AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, float radius, sf::Vector2f spawnPosition, float speed, Player& player);
@@ -28,7 +30,7 @@ public:
     sf::Vector2f& GetDirection();
 
     void Death();
-
+    void GetWeapon();
 
     // function update
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;

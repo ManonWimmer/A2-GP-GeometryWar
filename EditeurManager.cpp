@@ -167,7 +167,6 @@ void EditeurManager::SelectingAnObject(sf::RenderWindow& window)
 				rectangleShape->setOutlineColor(selectedOutlineColor);
 				break;
 		}
-
 		
 	}
 }

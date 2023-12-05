@@ -24,11 +24,12 @@ class Weapon : public Entity
 {
 public:
 
-	Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape&);
+	Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject);
 	void Shoot(sf::RenderWindow&, sf::Vector2f);
 	void CheckRotationAim(sf::RectangleShape&, sf::RenderWindow&);
 	int FireTime;
 	float FireRate;
+	Entity& ownerEntity;
 	sf::CircleShape* ownerObject;
 	sf::RectangleShape aimRectangle;
 	bool shootPressed = false;

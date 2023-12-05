@@ -83,4 +83,8 @@ void Entity::DestroyItSelf()
     managerEntity.RemoveEntity(it);
 }
 
+void Entity::OnDestroy()
+{
+}
+
 Entity::~Entity() {}

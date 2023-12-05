@@ -4,7 +4,7 @@
 #include <math.h>
 
 Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject)
-	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), ownerEntity(ownerEntity)
 {
 	switch (weaponType)
 	{
@@ -41,14 +41,25 @@ void Weapon::Shoot(sf::RenderWindow &window, sf::Vector2f posPlayer)
 	projectileShape.setOutlineThickness(4);
 	projectileShape.setRadius(6);
 
-	// Get positions
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-	sf::Vector2f bulletOrigin = sf::Vector2f(posPlayer.x + ownerObject->getRadius() - projectileShape.getRadius(), posPlayer.y + ownerObject->getRadius() - projectileShape.getRadius());
+	sf::Vector2i targetPosition;
+	sf::Vector2f bulletOrigin;
 
-	//std::cout << "mouse " << mousePosition.x << " " << mousePosition.y << " origin " << bulletOrigin.x << " " << bulletOrigin.y << std::endl;
-	
+	//if () {
+	//	// Get positions
+	//	targetPosition = sf::Mouse::getPosition(window);
+	//	bulletOrigin = sf::Vector2f(posPlayer.x + ownerObject->getRadius() - projectileShape.getRadius(), posPlayer.y + ownerObject->getRadius() - projectileShape.getRadius());
+	//}
+	//else {
+
+	//}
+
+
+	targetPosition = sf::Mouse::getPosition(window);
+	bulletOrigin = sf::Vector2f(posPlayer.x + ownerObject->getRadius() - projectileShape.getRadius(), posPlayer.y + ownerObject->getRadius() - projectileShape.getRadius());
+
+
 	// Calcul de la direction du projectile
-	sf::Vector2f bulletDirection = static_cast<sf::Vector2f>(mousePosition) - bulletOrigin;
+	sf::Vector2f bulletDirection = static_cast<sf::Vector2f>(targetPosition) - bulletOrigin;
 
 	// Normalisation du vecteur pour obtenir une direction unitaire (longueur 1)
 	float length = std::sqrt(bulletDirection.x * bulletDirection.x + bulletDirection.y * bulletDirection.y);
@@ -57,7 +68,6 @@ void Weapon::Shoot(sf::RenderWindow &window, sf::Vector2f posPlayer)
 		bulletDirection /= length;
 	}
 
-	//std::cout << "bullet direction " << bulletDirection.x << " " << bulletDirection.y << std::endl;
 
 	// Nouveau projectile
 	projectileShape.setPosition(bulletOrigin.x, bulletOrigin.y);
