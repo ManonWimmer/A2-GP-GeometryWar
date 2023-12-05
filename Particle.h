@@ -10,7 +10,7 @@ public:
 	Particle();
 	Particle(float);
 	Particle(float, float);
-	Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color);
+	Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target);
 
 	void Move(float deltaTime);
 

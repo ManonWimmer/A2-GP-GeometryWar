@@ -8,12 +8,12 @@ ParticleSystem::ParticleSystem(ManagerEntity& managerEntity, CollisionDetection&
 
 }
 
-void ParticleSystem::Burst(sf::Vector2f position, int number, float speed, float lifeTime, float size, sf::Color color)
+void ParticleSystem::Burst(sf::Vector2f position, int number, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target)
 {
 	std::list<Particle*>* newParticles = new std::list<Particle*>;
 	for (int i = 0; i < number; i++)
 	{
-		Particle* particle = new Particle(position, speed, lifeTime, size, color);
+		Particle* particle = new Particle(position, speed, lifeTime, size, color, target);
 		newParticles->push_back(particle);
 	}
 	this->burstLists.push_back(newParticles);
@@ -34,6 +34,7 @@ void ParticleSystem::MoveParticles(std::list<Particle*>& particlesList, float de
 			//std::cout << "X : " << (*it)->circleShape.getPosition().x << " ; Y : " << (*it)->circleShape.getPosition().y << std::endl;
 			(*it)->circleShape.getPosition();
 			(*it)->Move(deltaTime);
+			(*it)->currenLifeTime += deltaTime;
 			window.draw((*it)->circleShape);
 			it++;
 		}
