@@ -60,7 +60,6 @@ Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float siz
 	
 
 	//srand((unsigned int)time(NULL));	// !!!! Attention celle déclaration est appelé une seule fois dans le main sinon le rand sera bloqué sur une constante
-	//std::srand(std::time(nullptr));
 
 	//float randomValue1 = 1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1 - (-1))));
 	//float randomValue2 = 1 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (1 - (-1))));
@@ -69,29 +68,27 @@ Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float siz
 	sf::Vector2f bulletOrigin;
 	targetPosition = target;
 	bulletOrigin = position;
-	float gap = 50;
-
 	
-	/*int length = sqrt(targetPosition.x * targetPosition.x + targetPosition.y * targetPosition.y);
-	if (length != 0)
-	{
-		targetPosition /= length;
-	}*/
+	//float gap = 50;
 
-	float randomValue1 = 1;
-	float randomValue2 = 1;
+	//float randomValue1 = 1;
+	//float randomValue2 = 1;
 
-	if (gap != targetPosition.x && gap != targetPosition.y)
+	/*if (gap != targetPosition.x && gap != targetPosition.y)
 	{
 		randomValue1 = (targetPosition.x + gap) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / ((targetPosition.x + gap) - (targetPosition.x - gap))));
 		randomValue2 = (targetPosition.y + gap) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / ((targetPosition.y + gap) - (targetPosition.y - gap))));
-	}
-	float randomAngle = 70 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (70 - 0)));;
-	int randomBin = 1 + static_cast <int> (rand()) / (static_cast <int> (RAND_MAX / (1 - 0)));
+	}*/
+
+	float randomAngle = 180 + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (180 - 0)));;
+	int randomBin = 2 + static_cast <int> (rand()) / (static_cast <int> (RAND_MAX / (2 - 0)));
 	
-	if (randomBin == 1) {
+	
+	if (randomBin == 2)
+	{
 		randomAngle = -randomAngle;
 	}
+		std::cout << "randomBin : " << randomBin << std::endl;
 
 	float angleRadians = randomAngle * (3.14159265359 / 180.0f);
 	sf::Vector2f rotatedVector;
