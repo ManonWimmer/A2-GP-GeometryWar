@@ -13,7 +13,7 @@ public:
 	ParticleSystem(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType);
 
 
-	void Burst(sf::Vector2f position, int number, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target);
+	void Burst(sf::Vector2f position, int number, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target, float angle);
 	virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
 private:
