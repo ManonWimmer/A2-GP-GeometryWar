@@ -44,7 +44,9 @@ Particle::Particle(float speed, float lifeTime)
 }
 Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target, float angle)
 {
-	this->lifeTime = lifeTime;
+
+	float randomLifeTime = (lifeTime + 0.3) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / ((lifeTime + 0.3) - (lifeTime / 2))));
+	this->lifeTime = randomLifeTime;
 
 	sf::CircleShape circle;
 	circle.setFillColor(color);
@@ -92,6 +94,11 @@ void Particle::Move(float deltaTime)
 		dir /= length;
 	}
 	dir *= speed * deltaTime;
+
+	if (circleShape.getRadius() - deltaTime * 3 > 0)
+	{
+			circleShape.setRadius(circleShape.getRadius() - deltaTime * 3);
+	}
 
 	sf::Vector2f pos = this->circleShape.getPosition();
 	pos += this->dir;
