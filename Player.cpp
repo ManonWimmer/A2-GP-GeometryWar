@@ -100,3 +100,13 @@ void Player::CheckInvincibility(float deltaTime)
 		}
 	}
 }
+
+void Player::OnDestroy()
+{
+	if (ptrPistol != nullptr)   ptrPistol->DestroyItSelf();
+}
+
+sf::CircleShape& Player::GetEntityCircleShape()
+{
+	return circleShape;
+}

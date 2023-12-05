@@ -21,7 +21,12 @@ public :
 	virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 	Weapon* ptrPistol;
 
-	
+	//Function coming from Entity
+	sf::CircleShape& GetEntityCircleShape() override;
+	virtual void OnDestroy() override;
+
+
+	void SetBackPlayer();
 	void CheckInvincibility(float);
 	sf::CircleShape circleShape;
 	int pv;

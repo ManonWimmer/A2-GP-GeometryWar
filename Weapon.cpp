@@ -4,7 +4,7 @@
 #include <math.h>
 
 Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject)
-	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), ownerEntity(ownerEntity)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
 {
 	switch (weaponType)
 	{
@@ -30,7 +30,33 @@ Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	}
 }
 
-void Weapon::Shoot(sf::RenderWindow &window, sf::Vector2f posPlayer)
+Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject, sf::CircleShape* target)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _target(target)
+{
+	switch (weaponType)
+	{
+	case WeaponType::Pistol:
+		this->FireRate = 0.25;
+		this->_bulletSpeed = 800;
+		this->FireTime = 2;
+		this->ownerObject = &ownerObject;
+
+		aimRectangle.setFillColor(sf::Color::White);
+		aimRectangle.setPosition(640, 360);
+		aimRectangle.setSize(sf::Vector2f(20, 50));
+		aimRectangle.setOrigin(aimRectangle.getSize().x / 2, 0);
+		break;
+
+	default:
+		this->FireRate = 0.5;
+		this->_bulletSpeed = 0;
+		this->FireTime = 0;
+		this->ownerObject = &ownerObject;
+		break;
+	}
+}
+
+void Weapon::Shoot(sf::RenderWindow& window)
 {
 	std::cout << "shoot" << std::endl;
 
@@ -41,25 +67,23 @@ void Weapon::Shoot(sf::RenderWindow &window, sf::Vector2f posPlayer)
 	projectileShape.setOutlineThickness(4);
 	projectileShape.setRadius(6);
 
-	sf::Vector2i targetPosition;
+	sf::Vector2f targetPosition;
 	sf::Vector2f bulletOrigin;
+	sf::Vector2f ownerPos(ownerObject->getPosition());
 
-	//if () {
-	//	// Get positions
-	//	targetPosition = sf::Mouse::getPosition(window);
-	//	bulletOrigin = sf::Vector2f(posPlayer.x + ownerObject->getRadius() - projectileShape.getRadius(), posPlayer.y + ownerObject->getRadius() - projectileShape.getRadius());
-	//}
-	//else {
-
-	//}
-
-
-	targetPosition = sf::Mouse::getPosition(window);
-	bulletOrigin = sf::Vector2f(posPlayer.x + ownerObject->getRadius() - projectileShape.getRadius(), posPlayer.y + ownerObject->getRadius() - projectileShape.getRadius());
-
+	if(_target == nullptr) {
+		// Get positions
+		targetPosition = sf::Vector2f(sf::Mouse::getPosition(window));
+		bulletOrigin = sf::Vector2f(ownerPos.x + ownerObject->getRadius() - projectileShape.getRadius(), ownerPos.y + ownerObject->getRadius() - projectileShape.getRadius());
+	}
+	else {
+		// Get positions
+		targetPosition = _target->getPosition();
+		bulletOrigin = sf::Vector2f(ownerPos.x + ownerObject->getRadius() - projectileShape.getRadius(), ownerPos.y + ownerObject->getRadius() - projectileShape.getRadius());
+	}
 
 	// Calcul de la direction du projectile
-	sf::Vector2f bulletDirection = static_cast<sf::Vector2f>(targetPosition) - bulletOrigin;
+	sf::Vector2f bulletDirection = targetPosition - bulletOrigin;
 
 	// Normalisation du vecteur pour obtenir une direction unitaire (longueur 1)
 	float length = std::sqrt(bulletDirection.x * bulletDirection.x + bulletDirection.y * bulletDirection.y);
@@ -127,7 +151,16 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 	sf::Vector2f curPos;
 	curPos.x = aimShape.getGlobalBounds().left;
 	curPos.y = aimShape.getGlobalBounds().top;
-	sf::Vector2i position = sf::Mouse::getPosition(window);
+
+	sf::Vector2f position;
+
+	if (_target == nullptr) {
+		position = sf::Vector2f(sf::Mouse::getPosition(window));
+	}
+	else {
+		position = _target->getPosition();
+	}
+
 	//position = sf::Vector2i(window.mapPixelToCoords(position, playerView));
 
 	const float PI = 3.14159265;
@@ -143,31 +176,33 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 
 void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 
-	window.draw(aimRectangle);
 	aimRectangle.setPosition(ownerObject->getPosition().x + ownerObject->getRadius(), ownerObject->getPosition().y + ownerObject->getRadius());
 
-
-	// Verif si il peut tirer (en fonction de fire rate)
-	if (shootPressed)
-	{
-		timeSinceLastShoot += deltaTime;
-		if (timeSinceLastShoot >= FireRate)
+	if (_target == nullptr) {
+		// Verif si il peut tirer (en fonction de fire rate)
+		if (shootPressed)
 		{
-			shootPressed = false;
+			timeSinceLastShoot += deltaTime;
+			if (timeSinceLastShoot >= FireRate)
+			{
+				shootPressed = false;
+			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			if (!shootPressed)
+			{
+				shootPressed = true;
+				timeSinceLastShoot = 0;
+				Shoot(window);
+			}
 		}
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		if (!shootPressed)
-		{
-			shootPressed = true;
-			timeSinceLastShoot = 0;
-			Shoot(window, ownerObject->getPosition());
-		}
-	}
+	
 
 	CheckRotationAim(aimRectangle, window);
 
+	window.draw(aimRectangle);
 }
 

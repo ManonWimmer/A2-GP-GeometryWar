@@ -41,8 +41,6 @@ public :
 	void WeaponBulletsTouchPlayerCheck(Player&, std::list<Weapon*> enemyWeapons);
 	bool BulletsTouchPlayerCheck(Player&, std::list<Projectile*>& bulletsList);
 
-	bool BulletsTouchEnemyCheck(Entity& enemy, Entity& projectile);
-
 	std::list<sf::RectangleShape> rectList;
 
 	std::list<sf::CircleShape> playerBullets;

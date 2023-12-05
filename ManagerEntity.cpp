@@ -3,9 +3,7 @@
 #include "AI_Agent.h"
 #include "CollisionDetection.h" 
 
-ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection) {
-    collisionDetection = collisionDetection;
-}
+ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection) : collisionDetection(collisionDetection) {}
 
 void ManagerEntity::AddEntity(Entity* entity) {
     entityDictionary[entity] = true;
@@ -24,9 +22,9 @@ std::unordered_map<Entity*, bool>::iterator ManagerEntity::GetPair(Entity* entit
     }
 }
 
-void ManagerEntity::RemoveEntity(std::unordered_map<Entity*, bool>::iterator& iterator) {
+void ManagerEntity::RemoveEntity(Entity* entity) {
     //iterator = entityDictionary.erase(iterator);
-    entityGarbage[iterator->first] = true;
+    entityGarbage.insert(entity);
 }
 
 bool ManagerEntity::IsEntityActive(Entity* entity) {
@@ -36,8 +34,11 @@ bool ManagerEntity::IsEntityActive(Entity* entity) {
 
 void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity) {
     for (auto& pair : entityDictionary) {
-        pair.first->Update(window, deltaTime);
-        pair.first->UpdateBaseEntity(window, deltaTime);
+
+        if (pair.second) {
+            pair.first->Update(window, deltaTime);
+            pair.first->UpdateBaseEntity(window, deltaTime);
+        }
     }
 
     collisionDetection->CheckAllEntitiesCollisions(managerEntity);
@@ -47,21 +48,25 @@ void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime,
 
 void ManagerEntity::ClearEntityGarbage()
 {
-    for (auto& pair : entityGarbage) {
 
-        entityDictionary.erase(pair.first);
+    std::set<Entity*>::iterator it = entityGarbage.begin();
 
-        if (pair.first != nullptr) {
-            delete pair.first;
+    while (it != entityGarbage.end()) {
+
+        if (*it != nullptr) {
+            entityDictionary.erase(*it);
+
+            delete *it;
         }
-        entityGarbage.erase(pair.first);
+
+        it = entityGarbage.erase(it);
     }
+
 }
 
 void ManagerEntity::DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player)
 {
     AddEntity(new AI_Agent(managerEntity, collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, 17.0f, sf::Vector2f(600, 600), 75.0f, player));
-
 }
 
 std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityDictionary()
@@ -69,7 +74,7 @@ std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityDictionary()
     return entityDictionary;
 }
 
-std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityGarbage()
+std::set<Entity*>& ManagerEntity::GetEntityGarbage()
 {
     return entityGarbage;
 }

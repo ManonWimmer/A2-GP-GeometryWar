@@ -14,7 +14,7 @@ class ManagerEntity;
 class GameManager : public Entity
 {
 public:
-    GameManager(ManagerEntity&, CollisionDetection&, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player&);
+    GameManager(ManagerEntity&, CollisionDetection&, EntityType entityType, Faction entityFaction, CollisionType collisionType);
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
     void SpawnEnemy(float, sf::Vector2f, float);
@@ -28,7 +28,7 @@ public:
 private:
     ManagerEntity& _managerEntity;
     CollisionDetection& _collisionDetection;
-    Player& _player;
+    Player* _player;
 
     bool _allEnemiesDead;
     bool _playerDead;

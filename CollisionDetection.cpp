@@ -11,6 +11,8 @@
 //{
 //
 //}
+constexpr int PLAYER_DMG = 34;
+constexpr int AI_AGENT_DMG = 20;
 
 bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleShape rect, sf::Vector2f nextPosition)
 {
@@ -81,7 +83,7 @@ bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::Rect
 
 bool CollisionDetection::CircleIsInCircle(sf::CircleShape circle1, sf::CircleShape circle2)
 {
-	float distance = sqrt(pow(circle1.getPosition().x - circle2.getPosition().x, 2) + pow(circle1.getPosition().y - circle2.getPosition().y, 2));
+	float distance = static_cast<float>(sqrt(pow(circle1.getPosition().x - circle2.getPosition().x, 2) + pow(circle1.getPosition().y - circle2.getPosition().y, 2)));
 
 	if (distance <= circle1.getRadius() + circle2.getRadius()) {
 		return true;
@@ -96,15 +98,15 @@ void CollisionDetection::KeepCircleOutsideRectangle(sf::CircleShape circle, sf::
 	float dx = circle.getPosition().x - (rectangle.getPosition().x + rectangle.getSize().x / 2);
 	float dy = circle.getPosition().y - (rectangle.getPosition().y + rectangle.getSize().y / 2);
 
-	float maxDistance = sqrt(pow(rectangle.getSize().x / 2, 2) + pow(rectangle.getSize().y / 2, 2)) + circle.getRadius();
+	float maxDistance = static_cast<float>(sqrt(pow(rectangle.getSize().x / 2, 2) + pow(rectangle.getSize().y / 2, 2)) + circle.getRadius());
 
 
 	if (sqrt(dx * dx + dy * dy) < maxDistance) {
 		double angle = atan2(dy, dx);
 
 		sf::Vector2f newPosition;
-		newPosition.x = rectangle.getPosition().x + rectangle.getSize().x / 2 + maxDistance * cos(angle);
-		newPosition.y = rectangle.getPosition().y + rectangle.getSize().y / 2 + maxDistance * sin(angle);
+		newPosition.x = rectangle.getPosition().x + rectangle.getSize().x / 2 + maxDistance * static_cast<float>(cos(angle));
+		newPosition.y = rectangle.getPosition().y + rectangle.getSize().y / 2 + maxDistance * static_cast<float>(sin(angle));
 
 		circle.setPosition(newPosition);
 	}
@@ -178,17 +180,24 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 
 			if (i->first->GetEntityType() == EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Player_Entity)
 			{
-				//Applying damage.
+
+				if (CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape()))
+				{
+					std::cout << "Rentre dans le cercle" << std::endl;
+
+					//managerEntity.RemoveEntity(i->first);
+					x->first->DecreaseLife(AI_AGENT_DMG);
+					break;
+				}
 			}
 
 			if (i->first->GetEntityType() == EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::AI_Entity)
 			{
 				if (CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape()))
 				{
-					std::cout << "Rentre dans le cercle" << std::endl;
-					//delete i->first;
-					managerEntity.RemoveEntity(i);
-					x->first->DecreaseLife(34);
+					//std::cout << "Rentre dans le cercle" << std::endl;
+					managerEntity.RemoveEntity(i->first);
+					x->first->DecreaseLife(PLAYER_DMG);
 					break;
 				}
 			}
@@ -197,11 +206,13 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 			{
 				if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
 					std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
+					managerEntity.RemoveEntity(i->first);
 					break;
 				}
 
 				if (x->first->GetEntityCollisionType() == CollisionType::Circle && CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape())) {
 					std::cout << "Collision avec mur circulaire" << std::endl;
+					managerEntity.RemoveEntity(i->first);
 					break;
 				}
 			}
@@ -345,19 +356,4 @@ void CollisionDetection::WeaponBulletsTouchPlayerCheck(Player& player, std::list
 	//}
 }
 // Fin bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-// Gestion BulletsEnnemy !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-bool CollisionDetection::BulletsTouchEnemyCheck(Entity& enemy, Entity& projectile)
-{
-
-
-	if (CircleIsInCircle(projectile.GetEntityCircleShape(), enemy.GetEntityCircleShape()))
-	{
-		std::cout << "Rentre dans le cercle" << std::endl;
-		return true;
-		//enemy.DecreaseLife(34);
-	}
-}
 

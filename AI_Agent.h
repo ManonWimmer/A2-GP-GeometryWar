@@ -15,12 +15,13 @@ public:
 
     bool CheckFieldOfViewCorners();
     bool CheckFieldOfViewEdges();
-    void UpdateFieldView();
+    void UpdateFieldView(sf::RenderWindow& window, float deltaTime);
+    void RotateFieldView(float deltaTime);
     void DrawAgentRenderer(sf::RenderWindow& window);
     void SetTarget(sf::CircleShape* target);
     float GetAngle(sf::Vector2f targetedVector);
     float GetPositif(float value);
-    void Chase(float deltaTime);
+    void Chase(sf::RenderWindow& window, float deltaTime);
     float GetMagnitude(sf::Vector2f vector);
     float GetDistanceFromAgent(sf::Vector2f vector);
     float GetDistanceBetweenVectors(sf::Vector2f vector1, sf::Vector2f vector2);
@@ -32,11 +33,9 @@ public:
     void Death();
     void GetWeapon();
 
-    // function update
+    //Function coming from Entity
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
     virtual void OnDestroy() override;
-
-    //Function coming from Entity
     sf::CircleShape& GetEntityCircleShape() override;
 
 private:
@@ -54,13 +53,13 @@ private:
     sf::CircleShape fvCorner2;
     sf::CircleShape fvCorner3;
 
-    float coolDown;
+    float coolDown = 3.0f;
     float currentShootTimer;
 
 public: 
     bool isDead;
-
-
+    bool isChasing;
+    bool initializedChase;
 };
 
 #endif

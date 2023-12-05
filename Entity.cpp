@@ -77,10 +77,15 @@ int Entity::ClampInteger(int value, int minimum, int maximum)
     return value;
 }
 
+template <typename T>
+T lerp(const T& a, const T& b, float t) {
+    return a + t * (b - a);
+}
+
 void Entity::DestroyItSelf()
 {
-    std::unordered_map<Entity*, bool>::iterator it = managerEntity.GetEntityDictionary().find(this);
-    managerEntity.RemoveEntity(it);
+    OnDestroy();
+    managerEntity.RemoveEntity(this);
 }
 
 void Entity::OnDestroy()

@@ -4,7 +4,7 @@
 #include "ManagerEntity.h"
 
 
-GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player& player) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection), _player(player)
+GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection)
 {
 	
 }
@@ -17,9 +17,8 @@ void GameManager::Update(sf::RenderWindow& window, float deltaTime)
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
 {
-	AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, radius, spawnPosition, speed, _player);
+	AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, radius, spawnPosition, speed, (*_player));
 	_managerEntity.AddEntity(ptrEnemy);
-	//_enemies.push_back(ptrEnemy); 
 }
 
 void GameManager::CheckEnemiesLife()
@@ -42,7 +41,7 @@ void GameManager::CheckEnemiesLife()
 
 void GameManager::CheckPlayerLife() 
 {
-	_playerDead = (_player.pv <= 0) ? true : false;
+	//_playerDead = (_player.pv <= 0) ? true : false;
 }
 
 void GameManager::CheckGameEnd()
@@ -67,10 +66,17 @@ void GameManager::CheckGameEnd()
 void GameManager::StartLevel(int levelNumber)
 {
 	std::cout << "start level " << levelNumber << std::endl;
+
+
+	if (_player == nullptr) {
+		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle);
+		managerEntity.AddEntity(_player);
+	}
+
 	switch (levelNumber) {
-	case 1:
-		std::cout << "case 1" << std::endl;
-		_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
+		case 1:
+			std::cout << "case 1" << std::endl;
+			_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
 		break;
 	}
 

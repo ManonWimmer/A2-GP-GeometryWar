@@ -2,6 +2,7 @@
 #define MANAGERENTITY_H
 
 #include <unordered_map>
+#include <set>
 
 class Entity;
 class CollisionDetection;
@@ -22,18 +23,18 @@ public:
     ManagerEntity(CollisionDetection* collisionDetection);
     void AddEntity(Entity* entity);
     std::unordered_map<Entity*, bool>::iterator GetPair(Entity* entity);
-    void RemoveEntity(std::unordered_map<Entity*, bool>::iterator& iterator);
+    void RemoveEntity(Entity* entity);
     bool IsEntityActive(Entity* entity);
     void UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity);
     void ClearEntityGarbage();
     void DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player);
     std::unordered_map<Entity*, bool>& GetEntityDictionary();
-    std::unordered_map<Entity*, bool>& GetEntityGarbage();
+    std::set<Entity*>& GetEntityGarbage();
 
 private:
     CollisionDetection* collisionDetection;
     std::unordered_map<Entity*, bool> entityDictionary;
-    std::unordered_map<Entity*, bool> entityGarbage;
+    std::set<Entity*> entityGarbage;
 };
 
 #endif
