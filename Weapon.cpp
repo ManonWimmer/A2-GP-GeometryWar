@@ -1,6 +1,8 @@
 #include "Weapon.h"
 #include "CollisionDetection.h" 
 
+#include "ParticleSystem.h"
+
 #include <math.h>
 
 Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject)
@@ -84,6 +86,10 @@ void Weapon::Shoot(sf::RenderWindow& window)
 
 	// Calcul de la direction du projectile
 	sf::Vector2f bulletDirection = targetPosition - bulletOrigin;
+
+	// !!!!!!!!!!!!!!!!! Ajout Corentin
+	managerEntity.GetParticleSystem().Burst(bulletOrigin, 20, 300, 0.15, 2, sf::Color::Yellow, targetPosition, 20);	  // Burst preset tir canon
+	// !!!!!!!!!!!!!!!!! Ajout Corentin
 
 	// Normalisation du vecteur pour obtenir une direction unitaire (longueur 1)
 	float length = std::sqrt(bulletDirection.x * bulletDirection.x + bulletDirection.y * bulletDirection.y);
