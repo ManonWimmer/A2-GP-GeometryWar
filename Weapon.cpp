@@ -176,7 +176,10 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 
 void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 
-	aimRectangle.setPosition(ownerObject->getPosition().x + ownerObject->getRadius(), ownerObject->getPosition().y + ownerObject->getRadius());
+	if (_target == nullptr) {
+		aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
+	}
+
 
 	if (_target == nullptr) {
 		// Verif si il peut tirer (en fonction de fire rate)

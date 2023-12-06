@@ -96,40 +96,55 @@ void Building::SaveBuilding(std::ofstream& file)
 Building* Building::LoadBuilding(std::ifstream& file, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
 	std::string name;
 	sf::Vector2f position;
-	float rotation;
+	float rotation = FLT_MAX;
 
 	//Extracting the name from the file.
 	file >> name;
 
 	if (name == "CircularWall") 
 	{
-		float radius;
+		file >> position.x;
+
+		std::cout << name << std::endl;
+		std::cout << position.x << std::endl;
+
+		/*float radius;
 		file >> position.x;
 		file >> position.y;
 		file >> radius;
 		file >> rotation;
-		Building* building = &(*new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, position, name));
+		Building* building = new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, position, name);
 		sf::CircleShape& circle = building->GetEntityCircleShape();
 		circle.setRadius(radius);
 		building->ReplaceOrigin();
 		circle.setRotation(rotation);
-		return building;
+		return building;*/
+		return new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, position, name);
 	}
 
 
 	if (name == "RectangularWall")
 	{
-		sf::Vector2f size;
+		file >> position.x;
+
+		std::cout << name << std::endl;
+		std::cout << position.x << std::endl;
+
+		/*sf::Vector2f size;
 		file >> position.x;
 		file >> position.y;
 		file >> size.x;
 		file >> size.y;
 		file >> rotation;
-		Building* building = &(*new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, position, name));
+		Building* building = new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, position, name);
 		sf::RectangleShape& rectangle = building->GetEntityRectangleShape();
 		rectangle.setSize(size);
 		building->ReplaceOrigin();
 		rectangle.setRotation(rotation);
-		return building;
+		return building;*/
+		return new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, position, name);
 	}
+
+
+	return new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, position, name);
 }

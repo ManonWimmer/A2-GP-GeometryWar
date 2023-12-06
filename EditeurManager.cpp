@@ -30,9 +30,9 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 		mapManager.SaveToTxt(buildings, "MapTest1");
 	}
 
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
 		buildings = mapManager.LoadFromTxt("MapTest1", managerEntity, collisionDetection);
-	}*/
+	}
 
 
 
