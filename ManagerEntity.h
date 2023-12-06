@@ -35,6 +35,7 @@ public:
 
     std::unordered_map<Entity*, bool>& GetEntityDictionary();
     std::set<Entity*>& GetEntityGarbage();
+    ParticleSystem& GetParticleSystem();
 
 private:
     ParticleSystem* _particleSystem;

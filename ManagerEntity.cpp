@@ -87,3 +87,8 @@ std::set<Entity*>& ManagerEntity::GetEntityGarbage()
 {
     return entityGarbage;
 }
+
+ParticleSystem& ManagerEntity::GetParticleSystem()
+{
+    return *_particleSystem;
+}
