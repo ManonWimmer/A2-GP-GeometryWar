@@ -45,7 +45,7 @@ Particle::Particle(float speed, float lifeTime)
 Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color, sf::Vector2f target, float angle)
 {
 
-	float randomLifeTime = (lifeTime + 0.3) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / ((lifeTime + 0.3) - (lifeTime / 2))));
+	float randomLifeTime = (lifeTime + lifeTime/2) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / ((lifeTime + lifeTime / 4) - (lifeTime / 2))));
 	this->lifeTime = randomLifeTime;
 
 	sf::CircleShape circle;
