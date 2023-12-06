@@ -96,9 +96,10 @@ void GameManager::CheckGameEnd()
 void GameManager::StartLevel(int levelNumber)
 {
 	std::cout << "start level " << levelNumber << std::endl;
-
+	_inMenu = false;
 
 	if (_player == nullptr) {
+		std::cout << "add player" << std::endl;
 		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle);
 		managerEntity.AddEntity(_player);
 	}
