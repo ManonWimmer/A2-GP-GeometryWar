@@ -8,6 +8,9 @@
 #include "GameManager.h"
 #include "Weapon.h"
 #include "EditeurManager.h"
+
+#include "ParticleSystem.h"
+
 constexpr float cubeSpeed = 500.f;
 
 int main()
@@ -20,7 +23,11 @@ int main()
 	CollisionDetection collisionDetection;
 	ManagerEntity entityManager(&collisionDetection);
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	ParticleSystem particleSystem(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+
 	entityManager.AddEntity(&gameManager);
+
+	entityManager.AddEntity(&particleSystem);
 
 	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
