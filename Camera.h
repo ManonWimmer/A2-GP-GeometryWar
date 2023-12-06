@@ -3,21 +3,20 @@
 #include <iostream>
 #include "EntityEnums.h"
 #include "Entity.h"
+#include "GameManager.h"
 
 class ManagerEntity;
 class Player;
+class GameManager;
 
 class Camera : public Entity 
 {
 public:
-	//Camera(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player* player, sf::View& mapView, sf::View& playerView);
-	Camera(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player* player, sf::View& mapView, sf::View& playerView);
+	Camera(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, GameManager& gameManager);
 	void Update(sf::RenderWindow& window, float deltaTime);
 
 private:
 	bool _shake;
-	Player* _player;
-	sf::View& _mapView;
-	sf::View& _playerView;
+	GameManager& _gameManager;
 };
 

@@ -36,10 +36,7 @@ int main()
 
 	//gameManager.StartLevel(1);
 
-	// Camera
-	sf::View mapView = sf::View(sf::FloatRect(0, 0, 800, 600));
-	sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
-	Camera camera(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType,  gameManager.GetPlayer(), mapView, playerView);
+	Camera camera(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType,  gameManager);
 
 	entityManager.AddEntity(&camera);
 

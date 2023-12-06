@@ -146,6 +146,7 @@ void Menu::CheckMouseInButtons()
 		_game1Text->setFillColor(sf::Color(49, 203, 0, 255));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 1" << std::endl;
+			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(1);
 		}
 	}
@@ -160,6 +161,7 @@ void Menu::CheckMouseInButtons()
 		_game2Text->setFillColor(sf::Color(17, 152, 34, 255));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 2" << std::endl;
+			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(2);
 		}
 	}
@@ -174,6 +176,7 @@ void Menu::CheckMouseInButtons()
 		_game3Text->setFillColor(sf::Color(42, 114, 33, 255));
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 3" << std::endl;
+			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(3);
 		}
 	}
