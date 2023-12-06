@@ -11,6 +11,8 @@
 #include "Camera.h"
 #include "ParticleSystem.h"
 
+#include <cstdlib>
+
 constexpr float cubeSpeed = 500.f;
 
 int main()
@@ -42,6 +44,9 @@ int main()
 
 	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
+	
+	bool hasBurst = false;
+	std::srand(std::time(nullptr)); // Initialisation random
 
 	while (window.isOpen())
 	{
