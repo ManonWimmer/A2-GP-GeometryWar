@@ -8,7 +8,7 @@ ParticleSystem::ParticleSystem(ManagerEntity& managerEntity, CollisionDetection&
 
 }
 
-void ParticleSystem::Burst(sf::Vector2f position, int number, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target, float angle)
+void ParticleSystem::Burst(sf::Vector2f position, int number, float speed, float lifeTime, float size, sf::Color color, sf::Vector2f target, float angle)
 {
 	std::list<Particle*>* newParticles = new std::list<Particle*>;
 	for (int i = 0; i < number; i++)

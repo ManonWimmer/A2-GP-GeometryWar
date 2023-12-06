@@ -42,7 +42,7 @@ Particle::Particle(float speed, float lifeTime)
 
 	this->dir = sf::Vector2f(0, 1);
 }
-Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color, sf::Vector2i target, float angle)
+Particle::Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color, sf::Vector2f target, float angle)
 {
 
 	float randomLifeTime = (lifeTime + 0.3) + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / ((lifeTime + 0.3) - (lifeTime / 2))));
