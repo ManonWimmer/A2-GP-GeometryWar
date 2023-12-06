@@ -42,7 +42,7 @@ void GameManager::SwitchToShootEmUp()
 }
 void GameManager::SwitchToInfiltration()
 {
-
+	
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)

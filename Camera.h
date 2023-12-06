@@ -15,6 +15,9 @@ public:
 	Camera(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, GameManager& gameManager);
 	void Update(sf::RenderWindow& window, float deltaTime);
 
+	void ChangeToBig(sf::RenderWindow&);
+	void ChangeToSmall(sf::RenderWindow&);
+
 private:
 	bool _shake;
 	GameManager& _gameManager;

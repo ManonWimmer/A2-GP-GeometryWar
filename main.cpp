@@ -78,6 +78,22 @@ int main()
 
 		//editeurManager.Update(window, deltaTime);
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			if (hasBurst == false)
+			{
+				//gameManager.SwitchMode();
+				hasBurst = true;
+
+				camera.ChangeToBig(window);
+
+				entityManager.GetParticleSystem().Burst(sf::Vector2f(100, 100), 5, 150, 0.1, 2, sf::Color::Yellow, sf::Vector2f(-1, -1), 360);	// Preset impact de balle
+			}
+		}
+		else
+		{
+			hasBurst = false;
+		}
 
 		// On présente la fenêtre sur l'écran
 		window.display();
