@@ -97,3 +97,8 @@ void GameManager::StartLevel(int levelNumber)
 		}
 	}
 }
+
+Player& GameManager::GetPlayer()
+{
+	return *_player;
+}
