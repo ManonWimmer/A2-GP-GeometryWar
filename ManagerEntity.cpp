@@ -1,7 +1,10 @@
-#include "Entity.h"
 #include "ManagerEntity.h"
+#include "EntityEnums.h"
+#include "Entity.h"
 #include "AI_Agent.h"
 #include "CollisionDetection.h" 
+#include "ParticleSystem.h"
+
 
 ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection) : collisionDetection(collisionDetection) {}
 
@@ -67,6 +70,12 @@ void ManagerEntity::ClearEntityGarbage()
 void ManagerEntity::DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player)
 {
     AddEntity(new AI_Agent(managerEntity, collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, 17.0f, sf::Vector2f(600, 600), 75.0f, player));
+}
+
+void ManagerEntity::InitializedParticles(ManagerEntity& managerEntity)
+{
+    _particleSystem = new ParticleSystem(managerEntity, *collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+    AddEntity(_particleSystem);
 }
 
 std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityDictionary()

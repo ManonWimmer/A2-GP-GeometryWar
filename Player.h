@@ -25,7 +25,6 @@ public :
 	sf::CircleShape& GetEntityCircleShape() override;
 	virtual void OnDestroy() override;
 
-
 	void SetBackPlayer();
 	void CheckInvincibility(float);
 	sf::CircleShape circleShape;

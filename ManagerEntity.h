@@ -3,9 +3,11 @@
 
 #include <unordered_map>
 #include <set>
+#include <SFML/Graphics.hpp>
 
 class Entity;
 class CollisionDetection;
+class ParticleSystem;
 class Player;
 
 //enum EntityType
@@ -28,10 +30,14 @@ public:
     void UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity);
     void ClearEntityGarbage();
     void DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player);
+
+    void InitializedParticles(ManagerEntity& managerEntity);
+
     std::unordered_map<Entity*, bool>& GetEntityDictionary();
     std::set<Entity*>& GetEntityGarbage();
 
 private:
+    ParticleSystem* _particleSystem;
     CollisionDetection* collisionDetection;
     std::unordered_map<Entity*, bool> entityDictionary;
     std::set<Entity*> entityGarbage;

@@ -18,22 +18,20 @@ constexpr float cubeSpeed = 500.f;
 int main()
 {
 	// Initialisation
-	sf::RenderWindow window(sf::VideoMode(720, 480), "Geometry Wars");
+	sf::RenderWindow window(sf::VideoMode(720, 480), "James Bond");
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
 	CollisionDetection collisionDetection;
 	ManagerEntity entityManager(&collisionDetection);
-	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
-	ParticleSystem particleSystem(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	entityManager.InitializedParticles(entityManager);
 
+	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 	entityManager.AddEntity(&gameManager);
 
-	entityManager.AddEntity(&particleSystem);
 
 
 	gameManager.StartLevel(1);
-
 
 	// Camera
 	sf::View mapView = sf::View(sf::FloatRect(0, 0, 800, 600));
