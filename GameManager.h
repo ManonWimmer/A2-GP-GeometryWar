@@ -23,8 +23,11 @@ public:
     void CheckGameEnd(); // A changer plus tard par CheckLevelEnd ?
     void StartLevel(int);
     void SwitchMode();
+    void SwitchToShootEmUp();
+    void SwitchToInfiltration();
 
     bool GetMenuState();
+    int GetCurrentLevel();
     //std::list<AI_Agent*> _enemies;
 
     Player* GetPlayer();
@@ -42,4 +45,6 @@ private:
 
     bool _inMenu;
     bool _isShootEmUp;
+
+    int _currentLevel;
 };

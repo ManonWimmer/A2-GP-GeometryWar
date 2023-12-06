@@ -18,10 +18,31 @@ bool GameManager::GetMenuState()
 {
 	return _inMenu;
 }
+int GameManager::GetCurrentLevel()
+{
+	return _currentLevel;
+}
 
 void GameManager::SwitchMode()
 {
-	
+	if (_isShootEmUp)
+	{
+		_isShootEmUp = false;
+		SwitchToInfiltration();
+	}
+	else
+	{
+		_isShootEmUp = true;
+		SwitchToShootEmUp();
+	}
+}
+void GameManager::SwitchToShootEmUp()
+{
+
+}
+void GameManager::SwitchToInfiltration()
+{
+
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
