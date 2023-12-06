@@ -176,9 +176,8 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 
 void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 
-	if (_target == nullptr) {
-		aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
-	}
+	aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
+	
 
 
 	if (_target == nullptr) {

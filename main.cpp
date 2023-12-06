@@ -22,9 +22,9 @@ int main()
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 	entityManager.AddEntity(&gameManager);
 
-	EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
-	//gameManager.StartLevel(1);
+	gameManager.StartLevel(1);
 
 	while (window.isOpen())
 	{
@@ -56,7 +56,7 @@ int main()
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
 
-		editeurManager.Update(window, deltaTime);
+		//editeurManager.Update(window, deltaTime);
 
 
 		// On présente la fenêtre sur l'écran
