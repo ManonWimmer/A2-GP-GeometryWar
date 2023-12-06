@@ -10,6 +10,7 @@
 #include "EditeurManager.h"
 #include "Camera.h"
 #include "ParticleSystem.h"
+#include "Menu.h"
 
 #include <cstdlib>
 
@@ -18,7 +19,8 @@ constexpr float cubeSpeed = 500.f;
 int main()
 {
 	// Initialisation
-	sf::RenderWindow window(sf::VideoMode(720, 480), "James Bond");
+	//sf::RenderWindow window(sf::VideoMode(720, 480), "James Bond");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "James Bond");
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
@@ -29,9 +31,10 @@ int main()
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 	entityManager.AddEntity(&gameManager);
 
+	Menu menu(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType, window, gameManager);
+	entityManager.AddEntity(&menu);
 
-
-	gameManager.StartLevel(1);
+	//gameManager.StartLevel(1);
 
 	// Camera
 	sf::View mapView = sf::View(sf::FloatRect(0, 0, 800, 600));
