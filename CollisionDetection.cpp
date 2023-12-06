@@ -5,6 +5,7 @@
 #include "Weapon.h"
 #include "ManagerEntity.h"
 #include "Entity.h"
+#include "ParticleSystem.h"
 
 
 //bool CollisionDetection::PointInsideSquare(float x, float y, sf::RectangleShape rect)
@@ -187,6 +188,11 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 
 					//managerEntity.RemoveEntity(i->first);
 					x->first->DecreaseLife(AI_AGENT_DMG);
+
+					// !!!!!!! Ajout Corentin !!!!!!!!
+					managerEntity.GetParticleSystem().Burst(x->first->GetEntityCircleShape().getPosition() + sf::Vector2f(x->first->GetEntityCircleShape().getRadius(), x->first->GetEntityCircleShape().getRadius()), 35, 100, 0.2, 2, sf::Color::Red, i->first->GetEntityCircleShape().getPosition() + sf::Vector2f(i->first->GetEntityCircleShape().getRadius(), i->first->GetEntityCircleShape().getRadius()), 70);
+					// !!!!!!! Ajout Corentin !!!!!!!!
+
 					break;
 				}
 			}
@@ -198,6 +204,11 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 					//std::cout << "Rentre dans le cercle" << std::endl;
 					managerEntity.RemoveEntity(i->first);
 					x->first->DecreaseLife(PLAYER_DMG);
+
+					// !!!!!!! Ajout Corentin !!!!!!!!
+					managerEntity.GetParticleSystem().Burst(x->first->GetEntityCircleShape().getPosition() + sf::Vector2f(x->first->GetEntityCircleShape().getRadius(), x->first->GetEntityCircleShape().getRadius()), 35, 100, 0.2, 2, sf::Color::Red, i->first->GetEntityCircleShape().getPosition() + sf::Vector2f(i->first->GetEntityCircleShape().getRadius(), i->first->GetEntityCircleShape().getRadius()), 70);
+					// !!!!!!! Ajout Corentin !!!!!!!!
+
 					break;
 				}
 			}
