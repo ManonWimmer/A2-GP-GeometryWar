@@ -6,7 +6,7 @@
 
 GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection)
 {
-	
+	_inMenu = true;
 }
 
 void GameManager::Update(sf::RenderWindow& window, float deltaTime) 
