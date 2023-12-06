@@ -8,7 +8,7 @@
 #include "GameManager.h"
 #include "Weapon.h"
 #include "EditeurManager.h"
-
+#include "Camera.h"
 #include "ParticleSystem.h"
 
 constexpr float cubeSpeed = 500.f;
@@ -16,7 +16,7 @@ constexpr float cubeSpeed = 500.f;
 int main()
 {
 	// Initialisation
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Geometry Wars");
+	sf::RenderWindow window(sf::VideoMode(720, 480), "Geometry Wars");
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
@@ -29,9 +29,19 @@ int main()
 
 	entityManager.AddEntity(&particleSystem);
 
-	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	gameManager.StartLevel(1);
+
+
+	// Camera
+	sf::View mapView = sf::View(sf::FloatRect(0, 0, 800, 600));
+	sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+	Camera camera(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType,  gameManager.GetPlayer(), mapView, playerView);
+
+	entityManager.AddEntity(&camera);
+
+	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+
 
 	while (window.isOpen())
 	{

@@ -73,7 +73,7 @@ void Weapon::Shoot(sf::RenderWindow& window)
 
 	if(_target == nullptr) {
 		// Get positions
-		targetPosition = sf::Vector2f(sf::Mouse::getPosition(window));
+		targetPosition = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()));
 		bulletOrigin = sf::Vector2f(ownerPos.x + ownerObject->getRadius() - projectileShape.getRadius(), ownerPos.y + ownerObject->getRadius() - projectileShape.getRadius());
 	}
 	else {
@@ -152,16 +152,16 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 	curPos.x = aimShape.getGlobalBounds().left;
 	curPos.y = aimShape.getGlobalBounds().top;
 
-	sf::Vector2f position;
+	sf::Vector2i position;
 
 	if (_target == nullptr) {
-		position = sf::Vector2f(sf::Mouse::getPosition(window));
+		position = sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()));
 	}
 	else {
-		position = _target->getPosition();
+		position = sf::Vector2i(_target->getPosition().x, _target->getPosition().y);
 	}
 
-	//position = sf::Vector2i(window.mapPixelToCoords(position, playerView));
+	
 
 	const float PI = 3.14159265;
 

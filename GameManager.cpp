@@ -11,8 +11,7 @@ GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& colli
 
 void GameManager::Update(sf::RenderWindow& window, float deltaTime) 
 {
-	//_shake = true;
-	if (_shake) window.setPosition(sf::Vector2i(100 + rand() % 25, 100 + rand() % 25));
+
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
@@ -98,7 +97,7 @@ void GameManager::StartLevel(int levelNumber)
 	}
 }
 
-Player& GameManager::GetPlayer()
+Player* GameManager::GetPlayer()
 {
-	return *_player;
+	return _player;
 }

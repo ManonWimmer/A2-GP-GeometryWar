@@ -25,7 +25,7 @@ public:
 
     //std::list<AI_Agent*> _enemies;
 
-    Player& GetPlayer();
+    Player* GetPlayer();
 
 private:
     ManagerEntity& _managerEntity;
@@ -37,5 +37,4 @@ private:
     bool _gameWon;
     bool _gameLose;
     std::list<sf::Vector2f> _enemiesStartPositions;
-    bool _shake;
 };

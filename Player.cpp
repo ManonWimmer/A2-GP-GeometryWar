@@ -68,7 +68,12 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 	sf::RectangleShape screen;
 	screen.setSize(sf::Vector2f(window.getSize()));
 
-	pos = collisionDetection.ClampCircleInsideRectangle(this->circleShape, screen, pos, this->circleShape.getPosition());
+
+	if (window.getSize() == sf::Vector2u(720, 480))
+	{
+		screen.setSize(sf::Vector2f(1225, 560));
+		pos = collisionDetection.ClampCircleInsideRectangle(this->circleShape, screen, pos, this->circleShape.getPosition());
+	}
 
 	return pos;
 }
