@@ -1,50 +1,46 @@
 #include "SaveAndLoadMap.h"
 
-// Save Buildings* to a text file
 void SaveAndLoadMap::SaveToTxt(std::list<Building*>& buildingList, std::string fileName) {
-    std::ofstream file(fileName);
+    std::ofstream outFile(fileName);
 
-    if (file.is_open()) {
-        for (Building* building : buildingList) {
-            building->SaveBuilding(file);
-        }
-        file.close();
+    if (!outFile.is_open()) {
+        std::cerr << "Error opening file for writing: " << fileName << std::endl;
+        return;
     }
-    else {
-        std::cerr << "Error opening file: " << fileName << std::endl;
-        std::cerr << "Generating a new file with name: " << fileName << std::endl;
 
-        std::ofstream newFile(fileName, std::ios::app);
-
-        if (!newFile.is_open()) {
-            std::cerr << "Error creating file: " << fileName << std::endl;
-        }
-
-        std::list<Building*>::iterator it;
-        for (it = buildingList.begin(); it != buildingList.end(); it++)
-        {
-            (*it)->SaveBuilding(newFile);
-        }
-
-        newFile.close();
+    for (Building* building : buildingList) {
+        building->SaveBuilding(outFile);
     }
+
+    outFile.close();
 }
 
-// Load Buildings* from a text file
 std::list<Building*> SaveAndLoadMap::LoadFromTxt(std::string filePath, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
-    std::list<Building*> buildingList;
+    std::list<Building*> loadedBuildings;
 
-    std::ifstream file(filePath);
-    if (file.is_open()) {
-        while (!file.eof()) {
-            Building* building = Building::LoadBuilding(file, managerEntity, collisionDetection);
-            buildingList.push_back(building);
+
+    std::cout << "Launch Load Map: " << filePath << std::endl;
+
+    std::ifstream inFile(filePath);
+
+    std::cout << "after infile initialization" << filePath << std::endl;
+
+    if (!inFile.is_open()) {
+        std::cout << "Is file open" << filePath << std::endl;
+
+        std::cerr << "Error opening file for reading: " << filePath << std::endl;
+        return loadedBuildings;
+    }
+
+    while (!inFile.eof()) {
+        Building* loadedBuilding = Building::LoadBuilding(inFile, managerEntity, collisionDetection);
+
+        if (loadedBuilding) {
+            loadedBuildings.push_back(loadedBuilding);
         }
-        file.close();
-    }
-    else {
-        std::cerr << "Error opening file: " << filePath << std::endl;
     }
 
-    return buildingList;
+    inFile.close();
+
+    return loadedBuildings;
 }

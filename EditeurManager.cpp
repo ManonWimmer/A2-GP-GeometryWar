@@ -31,7 +31,7 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-		buildings = mapManager.LoadFromTxt("MapTest1", managerEntity, collisionDetection);
+		buildings = mapManager.LoadFromTxt("../bin/MapTest1", managerEntity, collisionDetection);
 	}
 
 
