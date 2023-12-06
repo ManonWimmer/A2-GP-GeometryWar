@@ -27,6 +27,7 @@ void ParticleSystem::MoveParticles(std::list<Particle*>& particlesList, float de
 	{
 		if ((*it)->currenLifeTime > (*it)->lifeTime)
 		{
+			delete* it;
 			it = particlesList.erase(it);
 		}
 		else 
