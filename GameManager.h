@@ -25,6 +25,8 @@ public:
 
     //std::list<AI_Agent*> _enemies;
 
+    Player& GetPlayer();
+
 private:
     ManagerEntity& _managerEntity;
     CollisionDetection& _collisionDetection;
