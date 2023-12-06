@@ -18,12 +18,24 @@ void Camera::Update(sf::RenderWindow& window, float deltaTime)
 		std::cout << "player pos " << _player->circleShape.getPosition().x << " " << _player->circleShape.getPosition().y << std::endl;
 
 		sf::Vector2i _playerPos = sf::Vector2i(_player->circleShape.getPosition().x, _player->circleShape.getPosition().y);
-		window.setPosition(_playerPos);
+		
+		if (window.getSize() == sf::Vector2u(720, 480))
+		{
+			window.setPosition(_playerPos);
 
+			sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+			playerView.setCenter(_player->circleShape.getPosition());
+			window.setView(playerView);
+		}
+		else if (window.getSize() == sf::Vector2u(1920, 1080))
+		{
+			window.setPosition(sf::Vector2i(0, 0));
 
-		sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
-		playerView.setCenter(_player->circleShape.getPosition());
-		window.setView(playerView);
+			sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
+			playerView.setCenter(sf::Vector2f(592, 300));
+			window.setView(playerView);
+		}
+
 	}
 
 }
