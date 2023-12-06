@@ -22,7 +22,9 @@ public:
     void CheckPlayerLife();
     void CheckGameEnd(); // A changer plus tard par CheckLevelEnd ?
     void StartLevel(int);
+    void SwitchMode();
 
+    bool GetMenuState();
     //std::list<AI_Agent*> _enemies;
 
     Player* GetPlayer();
@@ -37,4 +39,7 @@ private:
     bool _gameWon;
     bool _gameLose;
     std::list<sf::Vector2f> _enemiesStartPositions;
+
+    bool _inMenu;
+    bool _isShootEmUp;
 };

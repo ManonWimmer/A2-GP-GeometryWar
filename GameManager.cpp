@@ -14,6 +14,16 @@ void GameManager::Update(sf::RenderWindow& window, float deltaTime)
 
 }
 
+bool GameManager::GetMenuState()
+{
+	return _inMenu;
+}
+
+void GameManager::SwitchMode()
+{
+	
+}
+
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
 {
 	AI_Agent* ptrEnemy = new AI_Agent(_managerEntity, _collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, radius, spawnPosition, speed, (*_player));
