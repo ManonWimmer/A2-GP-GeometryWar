@@ -1,0 +1,44 @@
+[
+  {
+    "name": "CircularWall",
+    "position": [
+      849.0,
+      828.0
+    ],
+    "radius": 194.02479553222656,
+    "rotation": 0.0
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      888.0,
+      670.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      385.623291015625,
+      125.14307403564453
+    ]
+  },
+  {
+    "name": "CircularWall",
+    "position": [
+      1062.0,
+      224.0
+    ],
+    "radius": 156.1454620361328,
+    "rotation": 0.0
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      1062.0,
+      448.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      40.958213806152344,
+      340.6611328125
+    ]
+  }
+]

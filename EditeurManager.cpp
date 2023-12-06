@@ -27,11 +27,11 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 
 	BaseEditeurStuff(window, deltaTime);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-		mapManager.SaveToTxt(buildings, "MapTest1");
+		mapManager.SaveToJSON(buildings, "output.json");
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-		buildings = mapManager.LoadFromTxt("../bin/MapTest1", managerEntity, collisionDetection);
+		buildings = mapManager.LoadFromJSON("output.json", managerEntity, collisionDetection);
 	}
 
 

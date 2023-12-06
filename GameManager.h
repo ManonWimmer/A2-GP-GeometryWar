@@ -35,6 +35,7 @@ public:
 private:
     ManagerEntity& _managerEntity;
     CollisionDetection& _collisionDetection;
+    
     Player* _player;
 
     bool _allEnemiesDead;

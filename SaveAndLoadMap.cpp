@@ -1,46 +1,49 @@
 #include "SaveAndLoadMap.h"
 
-void SaveAndLoadMap::SaveToTxt(std::list<Building*>& buildingList, std::string fileName) {
-    std::ofstream outFile(fileName);
 
-    if (!outFile.is_open()) {
-        std::cerr << "Error opening file for writing: " << fileName << std::endl;
-        return;
-    }
 
+void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string fileName) {
+
+    // Create a JSON object
+    json jsonData;
+
+    //Load Data into Json
     for (Building* building : buildingList) {
-        building->SaveBuilding(outFile);
+        jsonData.push_back(building->SaveBuilding());
     }
 
-    outFile.close();
+    // Save JSON data to a file
+    std::ofstream outputFile("output.json");
+    if (outputFile.is_open()) {
+        outputFile << jsonData.dump(2);
+        outputFile.close();
+        std::cout << "JSON data saved to 'output.json'" << std::endl;
+    }
+    else {
+        std::cerr << "Error opening file for writing" << std::endl;
+    }
 }
 
-std::list<Building*> SaveAndLoadMap::LoadFromTxt(std::string filePath, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
-    std::list<Building*> loadedBuildings;
+std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
+    std::list<Building*> loadedBuildingList;
 
+    // Load JSON data from the file
+    std::ifstream inputFile(fileName);
+    if (inputFile.is_open()) {
+        json jsonData;
+        inputFile >> jsonData;
+        inputFile.close();
 
-    std::cout << "Launch Load Map: " << filePath << std::endl;
-
-    std::ifstream inFile(filePath);
-
-    std::cout << "after infile initialization" << filePath << std::endl;
-
-    if (!inFile.is_open()) {
-        std::cout << "Is file open" << filePath << std::endl;
-
-        std::cerr << "Error opening file for reading: " << filePath << std::endl;
-        return loadedBuildings;
-    }
-
-    while (!inFile.eof()) {
-        Building* loadedBuilding = Building::LoadBuilding(inFile, managerEntity, collisionDetection);
-
-        if (loadedBuilding) {
-            loadedBuildings.push_back(loadedBuilding);
+        // Process JSON data and create Building objects
+        for (auto& buildingData : jsonData) {
+            loadedBuildingList.push_back(Building::LoadBuilding(buildingData, managerEntity, collisionDetection));
         }
+
+        std::cout << "JSON data loaded from '" << fileName << "'" << std::endl;
+    }
+    else {
+        std::cerr << "Error opening file '" << fileName << "' for reading" << std::endl;
     }
 
-    inFile.close();
-
-    return loadedBuildings;
+    return loadedBuildingList;
 }

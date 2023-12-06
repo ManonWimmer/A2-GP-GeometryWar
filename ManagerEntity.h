@@ -9,6 +9,7 @@ class Entity;
 class CollisionDetection;
 class ParticleSystem;
 class Player;
+class Building;
 
 //enum EntityType
 //{
@@ -35,6 +36,7 @@ public:
 
     std::unordered_map<Entity*, bool>& GetEntityDictionary();
     std::set<Entity*>& GetEntityGarbage();
+
     ParticleSystem& GetParticleSystem();
 
 private:

@@ -4,6 +4,8 @@
 #include "EntityEnums.h"
 #include "Entity.h"
 
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 class Building : public Entity
 {
@@ -22,9 +24,10 @@ public:
 	void ReplaceOrigin();
 
 
-	void SaveBuilding(std::ofstream& file);
-	static Building* LoadBuilding(std::ifstream& file, ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
+	json SaveBuilding();
+	static Building* LoadBuilding(json& file, ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
 	std::string buildingName;
+
 private:
 	sf::CircleShape buildingCircleShape;
 	sf::RectangleShape buildingRectangleShape;
