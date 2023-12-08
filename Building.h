@@ -8,6 +8,8 @@
 using json = nlohmann::json;
 
 class ManagerEntity;
+class AI_Agent;
+class GameManager;
 
 class Building : public Entity
 {

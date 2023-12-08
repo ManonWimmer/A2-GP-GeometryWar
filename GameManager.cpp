@@ -178,14 +178,14 @@ void GameManager::StartLevel(int levelNumber)
 
 	if (_player == nullptr) {
 		std::cout << "add player" << std::endl;
-		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle);
+		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(100, 0));
 		managerEntity.AddEntity(_player);
 	}
 
 	switch (levelNumber) {
 		case 1:
 			std::cout << "case 1" << std::endl;
-			_mapManager->LoadMap("output.json", managerEntity, collisionDetection);
+			_mapManager->LoadMap("Level1.json", managerEntity, collisionDetection);
 			//_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
 		break;
 	}

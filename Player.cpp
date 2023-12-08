@@ -5,7 +5,7 @@
 #include "GameManager.h"
 #include "Weapon.h"
 
-Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType)
+Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f position)
 	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
 {
 
@@ -15,7 +15,7 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	sf::CircleShape tempShape;
 
 	tempShape.setRadius(20);
-	tempShape.setPosition(640, 360);
+	tempShape.setPosition(position);
 	tempShape.setFillColor(sf::Color(255, 255, 255, 180));
 
 	tempShape.setOutlineThickness(20 / 5);

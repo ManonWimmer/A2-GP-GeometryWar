@@ -1,0 +1,116 @@
+[
+  {
+    "name": "CircularWall",
+    "position": [
+      383.0,
+      415.0
+    ],
+    "radius": 217.5556640625,
+    "rotation": 0.0
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      21.0,
+      207.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      58.60629653930664,
+      414.7130432128906
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      256.0,
+      23.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      424.1239318847656,
+      42.8238410949707
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      487.0,
+      0.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      37.497108459472656,
+      288.20526123046875
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      754.0,
+      129.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      320.25238037109375,
+      36.29458236694336
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      886.0,
+      373.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      43.49875259399414,
+      511.6145324707031
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      432.0,
+      1075.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      30.0,
+      30.0
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      131.0,
+      617.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      1547.571044921875,
+      34.352783203125
+    ]
+  },
+  {
+    "name": "AI_Fixe",
+    "position": [
+      656.0,
+      0.0
+    ]
+  },
+  {
+    "name": "AI_Fixe",
+    "position": [
+      736.0,
+      484.0
+    ]
+  },
+  {
+    "name": "AI_Fixe",
+    "position": [
+      213.0,
+      136.0
+    ]
+  }
+]

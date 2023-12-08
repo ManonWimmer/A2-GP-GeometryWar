@@ -10,6 +10,7 @@ using json = nlohmann::json;
 class ManagerEntity;
 class Building;
 class CollisionDetection;
+class GameManager;
 
 class SaveAndLoadMap
 {

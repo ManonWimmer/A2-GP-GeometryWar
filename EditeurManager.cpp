@@ -28,12 +28,16 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	// Le chargement de la map fonctionne pas !! Regarder du côté de la récupération des données depuis le txt.
 
 	BaseEditeurStuff(window, deltaTime);
+	std::string level1 = "Level1.json";
+	std::string level2 = "Level2.json";
+	std::string level3 = "Level3.json";
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-		mapManager.SaveToJSON(buildings, "output.json");
+		mapManager.SaveToJSON(buildings, level1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-		buildings = mapManager.LoadFromJSON("output.json", managerEntity, collisionDetection);
+		buildings = mapManager.LoadFromJSON(level1, managerEntity, collisionDetection);
 	}
 
 
@@ -91,6 +95,13 @@ void EditeurManager::SpawningAnObject(sf::RenderWindow& window)
 		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Mouse::getPosition(window)), "RectangularWall"));
 		PressedAKey();
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && currentPressKeyTime >= pressKeyCoolDown) {
+		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Mouse::getPosition(window)), "AI_Fixe"));
+		PressedAKey();
+	}
+
+
 }
 
 void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
@@ -276,7 +287,7 @@ void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 		sf::CircleShape* circleShape;
 		sf::RectangleShape* rectangleShape;
 		sf::Vector2f incrementScale;
-		float resizeSpeed = 9.0f;
+		float resizeSpeed = 40.0f;
 		bool isNearer;
 
 		float distance = FLT_MAX;
@@ -306,6 +317,7 @@ void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 
 					// vérifie si le souris s'approche ou s'éloigne
 					isNearer = GetDistance(sf::Vector2f(sf::Mouse::getPosition(window)), rectangleShape->getPosition()) < GetDistance(framePassedMousePosition, rectangleShape->getPosition());
+
 
 					if (isNearer)
 					{

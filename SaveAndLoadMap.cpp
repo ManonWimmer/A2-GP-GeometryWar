@@ -3,6 +3,8 @@
 #include "ManagerEntity.h"
 #include "Building.h"
 #include "CollisionDetection.h"
+#include "GameManager.h"
+
 
 void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string fileName) {
 
@@ -15,7 +17,7 @@ void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string 
     }
 
     // Save JSON data to a file
-    std::ofstream outputFile("output.json");
+    std::ofstream outputFile(fileName);
     if (outputFile.is_open()) {
         outputFile << jsonData.dump(2);
         outputFile.close();

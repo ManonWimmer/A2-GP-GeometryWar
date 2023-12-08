@@ -1,5 +1,8 @@
 #include "Building.h"
 #include <iostream>
+#include "AI_Agent.h"
+#include "GameManager.h"
+
 
 Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f spawnPoint, std::string buildingName)
 	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), buildingName(buildingName)
@@ -23,7 +26,7 @@ Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDe
 	}
 
 
-	if (buildingName == "AI") {
+	if (buildingName == "AI_Fixe") {
 		buildingCircleShape.setFillColor(sf::Color::Red);
 		buildingCircleShape.setRadius(15.0f);
 		buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
@@ -31,7 +34,7 @@ Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDe
 		buildingCircleShape.setOutlineThickness(5.0f);
 		buildingCircleShape.setOutlineColor(sf::Color::Transparent);
 
-		patrolPointA.setFillColor(sf::Color(243, 174, 55, 180));
+		/*patrolPointA.setFillColor(sf::Color(243, 174, 55, 180));
 		patrolPointA.setRadius(10.0f);
 		patrolPointA.setOrigin(patrolPointA.getRadius(), patrolPointA.getRadius());
 		patrolPointA.setPosition(spawnPoint + sf::Vector2f(0, 50.0f));
@@ -43,7 +46,7 @@ Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDe
 		patrolPointB.setOrigin(patrolPointB.getRadius(), patrolPointB.getRadius());
 		patrolPointB.setPosition(spawnPoint + sf::Vector2f(0, -50.0f));
 		patrolPointB.setOutlineThickness(5.0f);
-		patrolPointB.setOutlineColor(sf::Color::Transparent);
+		patrolPointB.setOutlineColor(sf::Color::Transparent);*/
 	}
 	
 }
@@ -133,6 +136,15 @@ json Building::SaveBuilding()
 		};
 	}
 
+	if (buildingName == "AI_Fixe") {
+		sf::Vector2f position = buildingCircleShape.getPosition();
+
+		return {
+			{"position", {position.x, position.y}},
+			{"name", buildingName}
+		};
+	}
+
 	return { "null", 0 };
 }
 
@@ -178,6 +190,15 @@ Building*  Building::LoadBuilding(json& jsonData, ManagerEntity& managerEntity, 
 		newRectangleShape.setRotation(rotation);
 
 		return newBuilding;
+	}
+	else if (newBuildingName == "AI_Fixe") {
+		sf::Vector2f position = {
+			jsonData.value("position", json::array({0.0, 0.0}))[0],
+			jsonData.value("position", json::array({0.0, 0.0}))[1]
+		};
+
+		AI_Agent* ptrEnemy = new AI_Agent(managerEntity, collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, 15.0f, position, 100.0f, *collisionDetection.GetGameManager().GetPlayer());
+		managerEntity.AddEntity(ptrEnemy);
 	}
 
 	return new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(0, 0), "ErrorBuilding");
