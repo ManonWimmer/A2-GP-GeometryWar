@@ -14,7 +14,7 @@ GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& colli
 
 void GameManager::Update(sf::RenderWindow& window, float deltaTime) 
 {
-
+	CheckPlayerLife();
 }
 
 bool GameManager::GetMenuState()
@@ -81,16 +81,42 @@ void GameManager::CheckEnemiesLife()
 			it++;
 		}
 	}*/
+
+	std::unordered_map<Entity*, bool>::iterator it = managerEntity.GetEntityDictionary().begin();
+
+	_allEnemiesDead = true;
+
+	while (it != managerEntity.GetEntityDictionary().end())
+	{
+		if (it->first->GetEntityType() == EntityType::AI_Entity)
+		{
+			if (it->first->GetLife() > 0)
+			{
+				_allEnemiesDead = false;
+			}
+		}
+		it++;
+	}
 }
 
 void GameManager::CheckPlayerLife() 
 {
-	//_playerDead = (_player.pv <= 0) ? true : false;
+	if (_player != nullptr) {
+		_playerDead = (_player->GetLife() <= 0) ? true : false;
+	}
+
+}
+
+bool GameManager::GetLose() {
+	return _gameLose;
+}
+bool GameManager::GetWin() {
+	return _gameWon;
 }
 
 void GameManager::CheckGameEnd()
 {
-	//CheckEnemiesLife();
+	CheckEnemiesLife();
 	CheckPlayerLife();
 
 	if (_playerDead) 
@@ -102,6 +128,19 @@ void GameManager::CheckGameEnd()
 	{
 		std::cout << "All enemies dead, won" << std::endl;
 		_gameWon = true;
+	}
+
+	if (_gameWon) {
+		std::unordered_map<Entity*, bool>::iterator it2 = managerEntity.GetEntityDictionary().begin();
+
+		while (it2 != managerEntity.GetEntityDictionary().end())
+		{
+			if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Player_Entity || it2->first->GetEntityType() == EntityType::Building_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity || it2->first->GetEntityType() == EntityType::Weapon_Entity) && it2->second == true)
+			{
+				it2->second = false;
+			}
+			it2++;
+		}
 	}
 }
 

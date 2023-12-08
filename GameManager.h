@@ -31,6 +31,8 @@ public:
     void SwitchToShootEmUp();
     void SwitchToInfiltration();
 
+    bool GetLose();
+    bool GetWin();
     bool GetMenuState();
     int GetCurrentLevel();
     //std::list<AI_Agent*> _enemies;

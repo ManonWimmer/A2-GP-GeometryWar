@@ -15,7 +15,7 @@ void Camera::Update(sf::RenderWindow& window, float deltaTime)
 
 	Player* _player = _gameManager.GetPlayer();
 	if (_player != nullptr) {
-		std::cout << "player pos " << _player->circleShape.getPosition().x << " " << _player->circleShape.getPosition().y << std::endl;
+		//std::cout << "player pos " << _player->circleShape.getPosition().x << " " << _player->circleShape.getPosition().y << std::endl;
 
 		sf::Vector2i _playerPos = sf::Vector2i(_player->circleShape.getPosition().x, _player->circleShape.getPosition().y);
 
