@@ -14,7 +14,7 @@ GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& colli
 
 void GameManager::Update(sf::RenderWindow& window, float deltaTime) 
 {
-	CheckPlayerLife();
+	//CheckGameEnd();
 }
 
 bool GameManager::GetMenuState()
@@ -123,11 +123,13 @@ void GameManager::CheckGameEnd()
 	{
 		std::cout << "Player dead, lose" << std::endl;
 		_gameLose = true;
+		_inMenu = true;
 	}
 	else if (_allEnemiesDead) 
 	{
 		std::cout << "All enemies dead, won" << std::endl;
 		_gameWon = true;
+		_inMenu = true;
 	}
 
 	if (_gameWon) {
