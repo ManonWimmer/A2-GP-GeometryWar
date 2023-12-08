@@ -108,20 +108,20 @@ Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection,
 	(*_wonTitleText).setCharacterSize(175);
 	(*_wonTitleText).setFillColor(sf::Color::White);
 	(*_wonTitleText).setStyle(sf::Text::Bold);
-	sf::FloatRect textBounds = (*_wonTitleText).getLocalBounds();
-	float x = (window.getSize().x - textBounds.width) / 2;
-	float y = (window.getSize().y - textBounds.height) / 2 - 100;
+	textBounds = (*_wonTitleText).getLocalBounds();
+	x = (window.getSize().x - textBounds.width) / 2;
+	y = (window.getSize().y - textBounds.height) / 2 - 100;
 	(*_wonTitleText).setPosition(x, y);
 
 	this->_loseTitleText = new sf::Text;
 	(*_loseTitleText).setFont((*_font));
-	(*_loseTitleText).setString("YOU WON");
+	(*_loseTitleText).setString("YOU LOSe");
 	(*_loseTitleText).setCharacterSize(175);
 	(*_loseTitleText).setFillColor(sf::Color::White);
 	(*_loseTitleText).setStyle(sf::Text::Bold);
-	sf::FloatRect textBounds = (*_loseTitleText).getLocalBounds();
-	float x = (window.getSize().x - textBounds.width) / 2;
-	float y = (window.getSize().y - textBounds.height) / 2 - 100;
+	textBounds = (*_loseTitleText).getLocalBounds();
+	x = (window.getSize().x - textBounds.width) / 2;
+	y = (window.getSize().y - textBounds.height) / 2 - 100;
 	(*_loseTitleText).setPosition(x, y);
 
 	this->_backToMenuText = new sf::Text;
@@ -139,7 +139,7 @@ Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection,
 	(*_backToMenuRectangle).setFillColor(sf::Color::Transparent);
 	(*_backToMenuRectangle).setOutlineThickness(2);
 	(*_backToMenuRectangle).setOutlineColor(sf::Color::White);
-	sf::FloatRect rectangleBounds = ((*_backToMenuRectangle)).getLocalBounds();
+	rectangleBounds = ((*_backToMenuRectangle)).getLocalBounds();
 	x = (window.getSize().x - rectangleBounds.width) / 2 + 5;
 	y = (window.getSize().y - rectangleBounds.height) / 2 + 145 + textBounds.height / 2;
 	(*_backToMenuRectangle).setPosition(x, y);
