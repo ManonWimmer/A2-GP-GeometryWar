@@ -54,6 +54,7 @@ private:
     bool _playerDead;
     bool _gameWon;
     bool _gameLose;
+    bool _gameEnded;
     std::list<sf::Vector2f> _enemiesStartPositions;
 
     bool _inMenu;

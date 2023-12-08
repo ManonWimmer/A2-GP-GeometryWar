@@ -33,9 +33,15 @@ void Camera::Update(sf::RenderWindow& window, float deltaTime)
 		{
 			window.setPosition(sf::Vector2i(0, 0));
 			
-
 			sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
-			playerView.setCenter(sf::Vector2f(592, 300));
+			//playerView.setCenter(sf::Vector2f(592, 300));
+			if (_gameManager.GetMenuState()) {
+				playerView.setCenter(sf::Vector2f(1920 / 2, 1080 / 2));
+			}
+			else {
+				playerView.setCenter(sf::Vector2f(592, 300));
+			}
+			//playerView.setCenter(sf::Vector2f(1920/2, 1080/2));
 			window.setView(playerView);
 		}
 

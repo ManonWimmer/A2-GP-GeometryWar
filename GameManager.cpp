@@ -10,11 +10,23 @@
 GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection)
 {
 	_inMenu = true;
+	_gameEnded = true;
 }
 
 void GameManager::Update(sf::RenderWindow& window, float deltaTime) 
 {
-	//CheckGameEnd();
+	//std::cout << _gameEnded << std::endl;
+	if (!_inMenu)
+	{
+		CheckGameEnd();
+
+
+		if ((_gameLose || _gameWon) && window.getSize() != sf::Vector2u(1920, 1080) && _gameEnded)
+		{
+			std::cout << "creation nouv " << std::endl;
+			window.create(sf::VideoMode(1920, 1080), "James Bond", sf::Style::Fullscreen);
+		}
+	}
 }
 
 bool GameManager::GetMenuState()
@@ -120,32 +132,37 @@ bool GameManager::GetWin() {
 
 void GameManager::CheckGameEnd()
 {
-	CheckEnemiesLife();
-	CheckPlayerLife();
 
-	if (_playerDead) 
-	{
-		std::cout << "Player dead, lose" << std::endl;
-		_gameLose = true;
-		_inMenu = true;
-	}
-	else if (_allEnemiesDead) 
-	{
-		std::cout << "All enemies dead, won" << std::endl;
-		_gameWon = true;
-		_inMenu = true;
-	}
+	if (!_gameEnded) {
+		CheckEnemiesLife();
+		CheckPlayerLife();
 
-	if (_gameWon) {
-		std::unordered_map<Entity*, bool>::iterator it2 = managerEntity.GetEntityDictionary().begin();
-
-		while (it2 != managerEntity.GetEntityDictionary().end())
+		if (_playerDead)
 		{
-			if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Player_Entity || it2->first->GetEntityType() == EntityType::Building_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity || it2->first->GetEntityType() == EntityType::Weapon_Entity) && it2->second == true)
+			std::cout << "Player dead, lose" << std::endl;
+			_gameLose = true;
+			_inMenu = true;
+			_gameEnded = true;
+		}
+		else if (_allEnemiesDead)
+		{
+			std::cout << "All enemies dead, won" << std::endl;
+			_gameWon = true;
+			_inMenu = true;
+			_gameEnded = true;
+		}
+
+		if (_gameEnded) {
+			std::unordered_map<Entity*, bool>::iterator it2 = managerEntity.GetEntityDictionary().begin();
+
+			while (it2 != managerEntity.GetEntityDictionary().end())
 			{
-				it2->second = false;
+				if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Player_Entity || it2->first->GetEntityType() == EntityType::Building_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity || it2->first->GetEntityType() == EntityType::Weapon_Entity) && it2->second == true)
+				{
+					it2->second = false;
+				}
+				it2++;
 			}
-			it2++;
 		}
 	}
 }
@@ -154,6 +171,8 @@ void GameManager::CheckGameEnd()
 
 void GameManager::StartLevel(int levelNumber)
 {
+	_gameEnded = false;
+
 	std::cout << "start level " << levelNumber << std::endl;
 	_inMenu = false;
 
