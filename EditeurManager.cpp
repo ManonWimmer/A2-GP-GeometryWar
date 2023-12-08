@@ -87,17 +87,17 @@ void EditeurManager::DeletingAnObject()
 void EditeurManager::SpawningAnObject(sf::RenderWindow& window)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && currentPressKeyTime >= pressKeyCoolDown) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Mouse::getPosition(window)), "CircularWall"));
+		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "CircularWall"));
 		PressedAKey();
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && currentPressKeyTime >= pressKeyCoolDown) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Mouse::getPosition(window)), "RectangularWall"));
+		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "RectangularWall"));
 		PressedAKey();
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && currentPressKeyTime >= pressKeyCoolDown) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Mouse::getPosition(window)), "AI_Fixe"));
+		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "AI_Fixe"));
 		PressedAKey();
 	}
 
@@ -113,7 +113,7 @@ void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
 			window.setMouseCursor(cursor);
 		}
 
-		sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+		sf::Vector2f mousePosition = sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView())));
 
 		switch (draggedBuilding->GetEntityCollisionType()) {
 			case CollisionType::Circle:
@@ -196,7 +196,7 @@ void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 	std::list<Building*> hoveredBuildings;
 	std::list<Building*>::iterator it;
 	float closerDistance = FLT_MAX;
-	sf::Vector2f mousePosition(sf::Mouse::getPosition(window));
+	sf::Vector2f mousePosition(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView())));
 
 
 	// Taking only hovered Buildings.
@@ -282,12 +282,12 @@ void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 {
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T))
 	{
 		sf::CircleShape* circleShape;
 		sf::RectangleShape* rectangleShape;
 		sf::Vector2f incrementScale;
-		float resizeSpeed = 40.0f;
+		float resizeSpeed = 400.0f;
 		bool isNearer;
 
 		float distance = FLT_MAX;
