@@ -18,7 +18,7 @@ int main()
 {
 	// Initialisation
 	//sf::RenderWindow window(sf::VideoMode(720, 480), "James Bond");
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "James Bond");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "James Bond", sf::Style::Fullscreen);
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
