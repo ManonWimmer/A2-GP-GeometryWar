@@ -101,23 +101,79 @@ Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection,
 	x = (_window.getSize().x - rectangleBounds.width) / 2 + 5;
 	y = (_window.getSize().y - rectangleBounds.height) / 2 + 345 + textBounds.height / 2;
 	(*_quitRectangle).setPosition(x, y);
+
+	this->_wonTitleText = new sf::Text;
+	(*_wonTitleText).setFont((*_font));
+	(*_wonTitleText).setString("YOU WON");
+	(*_wonTitleText).setCharacterSize(175);
+	(*_wonTitleText).setFillColor(sf::Color::White);
+	(*_wonTitleText).setStyle(sf::Text::Bold);
+	sf::FloatRect textBounds = (*_wonTitleText).getLocalBounds();
+	float x = (window.getSize().x - textBounds.width) / 2;
+	float y = (window.getSize().y - textBounds.height) / 2 - 100;
+	(*_wonTitleText).setPosition(x, y);
+
+	this->_loseTitleText = new sf::Text;
+	(*_loseTitleText).setFont((*_font));
+	(*_loseTitleText).setString("YOU WON");
+	(*_loseTitleText).setCharacterSize(175);
+	(*_loseTitleText).setFillColor(sf::Color::White);
+	(*_loseTitleText).setStyle(sf::Text::Bold);
+	sf::FloatRect textBounds = (*_loseTitleText).getLocalBounds();
+	float x = (window.getSize().x - textBounds.width) / 2;
+	float y = (window.getSize().y - textBounds.height) / 2 - 100;
+	(*_loseTitleText).setPosition(x, y);
+
+	this->_backToMenuText = new sf::Text;
+	(*_backToMenuText).setFont((*_font));
+	(*_backToMenuText).setString("BACK TO MENU");
+	(*_backToMenuText).setCharacterSize(80);
+	(*_backToMenuText).setFillColor(sf::Color::White);
+	textBounds = (*_backToMenuText).getLocalBounds();
+	x = (window.getSize().x - textBounds.width) / 2;
+	y = (window.getSize().y - textBounds.height) / 2 + 150;
+	(*_backToMenuText).setPosition(x, y);
+
+	this->_backToMenuRectangle = new sf::RectangleShape;
+	(*_backToMenuRectangle).setSize(sf::Vector2f(680, 115));
+	(*_backToMenuRectangle).setFillColor(sf::Color::Transparent);
+	(*_backToMenuRectangle).setOutlineThickness(2);
+	(*_backToMenuRectangle).setOutlineColor(sf::Color::White);
+	sf::FloatRect rectangleBounds = ((*_backToMenuRectangle)).getLocalBounds();
+	x = (window.getSize().x - rectangleBounds.width) / 2 + 5;
+	y = (window.getSize().y - rectangleBounds.height) / 2 + 145 + textBounds.height / 2;
+	(*_backToMenuRectangle).setPosition(x, y);
 }
 
 void Menu::Update(sf::RenderWindow& window, float deltaTime)
 {
 	if (_gameManager.GetMenuState()) 
 	{
-		window.draw(*_titleText);
-		window.draw(*_game1Text);
-		window.draw(*_game1Rectangle);
-		window.draw(*_game2Text);
-		window.draw(*_game2Rectangle);
-		window.draw(*_game3Text);
-		window.draw(*_game3Rectangle);
-		window.draw(*_quitText);
-		window.draw(*_quitRectangle);
+		if (_gameManager.GetWin()) {
+			window.draw(*_wonTitleText);
+			window.draw(*_backToMenuText);
+			window.draw(*_backToMenuRectangle);
+			// check back to menu button
+		}
+		else if (_gameManager.GetLose()) {
+			window.draw(*_loseTitleText);
+			window.draw(*_backToMenuText);
+			window.draw(*_backToMenuRectangle);
+			// check back to menu button
+		}
+		else { // (remettre valeur départ !!)
+			window.draw(*_titleText);
+			window.draw(*_game1Text);
+			window.draw(*_game1Rectangle);
+			window.draw(*_game2Text);
+			window.draw(*_game2Rectangle);
+			window.draw(*_game3Text);
+			window.draw(*_game3Rectangle);
+			window.draw(*_quitText);
+			window.draw(*_quitRectangle);
 
-		CheckMouseInButtons();
+			CheckMouseInButtonsMenu();
+		}
 	}
 }
 
@@ -136,7 +192,7 @@ bool Menu::MouseInRectangle(sf::Vector2i mousePosition, sf::RectangleShape recta
 	return false;
 }
 
-void Menu::CheckMouseInButtons() 
+void Menu::CheckMouseInButtonsMenu() 
 {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
 	bool inRectangle = false;
@@ -212,5 +268,31 @@ void Menu::CheckMouseInButtons()
 		_titleText->setFillColor(sf::Color::White);
 	}
 }
-// envoyer vers le start level quand clic sur un des rectangles et mettre inmenu à false,
+
+void Menu::CheckMouseInBackToMenu()
+{
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
+	bool inRectangle = false;
+
+	if (MouseInRectangle(mousePosition, (*_backToMenuRectangle))) {
+		//std::cout << "hover rectangle 1" << std::endl;
+		_backToMenuRectangle->setOutlineColor(sf::Color::Yellow);
+		_backToMenuText->setFillColor(sf::Color::Yellow);
+		//_titleText->setFillColor(sf::Color::Yellow);
+		inRectangle = true;
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			std::cout << "click back to menu" << std::endl;
+			_gameManager.SetWinAndLoseFalse();
+		}
+	}
+	else {
+		_backToMenuRectangle->setOutlineColor(sf::Color::White);
+		_backToMenuText->setFillColor(sf::Color::White);
+	}
+
+	if (!inRectangle) {
+		//_titleText->setFillColor(sf::Color::White);
+	}
+}
+
 

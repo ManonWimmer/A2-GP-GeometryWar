@@ -14,8 +14,9 @@ public:
 	Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::RenderWindow& window, GameManager& gameManager);
 	
 	void Update(sf::RenderWindow& window, float deltaTime);
-	void CheckMouseInButtons();
+	void CheckMouseInButtonsMenu();
 	bool MouseInRectangle(sf::Vector2i mousePosition, sf::RectangleShape rectangle);
+	void CheckMouseInBackToMenu();
 
 private:
 	sf::RenderWindow& _window;
@@ -30,5 +31,11 @@ private:
 	sf::RectangleShape* _game2Rectangle;
 	sf::RectangleShape* _game3Rectangle;
 	sf::RectangleShape* _quitRectangle;
+
+	sf::Text* _wonTitleText;
+	sf::Text* _loseTitleText;
+	sf::Text* _backToMenuText;
+	sf::RectangleShape* _backToMenuRectangle;
 };
+
 
