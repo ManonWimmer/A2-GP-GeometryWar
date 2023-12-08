@@ -20,13 +20,13 @@ public:
     void DrawAgentRenderer(sf::RenderWindow& window);
     void SetTarget(sf::CircleShape* target);
     float GetAngle(sf::Vector2f targetedVector);
-    float GetPositif(float value);
+    static float GetPositif(float value);
     void Chase(sf::RenderWindow& window, float deltaTime);
-    float GetMagnitude(sf::Vector2f vector);
+    static float GetMagnitude(sf::Vector2f vector);
     float GetDistanceFromAgent(sf::Vector2f vector);
     float GetDistanceBetweenVectors(sf::Vector2f vector1, sf::Vector2f vector2);
     sf::Vector2f GetFieldViewPointWorldCoordinates(sf::Vector2f point);
-    sf::Vector2f NormalizedVector(sf::Vector2f source);
+    static sf::Vector2f NormalizedVector(sf::Vector2f source);
     sf::CircleShape& GetCircle();
     sf::Vector2f& GetDirection();
 

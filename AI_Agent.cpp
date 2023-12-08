@@ -171,7 +171,7 @@ void AI_Agent::UpdateFieldView(sf::RenderWindow& window, float deltaTime)
 void AI_Agent::RotateFieldView(float deltaTime)
 {
 
-    if (_target == nullptr) return;
+    /*if (_target == nullptr) return;
     sf::Vector2f targetPosition = _target->getPosition();
     sf::Vector2f objectPosition = _circle.getPosition();
     sf::Vector2f direction = NormalizedVector(targetPosition - objectPosition);
@@ -183,47 +183,61 @@ void AI_Agent::RotateFieldView(float deltaTime)
 
     float distanceToTarget = static_cast<float>(std::sqrt(std::pow(targetPosition.x - objectPosition.x, 2) + std::pow(targetPosition.y - objectPosition.y, 2)));
 
-    if (distanceToTarget > 0.15f) {
 
-        float interpolatedRotation = currentRotation + _rotationSpeed * deltaTime;
+    float interpolatedRotation = currentRotation + _rotationSpeed * deltaTime;*/
 
-        if (round(currentRotation) == round(targetRotation)) {
-            //_circle.setRotation(targetRotation);
+    float interpolatedRotation =  _rotationSpeed * deltaTime;
 
-            /*_currentFieldViewRotation = targetRotation;
+    sf::Transform rotationTransform;
+    rotationTransform.rotate(interpolatedRotation, fieldView.getOrigin());
 
-            sf::Transform rotationTransform;
-            rotationTransform.rotate(targetRotation, fieldView.getOrigin());
+    sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
+    sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
 
-            sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
-            sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
+    fieldView.setPoint(1, rotatedPoint1);
+    fieldView.setPoint(2, rotatedPoint2);
 
-            fieldView.setPoint(1, rotatedPoint1);
-            fieldView.setPoint(2, rotatedPoint2);*/
-        }
-        else {
-            //_circle.setRotation(interpolatedRotation);
-            //std::cout << interpolatedRotation << std::endl;
+    //if (distanceToTarget > 0.15f) {
 
-            //_currentFieldViewRotation = interpolatedRotation;
-            sf::Transform rotationTransform;
-            rotationTransform.rotate(interpolatedRotation, fieldView.getOrigin());
+    //    float interpolatedRotation = currentRotation + _rotationSpeed * deltaTime;
 
-            sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
-            sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
+    //    if (round(currentRotation) == round(targetRotation)) {
+    //        //_circle.setRotation(targetRotation);
 
-            fieldView.setPoint(1, rotatedPoint1);
-            fieldView.setPoint(2, rotatedPoint2);
-        }
+    //        /*_currentFieldViewRotation = targetRotation;
 
-    }
+    //        sf::Transform rotationTransform;
+    //        rotationTransform.rotate(targetRotation, fieldView.getOrigin());
 
-    if (_currentFieldViewRotation >= 360) {
-        _currentFieldViewRotation = 0;
-    }
-    else if (_currentFieldViewRotation < 0) {
-        _currentFieldViewRotation = 360;
-    }
+    //        sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
+    //        sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
+
+    //        fieldView.setPoint(1, rotatedPoint1);
+    //        fieldView.setPoint(2, rotatedPoint2);*/
+    //    }
+    //    else {
+    //        //_circle.setRotation(interpolatedRotation);
+    //        //std::cout << interpolatedRotation << std::endl;
+
+    //        //_currentFieldViewRotation = interpolatedRotation;
+    //        sf::Transform rotationTransform;
+    //        rotationTransform.rotate(interpolatedRotation, fieldView.getOrigin());
+
+    //        sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
+    //        sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
+
+    //        fieldView.setPoint(1, rotatedPoint1);
+    //        fieldView.setPoint(2, rotatedPoint2);
+    //    }
+
+    //}
+
+    //if (_currentFieldViewRotation >= 360) {
+    //    _currentFieldViewRotation = 0;
+    //}
+    //else if (_currentFieldViewRotation < 0) {
+    //    _currentFieldViewRotation = 360;
+    //}
 
 
 }
@@ -323,9 +337,6 @@ sf::CircleShape& AI_Agent::GetCircle() {
 }
 
 sf::Vector2f& AI_Agent::GetDirection() {
-
-    /*_direction.x = cos(_circle.getRotation());
-    _direction.y = sin(_circle.getRotation());*/
 
     return _direction;
 }

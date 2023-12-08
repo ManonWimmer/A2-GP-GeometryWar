@@ -6,6 +6,12 @@
 #include "ManagerEntity.h"
 #include "Entity.h"
 #include "ParticleSystem.h"
+#include "SaveAndLoadMap.h"
+#include "Building.h"
+#include "GameManager.h"
+
+
+
 
 
 //bool CollisionDetection::PointInsideSquare(float x, float y, sf::RectangleShape rect)
@@ -15,6 +21,8 @@
 constexpr int PLAYER_DMG = 34;
 constexpr int AI_AGENT_DMG = 20;
 
+
+
 bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleShape rect, sf::Vector2f nextPosition)
 {
 	float rw = rect.getSize().x;
@@ -22,7 +30,6 @@ bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleS
 
 
 	float rxTL = rect.getPosition().x;
-	
 	float ryTR = rect.getPosition().y;
 
 
@@ -30,7 +37,6 @@ bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleS
 
 	
 	float cx = nextPosition.x + cr;
-	
 	float cy = nextPosition.y + cr;
 
 
@@ -40,6 +46,11 @@ bool CollisionDetection::CircleIsInSquare(sf::CircleShape circle, sf::RectangleS
 		return true;
 	}
 	return false;
+}
+
+float CollisionDetection::SimpleClamp(float value, float low, float high)
+{
+	return (value < low) ? low : (value > high) ? high : value;
 }
 
 
@@ -57,9 +68,9 @@ bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::Rect
 	float cr = circle.getRadius();
 
 	
-	float cx = nextPosition.x + cr;
+	float cx = nextPosition.x/* + cr*/;
 	
-	float cy = nextPosition.y + cr;
+	float cy = nextPosition.y/* + cr*/;
 
 
 
@@ -80,9 +91,10 @@ bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::Rect
 		return true;
 	}
 	return false;
+
 }
 
-bool CollisionDetection::CircleIsInCircle(sf::CircleShape circle1, sf::CircleShape circle2)
+bool CollisionDetection::CircleIsInCircle(sf::CircleShape& circle1, sf::CircleShape& circle2)
 {
 	float distance = static_cast<float>(sqrt(pow(circle1.getPosition().x - circle2.getPosition().x, 2) + pow(circle1.getPosition().y - circle2.getPosition().y, 2)));
 
@@ -94,24 +106,20 @@ bool CollisionDetection::CircleIsInCircle(sf::CircleShape circle1, sf::CircleSha
 	}
 }
 
-void CollisionDetection::KeepCircleOutsideRectangle(sf::CircleShape circle, sf::RectangleShape rectangle)
+
+
+void CollisionDetection::KeepCircleOutsideCircle(sf::CircleShape& circle1, sf::CircleShape& circle2)
 {
-	float dx = circle.getPosition().x - (rectangle.getPosition().x + rectangle.getSize().x / 2);
-	float dy = circle.getPosition().y - (rectangle.getPosition().y + rectangle.getSize().y / 2);
+	sf::Vector2f vecteurDirecteur = AI_Agent::NormalizedVector(circle1.getPosition() - circle2.getPosition());
 
-	float maxDistance = static_cast<float>(sqrt(pow(rectangle.getSize().x / 2, 2) + pow(rectangle.getSize().y / 2, 2)) + circle.getRadius());
+	float currentDistance = static_cast<float>(sqrt(pow(circle1.getPosition().x - circle2.getPosition().x, 2) + pow(circle1.getPosition().y - circle2.getPosition().y, 2)));
+	float maxDistance = circle1.getRadius() + circle2.getRadius();
 
+	float offset = maxDistance - currentDistance;
 
-	if (sqrt(dx * dx + dy * dy) < maxDistance) {
-		double angle = atan2(dy, dx);
-
-		sf::Vector2f newPosition;
-		newPosition.x = rectangle.getPosition().x + rectangle.getSize().x / 2 + maxDistance * static_cast<float>(cos(angle));
-		newPosition.y = rectangle.getPosition().y + rectangle.getSize().y / 2 + maxDistance * static_cast<float>(sin(angle));
-
-		circle.setPosition(newPosition);
-	}
+	circle1.setPosition(circle1.getPosition() + (vecteurDirecteur * offset));
 }
+
 
 bool CollisionDetection::CircleIsPartiallyInCircle(sf::CircleShape circle, sf::CircleShape circleColl, sf::Vector2f nextPosition)
 {
@@ -163,8 +171,8 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 		// Check if the current entity should be simulated
 		if (i->first->GetEntityCollisionType() == CollisionType::None_CollisionType) continue;
 
-		// Since only the Circle objects are moving I calcuate collision only for circle shape as the base
-		if (i->first->GetEntityCollisionType() == CollisionType::Rectangle) continue;
+		// Since only the moving objects are moving I don't calcuate collisions based on static object such as building entity.
+		if (i->first->GetEntityType() == EntityType::Building_Entity) continue;
 
 
 		for (auto x = managerEntity.GetEntityDictionary().begin(); x != managerEntity.GetEntityDictionary().end(); ++x)
@@ -225,15 +233,17 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 			
 			if (i->first->GetEntityType() != EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Building_Entity) {
 
-				if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
-					std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
-					KeepCircleOutsideRectangle(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape());
-					break;
-				}
+				//if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
+				//	std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
+
+				//	//KeepCircleOutsideRectangle(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape());
+				//	break;
+				//}
 
 
 				if (x->first->GetEntityCollisionType() == CollisionType::Circle && CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape())) {
-					std::cout << "Collision avec mur circulaire" << std::endl;
+					//std::cout << "Collision avec mur circulaire" << std::endl;
+					KeepCircleOutsideCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape());
 					break;
 				}
 			}
@@ -245,19 +255,32 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 
 }
 
-sf::Vector2f CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& circle, std::list<sf::RectangleShape> listRect, sf::Vector2f nextPosition, sf::Vector2f currentPosition)
+sf::Vector2f CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& circle, sf::Vector2f nextPosition, sf::Vector2f currentPosition)
 {
-	listRect = CollisionDetection::rectList;
+	
+	std::list<Building*>& buildingsList = _gameManager->GetMapManager().GetBuildings();
+	std::list<Building*>::iterator it = buildingsList.begin();
 
-	std::list<sf::RectangleShape>::iterator it = listRect.begin();
+	std::list<sf::RectangleShape*> listRectangles;
 
-	while (it != listRect.end())	// Parcours Liste
+	// Getting all rectangles type building
+	while (it != buildingsList.end())	// Parcours Liste
 	{
-		if (CollisionDetection::CirclePartialyInSquare(circle, *it, nextPosition))	// Si nextPosition dans rectangle
+		if ((*it)->GetEntityCollisionType() == CollisionType::Rectangle) {
+			listRectangles.push_back(&(*it)->GetEntityRectangleShape());
+		}
+		it++;
+	}
+
+	std::list<sf::RectangleShape*>::iterator it_r = listRectangles.begin();
+
+	while (it_r != listRectangles.end())	// Parcours Liste
+	{
+		if (CollisionDetection::CirclePartialyInSquare(circle, **it_r, nextPosition))	// Si nextPosition dans rectangle
 		{
 			return currentPosition;
 		}
-		it++;
+		it_r++;
 	}
 	return nextPosition;
 }
@@ -362,3 +385,12 @@ void CollisionDetection::WeaponBulletsTouchPlayerCheck(Player& player, std::list
 }
 // Fin bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+GameManager& CollisionDetection::GetGameManager()
+{
+	return *_gameManager;
+}
+
+void CollisionDetection::SetGameManager(GameManager* gameManager)
+{
+	_gameManager = gameManager;
+}

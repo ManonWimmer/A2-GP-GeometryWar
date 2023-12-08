@@ -7,6 +7,8 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+class ManagerEntity;
+
 class Building : public Entity
 {
 
@@ -14,8 +16,6 @@ public:
 	Building(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f spawnPoint, std::string buildingName);
 
 	virtual void Update(sf::RenderWindow& window, float deltaTime) override;
-
-	void UpdateBuilding(sf::RenderWindow& window, float deltaTime);
 
 	sf::CircleShape& GetEntityCircleShape() override;
 	sf::RectangleShape& GetEntityRectangleShape() override;
@@ -31,6 +31,9 @@ public:
 private:
 	sf::CircleShape buildingCircleShape;
 	sf::RectangleShape buildingRectangleShape;
+
+	sf::CircleShape patrolPointA;
+	sf::CircleShape patrolPointB;
 
 };
 

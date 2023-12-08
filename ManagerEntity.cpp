@@ -92,3 +92,4 @@ ParticleSystem& ManagerEntity::GetParticleSystem()
 {
     return *_particleSystem;
 }
+

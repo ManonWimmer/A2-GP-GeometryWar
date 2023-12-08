@@ -21,6 +21,8 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	tempShape.setOutlineThickness(20 / 5);
 	tempShape.setOutlineColor(sf::Color::White);
 
+	tempShape.setOrigin(tempShape.getRadius(), tempShape.getRadius());
+
 	this->circleShape = tempShape;
 
 	this->pv = 4;
@@ -29,6 +31,10 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	this->invincibilityTime = this->invincibilityCooldown;
 
 	this->isInvincible = false;
+
+	fvCorner1.setRadius(7.0f);
+	fvCorner1.setFillColor(sf::Color::Red);
+	fvCorner1.setOrigin(fvCorner1.getRadius(), fvCorner1.getRadius());
 }
 
 sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection collManager, float deltaTime, float cubeSpeed)
@@ -62,8 +68,8 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 	}
 	dir *= cubeSpeed * deltaTime;
 
-	pos.x = collisionManager.ClampCircleOutsideRectangles(this->circleShape, collisionManager.rectList, sf::Vector2f(pos.x + dir.x, pos.y), pos).x;
-	pos.y = collisionManager.ClampCircleOutsideRectangles(this->circleShape, collisionManager.rectList, sf::Vector2f(pos.x, pos.y + dir.y), pos).y;
+	pos.x = collisionManager.ClampCircleOutsideRectangles(this->circleShape, sf::Vector2f(pos.x + dir.x, pos.y), pos).x;
+	pos.y = collisionManager.ClampCircleOutsideRectangles(this->circleShape, sf::Vector2f(pos.x, pos.y + dir.y), pos).y;
 
 	sf::RectangleShape screen;
 	screen.setSize(sf::Vector2f(window.getSize()));
@@ -82,8 +88,9 @@ void Player::Update(sf::RenderWindow& window, float deltaTime)
 {
 
 	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 500.0f));
+	fvCorner1.setPosition(circleShape.getPosition());
 	window.draw(circleShape);
-
+	window.draw(fvCorner1);
 }
 
 

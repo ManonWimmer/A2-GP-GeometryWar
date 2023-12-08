@@ -8,14 +8,19 @@
 #include <list>
 
 class ManagerEntity;
-
-
+class SaveAndLoadMap;
+class Menu;
+class Camera;
 
 class GameManager : public Entity
 {
 public:
     GameManager(ManagerEntity&, CollisionDetection&, EntityType entityType, Faction entityFaction, CollisionType collisionType);
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
+
+
+
+    void InitializedGameManager(sf::RenderWindow& window, GameManager& gameManager);
 
     void SpawnEnemy(float, sf::Vector2f, float);
     void CheckEnemiesLife();
@@ -31,12 +36,16 @@ public:
     //std::list<AI_Agent*> _enemies;
 
     Player* GetPlayer();
+    SaveAndLoadMap& GetMapManager();
 
 private:
     ManagerEntity& _managerEntity;
     CollisionDetection& _collisionDetection;
-    
+    SaveAndLoadMap* _mapManager;
+
     Player* _player;
+    Camera* _camera;
+    Menu* _menu;
 
     bool _allEnemiesDead;
     bool _playerDead;

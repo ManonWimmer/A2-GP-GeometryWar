@@ -76,7 +76,7 @@ void Weapon::Shoot(sf::RenderWindow& window)
 	if(_target == nullptr) {
 		// Get positions
 		targetPosition = sf::Vector2f(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()));
-		bulletOrigin = sf::Vector2f(ownerPos.x + ownerObject->getRadius() - projectileShape.getRadius(), ownerPos.y + ownerObject->getRadius() - projectileShape.getRadius());
+		bulletOrigin = sf::Vector2f(ownerPos.x  - projectileShape.getRadius(), ownerPos.y - projectileShape.getRadius());
 	}
 	else {
 		// Get positions
@@ -181,10 +181,13 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 
 
 void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
-
-	aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
 	
-
+	if (_target == nullptr) {
+		aimRectangle.setPosition(ownerObject->getPosition().x, ownerObject->getPosition().y);
+	}
+	else {
+		aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
+	}
 
 	if (_target == nullptr) {
 		// Verif si il peut tirer (en fonction de fire rate)

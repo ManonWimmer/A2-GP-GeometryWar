@@ -4,38 +4,71 @@
 Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f spawnPoint, std::string buildingName)
 	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), buildingName(buildingName)
 {
-	buildingCircleShape.setFillColor(sf::Color::White);
-	buildingCircleShape.setRadius(30.0f);
-	buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
-	buildingCircleShape.setPosition(spawnPoint);
-	buildingCircleShape.setOutlineThickness(5.0f);
+	if (buildingName == "CircularWall") {
+		buildingCircleShape.setFillColor(sf::Color::White);
+		buildingCircleShape.setRadius(30.0f);
+		buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
+		buildingCircleShape.setPosition(spawnPoint);
+		buildingCircleShape.setOutlineThickness(5.0f);
+		buildingCircleShape.setOutlineColor(sf::Color::Transparent);
+	}
+	
+	if (buildingName == "RectangularWall") {
+		buildingRectangleShape.setFillColor(sf::Color::White);
+		buildingRectangleShape.setSize(sf::Vector2f(30.0f, 30.0f));
+		//buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
+		buildingRectangleShape.setPosition(spawnPoint);
+		buildingRectangleShape.setOutlineThickness(5.0f);
+		buildingRectangleShape.setOutlineColor(sf::Color::Transparent);
+	}
 
-	buildingRectangleShape.setFillColor(sf::Color::White);
-	buildingRectangleShape.setSize(sf::Vector2f(30.0f, 30.0f));
-	buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
-	buildingRectangleShape.setPosition(spawnPoint);
-	buildingRectangleShape.setOutlineThickness(5.0f);
 
+	if (buildingName == "AI") {
+		buildingCircleShape.setFillColor(sf::Color::Red);
+		buildingCircleShape.setRadius(15.0f);
+		buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
+		buildingCircleShape.setPosition(spawnPoint);
+		buildingCircleShape.setOutlineThickness(5.0f);
+		buildingCircleShape.setOutlineColor(sf::Color::Transparent);
+
+		patrolPointA.setFillColor(sf::Color(243, 174, 55, 180));
+		patrolPointA.setRadius(10.0f);
+		patrolPointA.setOrigin(patrolPointA.getRadius(), patrolPointA.getRadius());
+		patrolPointA.setPosition(spawnPoint + sf::Vector2f(0, 50.0f));
+		patrolPointA.setOutlineThickness(5.0f);
+		patrolPointA.setOutlineColor(sf::Color::Transparent);
+
+		patrolPointB.setFillColor(sf::Color(239, 124, 33, 180));
+		patrolPointB.setRadius(10.0f);
+		patrolPointB.setOrigin(patrolPointB.getRadius(), patrolPointB.getRadius());
+		patrolPointB.setPosition(spawnPoint + sf::Vector2f(0, -50.0f));
+		patrolPointB.setOutlineThickness(5.0f);
+		patrolPointB.setOutlineColor(sf::Color::Transparent);
+	}
+	
 }
 
 
 void Building::Update(sf::RenderWindow& window, float deltaTime) {
 
-
-}
-
-void Building::UpdateBuilding(sf::RenderWindow& window, float deltaTime)
-{
 	switch (collisionType) {
 		case CollisionType::Circle:
+			buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
 			window.draw(buildingCircleShape);
+
+			if (buildingName == "AI") {
+				
+			}
+
 			break;
 
 		case CollisionType::Rectangle:
+			//buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
 			window.draw(buildingRectangleShape);
 			break;
 	}
 }
+
 
 sf::CircleShape& Building::GetEntityCircleShape() {
 	return buildingCircleShape;

@@ -1,6 +1,8 @@
 #include "SaveAndLoadMap.h"
 
-
+#include "ManagerEntity.h"
+#include "Building.h"
+#include "CollisionDetection.h"
 
 void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string fileName) {
 
@@ -22,6 +24,11 @@ void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string 
     else {
         std::cerr << "Error opening file for writing" << std::endl;
     }
+}
+
+std::list<Building*>& SaveAndLoadMap::GetBuildings()
+{
+    return buildings;
 }
 
 std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
@@ -46,4 +53,22 @@ std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerE
     }
 
     return loadedBuildingList;
+}
+
+void SaveAndLoadMap::LoadMap(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection)
+{
+    ClearCurrentMap(managerEntity);
+
+    buildings = LoadFromJSON(fileName, managerEntity, collisionDetection);
+
+    for (Building* building : buildings) {
+        managerEntity.AddEntity(building);
+    }
+}
+
+void SaveAndLoadMap::ClearCurrentMap(ManagerEntity& managerEntity)
+{
+    for (Building* building : buildings) {
+        managerEntity.RemoveEntity(building);
+    }
 }

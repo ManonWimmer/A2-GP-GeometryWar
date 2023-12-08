@@ -2,6 +2,9 @@
 #include "AI_Agent.h"
 #include "CollisionDetection.h"
 #include "ManagerEntity.h"
+#include "SaveAndLoadMap.h"
+#include "Menu.h"
+#include "Camera.h"
 
 
 GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection)
@@ -43,6 +46,17 @@ void GameManager::SwitchToShootEmUp()
 void GameManager::SwitchToInfiltration()
 {
 	
+}
+
+void GameManager::InitializedGameManager(sf::RenderWindow& window, GameManager& gameManager)
+{
+	_mapManager = new SaveAndLoadMap();
+
+	_menu = new Menu(managerEntity, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType, window, gameManager);
+	managerEntity.AddEntity(_menu);
+
+	_camera = new Camera(managerEntity, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType, gameManager);
+	managerEntity.AddEntity(_camera);
 }
 
 void GameManager::SpawnEnemy(float radius, sf::Vector2f spawnPosition, float speed)
@@ -107,7 +121,8 @@ void GameManager::StartLevel(int levelNumber)
 	switch (levelNumber) {
 		case 1:
 			std::cout << "case 1" << std::endl;
-			_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
+			_mapManager->LoadMap("output.json", managerEntity, collisionDetection);
+			//_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
 		break;
 	}
 
@@ -132,4 +147,9 @@ void GameManager::StartLevel(int levelNumber)
 Player* GameManager::GetPlayer()
 {
 	return _player;
+}
+
+SaveAndLoadMap& GameManager::GetMapManager()
+{
+	return *_mapManager;
 }

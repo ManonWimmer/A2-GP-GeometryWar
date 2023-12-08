@@ -32,6 +32,8 @@ public :
 	float invincibilityCooldown;
 	float invincibilityTime;
 	bool isInvincible;
+	sf::CircleShape fvCorner1;
+
 };
 
 

@@ -15,6 +15,8 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	// Maintenir clique gauche pour drag un objet.
 	// R pour spawn un rectangle.
 	// C pour spawn un cercle.
+	// I pour spawn une IA avec des points de patrouille. (le point clair est le point A, le point foncé est le point B)
+	// K pour directement spawn une IA fixe.
 	// S en ayant un objet sélectionner pour resize.
 	// S + Shift en ayant un objet sélectionner pour resize uniformément.
 	// F en ayant un objet de sélectionner pour supprimer.
@@ -354,7 +356,7 @@ void EditeurManager::BaseEditeurStuff(sf::RenderWindow& window, float deltaTime)
 
 	for (it = buildings.begin(); it != buildings.end(); it++)
 	{
-		(*it)->UpdateBuilding(window, deltaTime);
+		(*it)->Update(window, deltaTime);
 	}
 }
 

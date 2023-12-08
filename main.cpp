@@ -2,6 +2,8 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+
 #include "ManagerEntity.h"
 #include "CollisionDetection.h"
 #include "Player.h"
@@ -12,10 +14,6 @@
 #include "ParticleSystem.h"
 #include "Menu.h"
 
-#include <cstdlib>
-
-constexpr float cubeSpeed = 500.f;
-
 int main()
 {
 	// Initialisation
@@ -24,31 +22,25 @@ int main()
 	window.setVerticalSyncEnabled(true);
 
 	sf::Clock frameClock;
+
 	CollisionDetection collisionDetection;
+
 	ManagerEntity entityManager(&collisionDetection);
 	entityManager.InitializedParticles(entityManager);
 
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	gameManager.InitializedGameManager(window, gameManager);
 	entityManager.AddEntity(&gameManager);
 
-	Menu menu(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType, window, gameManager);
-	entityManager.AddEntity(&menu);
-
-	//gameManager.StartLevel(1);
-
-	Camera camera(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType,  gameManager);
-
-	entityManager.AddEntity(&camera);
+	collisionDetection.SetGameManager(&gameManager);
 
 	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
-	
 	bool hasBurst = false;
-	std::srand(std::time(nullptr)); // Initialisation random
+	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation random
 
 	while (window.isOpen())
 	{
-		
 		// Gérer les événéments survenus depuis le dernier tour de boucle
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -68,8 +60,6 @@ int main()
 
 		float deltaTime = frameClock.restart().asSeconds();
 
-
-		
 		// Remise au noir de toute la fenêtre
 		window.clear();
 
