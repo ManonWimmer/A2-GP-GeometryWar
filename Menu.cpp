@@ -139,11 +139,14 @@ bool Menu::MouseInRectangle(sf::Vector2i mousePosition, sf::RectangleShape recta
 void Menu::CheckMouseInButtons() 
 {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
+	bool inRectangle = false;
 
 	if (MouseInRectangle(mousePosition, (*_game1Rectangle))) {
 		//std::cout << "hover rectangle 1" << std::endl;
-		_game1Rectangle->setOutlineColor(sf::Color(49,203,0,255));
-		_game1Text->setFillColor(sf::Color(49, 203, 0, 255));
+		_game1Rectangle->setOutlineColor(sf::Color::Yellow);
+		_game1Text->setFillColor(sf::Color::Yellow);
+		_titleText->setFillColor(sf::Color::Yellow);
+		inRectangle = true;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 1" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
@@ -157,8 +160,10 @@ void Menu::CheckMouseInButtons()
 
 	if (MouseInRectangle(mousePosition, (*_game2Rectangle))) {
 		//std::cout << "hover rectangle 2" << std::endl;
-		_game2Rectangle->setOutlineColor(sf::Color(17, 152, 34, 255));
-		_game2Text->setFillColor(sf::Color(17, 152, 34, 255));
+		_game2Rectangle->setOutlineColor(sf::Color::Cyan);
+		_game2Text->setFillColor(sf::Color::Cyan);
+		_titleText->setFillColor(sf::Color::Cyan);
+		inRectangle = true;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 2" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
@@ -172,8 +177,10 @@ void Menu::CheckMouseInButtons()
 
 	if (MouseInRectangle(mousePosition, (*_game3Rectangle))) {
 		//std::cout << "hover rectangle 3" << std::endl;
-		_game3Rectangle->setOutlineColor(sf::Color(42, 114, 33, 255));
-		_game3Text->setFillColor(sf::Color(42, 114, 33, 255));
+		_game3Rectangle->setOutlineColor(sf::Color::Magenta);
+		_game3Text->setFillColor(sf::Color::Magenta);
+		_titleText->setFillColor(sf::Color::Magenta);
+		inRectangle = true;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 3" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
@@ -187,8 +194,10 @@ void Menu::CheckMouseInButtons()
 
 	if (MouseInRectangle(mousePosition, (*_quitRectangle))) {
 		//std::cout << "hover quit" << std::endl;
-		_quitRectangle->setOutlineColor(sf::Color(30, 68, 30, 255));
-		_quitText->setFillColor(sf::Color(30, 68, 30, 255));
+		_quitRectangle->setOutlineColor(sf::Color::Red);
+		_quitText->setFillColor(sf::Color::Red);
+		_titleText->setFillColor(sf::Color::Red);
+		inRectangle = true;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click quit" << std::endl;
 			_window.close();
@@ -197,6 +206,10 @@ void Menu::CheckMouseInButtons()
 	else {
 		_quitRectangle->setOutlineColor(sf::Color::White);
 		_quitText->setFillColor(sf::Color::White);
+	}
+
+	if (!inRectangle) {
+		_titleText->setFillColor(sf::Color::White);
 	}
 }
 // envoyer vers le start level quand clic sur un des rectangles et mettre inmenu à false,
