@@ -5,7 +5,7 @@
 #include "SaveAndLoadMap.h"
 #include "Menu.h"
 #include "Camera.h"
-
+#include "Entity.h"
 
 GameManager::GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _managerEntity(managerEntity), _collisionDetection(collisionDetection)
 {
@@ -58,6 +58,36 @@ void GameManager::SwitchToShootEmUp()
 void GameManager::SwitchToInfiltration()
 {
 	
+}
+
+void GameManager::CheckShootEmUp()
+{
+	std::unordered_map<Entity*, bool>::iterator it;
+
+	for (it = managerEntity.GetEntityDictionary().begin(); it != managerEntity.GetEntityDictionary().end(); it++)
+	{
+		if (it->first->GetEntityType() == EntityType::AI_Entity) {
+
+			if (it->first->isChasing) {
+
+				ActivateShootEmUp();
+			}
+		}
+	}
+}
+
+void GameManager::ActivateShootEmUp()
+{
+	std::unordered_map<Entity*, bool>::iterator it;
+
+	for (it = managerEntity.GetEntityDictionary().begin(); it != managerEntity.GetEntityDictionary().end(); it++)
+	{
+		if (it->first->GetEntityType() == EntityType::AI_Entity) {
+			it->first->isChasing = true;
+		}
+	}
+
+	_mapManager->ClearCurrentMap(managerEntity);
 }
 
 void GameManager::InitializedGameManager(sf::RenderWindow& window, GameManager& gameManager)
@@ -133,7 +163,7 @@ bool GameManager::GetWin() {
 void GameManager::CheckGameEnd()
 {
 
-	if (!_gameEnded) {
+	/*if (!_gameEnded) {
 		CheckEnemiesLife();
 		CheckPlayerLife();
 
@@ -164,7 +194,7 @@ void GameManager::CheckGameEnd()
 				it2++;
 			}
 		}
-	}
+	}*/
 }
 
 

@@ -58,7 +58,6 @@ private:
 
 public: 
     bool isDead;
-    bool isChasing;
     bool initializedChase;
 };
 

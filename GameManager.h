@@ -11,6 +11,7 @@ class ManagerEntity;
 class SaveAndLoadMap;
 class Menu;
 class Camera;
+class Entity;
 
 class GameManager : public Entity
 {
@@ -30,6 +31,10 @@ public:
     void SwitchMode();
     void SwitchToShootEmUp();
     void SwitchToInfiltration();
+
+    void CheckShootEmUp();
+    void ActivateShootEmUp();
+
 
     void SetWinAndLoseFalse();
     bool GetLose();

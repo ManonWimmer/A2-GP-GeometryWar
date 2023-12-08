@@ -34,6 +34,9 @@ public:
     void DecreaseLife(int value);
     int ClampInteger(int value, int minimum, int maximum);
     template <typename T> T lerp(const T& a, const T& b, float t);
+    bool isChasing;
+
+
 
 protected:
     ManagerEntity& managerEntity;
