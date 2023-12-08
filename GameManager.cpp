@@ -107,6 +107,10 @@ void GameManager::CheckPlayerLife()
 
 }
 
+void GameManager::SetWinAndLoseFalse() {
+	_gameLose = false;
+	_gameWon = false;
+}
 bool GameManager::GetLose() {
 	return _gameLose;
 }

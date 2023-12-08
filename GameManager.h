@@ -31,6 +31,7 @@ public:
     void SwitchToShootEmUp();
     void SwitchToInfiltration();
 
+    void SetWinAndLoseFalse();
     bool GetLose();
     bool GetWin();
     bool GetMenuState();
