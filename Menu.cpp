@@ -153,13 +153,13 @@ void Menu::Update(sf::RenderWindow& window, float deltaTime)
 			window.draw(*_wonTitleText);
 			window.draw(*_backToMenuText);
 			window.draw(*_backToMenuRectangle);
-			// check back to menu button
+			CheckMouseInBackToMenu();
 		}
 		else if (_gameManager.GetLose()) {
 			window.draw(*_loseTitleText);
 			window.draw(*_backToMenuText);
 			window.draw(*_backToMenuRectangle);
-			// check back to menu button
+			CheckMouseInBackToMenu();
 		}
 		else { // (remettre valeur départ !!)
 			window.draw(*_titleText);
