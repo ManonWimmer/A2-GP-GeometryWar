@@ -76,12 +76,18 @@
     <Filter Include="Systems\Save &amp; Load">
       <UniqueIdentifier>{a95fbfaf-5f5d-418d-852c-8dafe9ec3589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems\Lights">
+      <UniqueIdentifier>{76b8f1af-cb19-49b1-96de-563230797f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Lights\Sources">
+      <UniqueIdentifier>{a0c1c649-6dfa-430f-a40d-278c4a858102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Lights\Header">
+      <UniqueIdentifier>{7fff84bb-2bc0-495b-97ca-e9832f48cd8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBulletCollision.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Building.cpp">
@@ -129,11 +135,11 @@
     <ClCompile Include="SaveAndLoadMap.cpp">
       <Filter>Systems\Save &amp; Load</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Systems\Lights\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EnemyBulletCollision.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Building.h">
       <Filter>Systems\LevelEditor\Header</Filter>
     </ClInclude>
@@ -181,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="SaveAndLoadMap.h">
       <Filter>Systems\Save &amp; Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Systems\Lights\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
