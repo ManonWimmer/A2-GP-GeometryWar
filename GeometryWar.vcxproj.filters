@@ -138,6 +138,9 @@
     <ClCompile Include="Light.cpp">
       <Filter>Systems\Lights\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="RayCast.cpp">
+      <Filter>Systems\Lights\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h">
@@ -189,6 +192,9 @@
       <Filter>Systems\Save &amp; Load</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
+      <Filter>Systems\Lights\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="RayCast.h">
       <Filter>Systems\Lights\Header</Filter>
     </ClInclude>
   </ItemGroup>
