@@ -85,6 +85,15 @@
     <Filter Include="Systems\Lights\Header">
       <UniqueIdentifier>{7fff84bb-2bc0-495b-97ca-e9832f48cd8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems\MathLibrary">
+      <UniqueIdentifier>{1ce30ce1-a576-42e7-b97e-ababc7ac72e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\MathLibrary\Sources">
+      <UniqueIdentifier>{7aa106a5-fe0e-409a-9857-af8483ff4138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\MathLibrary\Header">
+      <UniqueIdentifier>{90c561c2-ef52-4ca7-a21f-86bbf3e6f39a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -141,6 +150,9 @@
     <ClCompile Include="RayCast.cpp">
       <Filter>Systems\Lights\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="MathLib.cpp">
+      <Filter>Systems\MathLibrary\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h">
@@ -196,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="RayCast.h">
       <Filter>Systems\Lights\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MathLib.h">
+      <Filter>Systems\MathLibrary\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
