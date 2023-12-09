@@ -13,111 +13,177 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{662d48d2-00a4-49c7-85f3-7165b2a643ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\EntityFrameWork">
+      <UniqueIdentifier>{5db37560-5d12-411e-a26e-9101331a8ff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\EntityFrameWork\Sources">
+      <UniqueIdentifier>{7791abc7-0a65-4028-b5a4-5f20e7f05674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\EntityFrameWork\Header">
+      <UniqueIdentifier>{a0756396-1e37-44fb-9bbb-2e2d9e26dfe1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Particles">
+      <UniqueIdentifier>{4bf7df6a-05d7-4d39-89f6-2a53c2a98d8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\AI Agents">
+      <UniqueIdentifier>{ab5034df-f95c-447a-b0af-e51c9d3d8272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Particles\Sources">
+      <UniqueIdentifier>{ef2d1e5c-0a58-4e4b-a7d3-f9e7f9c88855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Particles\Header">
+      <UniqueIdentifier>{cb77171e-72a5-463e-b8dc-b9e148ee0fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\CollisionsDetections">
+      <UniqueIdentifier>{b9dbba2c-c3e3-40c5-a36b-c692c22f485d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\LevelEditor">
+      <UniqueIdentifier>{69d8dcae-d445-4c82-a26d-2fd4aa181ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\LevelEditor\Sources">
+      <UniqueIdentifier>{41b80cec-23a1-4839-85f4-06619222bede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\LevelEditor\Header">
+      <UniqueIdentifier>{0e3c5254-cc44-4d2d-baf6-21d1a1e3901c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Weapons &amp; Projectiles">
+      <UniqueIdentifier>{03b60698-fbf1-46e5-b0e3-ff9bab2dbe02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Weapons &amp; Projectiles\Sources">
+      <UniqueIdentifier>{7e021503-49b6-462c-a631-5443b5830cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Weapons &amp; Projectiles\Header">
+      <UniqueIdentifier>{a10febc3-7003-45e2-8775-34b072e6d0e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Player &amp; GameManager">
+      <UniqueIdentifier>{53bd99b0-7e8b-491d-9f01-08e72f93bbb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Player &amp; GameManager\Sources">
+      <UniqueIdentifier>{937f01bd-ce47-44b0-8bc1-bcc85f735f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Player &amp; GameManager\Header">
+      <UniqueIdentifier>{48cfcb3b-8bcc-4796-ab7e-f34144e0e316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Camera">
+      <UniqueIdentifier>{0db71d01-d643-4d3e-964d-29900ec25bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Menu">
+      <UniqueIdentifier>{84aed520-ec74-4476-8b2e-2082e000f8ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\Save &amp; Load">
+      <UniqueIdentifier>{a95fbfaf-5f5d-418d-852c-8dafe9ec3589}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionDetection.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="AI_Agent.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ManagerEntity.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyBulletCollision.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Building.cpp">
+      <Filter>Systems\LevelEditor\Sources</Filter>
     </ClCompile>
     <ClCompile Include="EditeurManager.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Systems\LevelEditor\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Building.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="ManagerEntity.cpp">
+      <Filter>Systems\EntityFrameWork\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="SaveAndLoadMap.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Systems\EntityFrameWork\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="AI_Agent.cpp">
+      <Filter>Systems\AI Agents</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>Fichiers sources</Filter>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Systems\Weapons &amp; Projectiles\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Systems\Weapons &amp; Projectiles\Sources</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Systems\Particles\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Systems\Particles\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetection.cpp">
+      <Filter>Systems\CollisionsDetections</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Systems\Player &amp; GameManager\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Systems\Player &amp; GameManager\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Systems\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Systems\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveAndLoadMap.cpp">
+      <Filter>Systems\Save &amp; Load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CollisionDetection.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="AI_Agent.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="ManagerEntity.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyBulletCollision.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityEnums.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Building.h">
+      <Filter>Systems\LevelEditor\Header</Filter>
     </ClInclude>
     <ClInclude Include="EditeurManager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Systems\LevelEditor\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="ManagerEntity.h">
+      <Filter>Systems\EntityFrameWork\Header</Filter>
     </ClInclude>
-    <ClInclude Include="SaveAndLoadMap.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="Entity.h">
+      <Filter>Systems\EntityFrameWork\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="EntityEnums.h">
+      <Filter>Systems\EntityFrameWork\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="AI_Agent.h">
+      <Filter>Systems\AI Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Systems\Weapons &amp; Projectiles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Systems\Weapons &amp; Projectiles\Header</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Systems\Particles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Systems\Particles\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetection.h">
+      <Filter>Systems\CollisionsDetections</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Systems\Player &amp; GameManager\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Systems\Player &amp; GameManager\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Systems\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Systems\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="SaveAndLoadMap.h">
+      <Filter>Systems\Save &amp; Load</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

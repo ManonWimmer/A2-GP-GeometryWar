@@ -12,18 +12,17 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	ptrPistol = new Weapon(managerEntity, collisionDetection, EntityType::Weapon_Entity, entityFaction, CollisionType::None_CollisionType, WeaponType::Pistol, circleShape);
 	managerEntity.AddEntity(ptrPistol);
 
-	sf::CircleShape tempShape;
 
-	tempShape.setRadius(20);
-	tempShape.setPosition(position);
-	tempShape.setFillColor(sf::Color(255, 255, 255, 180));
+	circleShape.setRadius(20);
+	circleShape.setPosition(position);
+	circleShape.setFillColor(sf::Color(255, 255, 255, 180));
 
-	tempShape.setOutlineThickness(20 / 5);
-	tempShape.setOutlineColor(sf::Color::White);
+	circleShape.setOutlineThickness(20 / 5);
+	circleShape.setOutlineColor(sf::Color::White);
 
-	tempShape.setOrigin(tempShape.getRadius(), tempShape.getRadius());
+	circleShape.setOrigin(circleShape.getRadius(), circleShape.getRadius());
 
-	this->circleShape = tempShape;
+	
 
 	this->pv = 4;
 
@@ -90,7 +89,7 @@ void Player::Update(sf::RenderWindow& window, float deltaTime)
 	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 500.0f));
 	fvCorner1.setPosition(circleShape.getPosition());
 	window.draw(circleShape);
-	window.draw(fvCorner1);
+	//window.draw(fvCorner1);
 }
 
 

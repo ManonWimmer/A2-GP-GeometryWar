@@ -21,7 +21,7 @@ void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string 
     if (outputFile.is_open()) {
         outputFile << jsonData.dump(2);
         outputFile.close();
-        std::cout << "JSON data saved to 'output.json'" << std::endl;
+        std::cout << "JSON data saved to: " << fileName << std::endl;
     }
     else {
         std::cerr << "Error opening file for writing" << std::endl;

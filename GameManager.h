@@ -11,12 +11,11 @@ class ManagerEntity;
 class SaveAndLoadMap;
 class Menu;
 class Camera;
-class Entity;
 
 class GameManager : public Entity
 {
 public:
-    GameManager(ManagerEntity&, CollisionDetection&, EntityType entityType, Faction entityFaction, CollisionType collisionType);
+    GameManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType);
     virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
 

@@ -56,42 +56,65 @@ float CollisionDetection::SimpleClamp(float value, float low, float high)
 
 bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::RectangleShape rect, sf::Vector2f nextPosition)
 {
+	//float rw = rect.getSize().x;
+	//float rh = rect.getSize().y;
+
+	//
+	//float rxTL = rect.getPosition().x;
+	//
+	//float ryTR = rect.getPosition().y;
+
+
+	//float cr = circle.getRadius();
+
+	//
+	//float cx = nextPosition.x + cr;
+	//
+	//float cy = nextPosition.y + cr;
+
+
+
+	//if ((cx - cr >= rxTL && cx - cr <= rxTL + rw) && (cy - cr >= ryTR && cy - cr <= ryTR + rh))	// Si point gauche haut cercle dans rectangle
+	//{
+	//	return true;
+	//}
+	//else if ((cx + cr >= rxTL && cx + cr <= rxTL + rw) && (cy - cr >= ryTR && cy - cr <= ryTR + rh))	// Si point droit haut cercle dans rectangle
+	//{
+	//	return true;
+	//}
+	//else if ((cx - cr >= rxTL && cx - cr <= rxTL + rw) && (cy + cr >= ryTR && cy + cr <= ryTR + rh))	// Si point bas gauche cercle dans rectangle
+	//{
+	//	return true;
+	//}
+	//else if ((cx + cr >= rxTL && cx + cr <= rxTL + rw) && (cy + cr >= ryTR && cy + cr <= ryTR + rh))	// Si point bas droit cercle dans rectangle
+	//{
+	//	return true;
+	//}
+	//return false;
+
+
+
 	float rw = rect.getSize().x;
 	float rh = rect.getSize().y;
 
-	
-	float rxTL = rect.getPosition().x;
-	
-	float ryTR = rect.getPosition().y;
-
+	float rxCenter = rect.getPosition().x;
+	float ryCenter = rect.getPosition().y;
 
 	float cr = circle.getRadius();
 
-	
-	float cx = nextPosition.x/* + cr*/;
-	
-	float cy = nextPosition.y/* + cr*/;
+	float cx = nextPosition.x;
+	float cy = nextPosition.y;
 
+	// Calculate the distance between the center of the circle and the center of the rectangle
+	float dx = std::abs(cx - rxCenter);
+	float dy = std::abs(cy - ryCenter);
 
+	// Check if the distance is within the bounds of the rectangle
+	if (dx <= (rw / 2.0f + cr) && dy <= (rh / 2.0f + cr)) {
+		return true; 
+	}
 
-	if ((cx - cr >= rxTL && cx - cr <= rxTL + rw) && (cy - cr >= ryTR && cy - cr <= ryTR + rh))	// Si point gauche haut cercle dans rectangle
-	{
-		return true;
-	}
-	else if ((cx + cr >= rxTL && cx + cr <= rxTL + rw) && (cy - cr >= ryTR && cy - cr <= ryTR + rh))	// Si point droit haut cercle dans rectangle
-	{
-		return true;
-	}
-	else if ((cx - cr >= rxTL && cx - cr <= rxTL + rw) && (cy + cr >= ryTR && cy + cr <= ryTR + rh))	// Si point bas gauche cercle dans rectangle
-	{
-		return true;
-	}
-	else if ((cx + cr >= rxTL && cx + cr <= rxTL + rw) && (cy + cr >= ryTR && cy + cr <= ryTR + rh))	// Si point bas droit cercle dans rectangle
-	{
-		return true;
-	}
-	return false;
-
+	return false; 
 }
 
 bool CollisionDetection::CircleIsInCircle(sf::CircleShape& circle1, sf::CircleShape& circle2)

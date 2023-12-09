@@ -19,7 +19,7 @@ Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDe
 	if (buildingName == "RectangularWall") {
 		buildingRectangleShape.setFillColor(sf::Color::White);
 		buildingRectangleShape.setSize(sf::Vector2f(30.0f, 30.0f));
-		//buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
+		buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
 		buildingRectangleShape.setPosition(spawnPoint);
 		buildingRectangleShape.setOutlineThickness(5.0f);
 		buildingRectangleShape.setOutlineColor(sf::Color::Transparent);
@@ -66,7 +66,7 @@ void Building::Update(sf::RenderWindow& window, float deltaTime) {
 			break;
 
 		case CollisionType::Rectangle:
-			//buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
+			buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
 			window.draw(buildingRectangleShape);
 			break;
 	}
@@ -158,6 +158,8 @@ Building*  Building::LoadBuilding(json& jsonData, ManagerEntity& managerEntity, 
 			jsonData.value("position", json::array({0.0, 0.0}))[0],
 			jsonData.value("position", json::array({0.0, 0.0}))[1]
 		};
+
+		position = sf::Vector2f(managerEntity.GetRenderWindow().mapCoordsToPixel(position));
 
 		float radius = jsonData.value("radius", 0.0f);
 		float rotation = jsonData.value("rotation", 0.0f);

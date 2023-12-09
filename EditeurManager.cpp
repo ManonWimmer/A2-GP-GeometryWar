@@ -58,6 +58,12 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 
 	}
 	else {
+
+		sf::Vector2i pixelPos = sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()));
+
+		std::cout << "Draged Object Pixel Pos: " << pixelPos.x << " ; " << pixelPos.y << std::endl;
+
+		std::cout << "Draged Object Pos: " << draggedBuilding->GetEntityCircleShape().getPosition().x << " ; " << draggedBuilding->GetEntityCircleShape().getPosition().y << std::endl;
 		DraggingAnObject(window, deltaTime);
 	}
 	
@@ -101,7 +107,6 @@ void EditeurManager::SpawningAnObject(sf::RenderWindow& window)
 		PressedAKey();
 	}
 
-
 }
 
 void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
@@ -114,7 +119,6 @@ void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
 		}
 
 		sf::Vector2f mousePosition = sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView())));
-
 		switch (draggedBuilding->GetEntityCollisionType()) {
 			case CollisionType::Circle:
 				draggedBuilding->GetEntityCircleShape().setPosition(mousePosition);

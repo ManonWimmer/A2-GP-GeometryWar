@@ -23,7 +23,7 @@ class Building;
 
 class ManagerEntity {
 public:
-    ManagerEntity(CollisionDetection* collisionDetection);
+    ManagerEntity(CollisionDetection* collisionDetection, sf::RenderWindow* window);
     void AddEntity(Entity* entity);
     std::unordered_map<Entity*, bool>::iterator GetPair(Entity* entity);
     void RemoveEntity(Entity* entity);
@@ -38,10 +38,14 @@ public:
     std::set<Entity*>& GetEntityGarbage();
 
     ParticleSystem& GetParticleSystem();
+    sf::RenderWindow& GetRenderWindow();
+
 
 private:
     ParticleSystem* _particleSystem;
     CollisionDetection* collisionDetection;
+    sf::RenderWindow* _window;
+
     std::unordered_map<Entity*, bool> entityDictionary;
     std::set<Entity*> entityGarbage;
 };

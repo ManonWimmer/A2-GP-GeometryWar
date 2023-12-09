@@ -17,7 +17,6 @@
 int main()
 {
 	// Initialisation
-	//sf::RenderWindow window(sf::VideoMode(720, 480), "James Bond");
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "James Bond", sf::Style::Fullscreen);
 	window.setVerticalSyncEnabled(true);
 
@@ -25,7 +24,7 @@ int main()
 
 	CollisionDetection collisionDetection;
 
-	ManagerEntity entityManager(&collisionDetection);
+	ManagerEntity entityManager(&collisionDetection, &window);
 	entityManager.InitializedParticles(entityManager);
 
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
@@ -34,7 +33,7 @@ int main()
 
 	collisionDetection.SetGameManager(&gameManager);
 
-	EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	// editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	bool hasBurst = false;
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation random
@@ -66,7 +65,7 @@ int main()
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
 
-		editeurManager.Update(window, deltaTime);
+		//editeurManager.Update(window, deltaTime);
 
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		//{
@@ -84,6 +83,17 @@ int main()
 		//{
 		//	hasBurst = false;
 		//}
+
+
+
+
+		/*sf::RenderTexture renderTexture;
+
+		sf::Texture texture = renderTexture.getTexture();
+		sf::Image image = texture.copyToImage();
+
+		image.setPixel(0, 0, sf::Color::Transparent);*/
+
 
 		// On présente la fenêtre sur l'écran
 		window.display();

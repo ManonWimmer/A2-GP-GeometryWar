@@ -6,7 +6,8 @@
 #include "ParticleSystem.h"
 
 
-ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection) : collisionDetection(collisionDetection) {}
+ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection, sf::RenderWindow* window) 
+    : collisionDetection(collisionDetection), _window(window) {}
 
 void ManagerEntity::AddEntity(Entity* entity) {
     entityDictionary[entity] = true;
@@ -91,5 +92,10 @@ std::set<Entity*>& ManagerEntity::GetEntityGarbage()
 ParticleSystem& ManagerEntity::GetParticleSystem()
 {
     return *_particleSystem;
+}
+
+sf::RenderWindow& ManagerEntity::GetRenderWindow()
+{
+    return *_window;
 }
 
