@@ -163,7 +163,7 @@ bool GameManager::GetWin() {
 void GameManager::CheckGameEnd()
 {
 
-	/*if (!_gameEnded) {
+	if (!_gameEnded) {
 		CheckEnemiesLife();
 		CheckPlayerLife();
 
@@ -194,7 +194,7 @@ void GameManager::CheckGameEnd()
 				it2++;
 			}
 		}
-	}*/
+	}
 }
 
 
@@ -216,7 +216,7 @@ void GameManager::StartLevel(int levelNumber)
 		case 1:
 			std::cout << "case 1" << std::endl;
 			_mapManager->LoadMap("Level1.json", managerEntity, collisionDetection);
-			//_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(80, 640), sf::Vector2f(70, 80) };
+			_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(120, 640), sf::Vector2f(1000, 80), sf::Vector2f(600, 80),  sf::Vector2f(600, 640) };
 		break;
 	}
 

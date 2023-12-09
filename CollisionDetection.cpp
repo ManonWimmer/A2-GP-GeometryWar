@@ -219,7 +219,9 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 			{
 				if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
 					std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
+					managerEntity.GetParticleSystem().Burst(i->first->GetEntityCircleShape().getPosition(), 10, 200, 0.1, 2, sf::Color::White, sf::Vector2f(-1, -1), 360);
 					managerEntity.RemoveEntity(i->first);
+					
 					break;
 				}
 
