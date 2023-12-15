@@ -87,9 +87,7 @@ void Weapon::Shoot(sf::RenderWindow& window)
 	// Calcul de la direction du projectile
 	sf::Vector2f bulletDirection = targetPosition - bulletOrigin;
 
-	// !!!!!!!!!!!!!!!!! Ajout Corentin
 	managerEntity.GetParticleSystem().Burst(bulletOrigin, 20, 300, 0.15, 2, sf::Color::Yellow, targetPosition, 20);	  // Burst preset tir canon
-	// !!!!!!!!!!!!!!!!! Ajout Corentin
 
 	// Normalisation du vecteur pour obtenir une direction unitaire (longueur 1)
 	float length = std::sqrt(bulletDirection.x * bulletDirection.x + bulletDirection.y * bulletDirection.y);
@@ -106,12 +104,10 @@ void Weapon::Shoot(sf::RenderWindow& window)
 	switch (entityFaction)
 	{
 		case Faction::PlayerFaction:
-			//Projectile* ptrNewPlayerProjectile = new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::PlayerFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape);
 			managerEntity.AddEntity(new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::PlayerFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape));
 			break;
 
 		case Faction::EnemiesFaction:
-			//Projectile* ptrNewEnemyProjectile = new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::EnemiesFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape);
 			managerEntity.AddEntity(new Projectile(managerEntity, collisionDetection, EntityType::Projectile_Entity, Faction::EnemiesFaction, CollisionType::Circle, bulletOrigin, bulletDirection, 0, _bulletSpeed, projectileShape));
 			break;
 
@@ -189,6 +185,8 @@ void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 		aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
 	}
 
+
+
 	if (_target == nullptr) {
 		// Verif si il peut tirer (en fonction de fire rate)
 		if (shootPressed)
@@ -213,7 +211,6 @@ void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 	
 
 	CheckRotationAim(aimRectangle, window);
-
 	window.draw(aimRectangle);
 }
 

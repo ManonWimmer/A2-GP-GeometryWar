@@ -37,13 +37,38 @@ bool ManagerEntity::IsEntityActive(Entity* entity) {
 }
 
 void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity) {
+
+    // Updating Player & All Ai for first drawed layer
     for (auto& pair : entityDictionary) {
+        if (pair.first->GetEntityType() != EntityType::AI_Entity && pair.first->GetEntityType() != EntityType::Player_Entity) continue;
 
         if (pair.second) {
             pair.first->Update(window, deltaTime);
             pair.first->UpdateBaseEntity(window, deltaTime);
         }
     }
+
+
+    // Updating Light & Shadows for second drawed layer
+    for (auto& pair : entityDictionary) {
+        if (pair.first->GetEntityType() != EntityType::Light_Entity) continue;
+
+        if (pair.second) {
+            pair.first->Update(window, deltaTime);
+            pair.first->UpdateBaseEntity(window, deltaTime);
+        }
+    }
+
+    // Updating others
+    for (auto& pair : entityDictionary) {
+        if (pair.first->GetEntityType() == EntityType::Light_Entity || pair.first->GetEntityType() == EntityType::AI_Entity || pair.first->GetEntityType() == EntityType::Player_Entity) continue;
+
+        if (pair.second) {
+            pair.first->Update(window, deltaTime);
+            pair.first->UpdateBaseEntity(window, deltaTime);
+        }
+    }
+
 
     collisionDetection->CheckAllEntitiesCollisions(managerEntity);
     

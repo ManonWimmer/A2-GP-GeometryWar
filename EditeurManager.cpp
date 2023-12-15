@@ -33,11 +33,11 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	std::string level3 = "Level3.json";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-		mapManager.SaveToJSON(buildings, level1);
+		mapManager.SaveToJSON(buildings, level2);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-		buildings = mapManager.LoadFromJSON(level1, managerEntity, collisionDetection);
+		buildings = mapManager.LoadFromJSON(level2, managerEntity, collisionDetection);
 	}
 
 

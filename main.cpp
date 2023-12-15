@@ -13,6 +13,7 @@
 #include "Camera.h"
 #include "ParticleSystem.h"
 #include "Menu.h"
+#include "Light.h"
 
 int main()
 {
@@ -33,10 +34,12 @@ int main()
 
 	collisionDetection.SetGameManager(&gameManager);
 
-	// editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	bool hasBurst = false;
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation random
+
+
 
 	while (window.isOpen())
 	{
@@ -60,8 +63,8 @@ int main()
 		float deltaTime = frameClock.restart().asSeconds();
 
 		// Remise au noir de toute la fenêtre
-		window.clear();
-
+		window.clear(sf::Color(90, 90, 90, 255));
+		
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
 
@@ -87,13 +90,7 @@ int main()
 
 
 
-		/*sf::RenderTexture renderTexture;
-
-		sf::Texture texture = renderTexture.getTexture();
-		sf::Image image = texture.copyToImage();
-
-		image.setPixel(0, 0, sf::Color::Transparent);*/
-
+		//sf::Vector2f mousePosition(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView())));
 
 		// On présente la fenêtre sur l'écran
 		window.display();

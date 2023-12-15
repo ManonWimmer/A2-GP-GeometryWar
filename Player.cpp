@@ -4,6 +4,8 @@
 #include "ManagerEntity.h"
 #include "GameManager.h"
 #include "Weapon.h"
+#include "Light.h"
+
 
 Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f position)
 	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
@@ -23,6 +25,9 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	circleShape.setOrigin(circleShape.getRadius(), circleShape.getRadius());
 
 	
+	_light = new Light(managerEntity, collisionDetection, EntityType::Light_Entity, Faction::None_Faction, CollisionType::None_CollisionType, 1000.0f);
+	managerEntity.AddEntity(_light);
+
 
 	this->pv = 4;
 
@@ -34,6 +39,8 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	fvCorner1.setRadius(7.0f);
 	fvCorner1.setFillColor(sf::Color::Red);
 	fvCorner1.setOrigin(fvCorner1.getRadius(), fvCorner1.getRadius());
+
+
 }
 
 sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection collManager, float deltaTime, float cubeSpeed)
@@ -70,7 +77,7 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 	pos.x = collisionManager.ClampCircleOutsideRectangles(this->circleShape, sf::Vector2f(pos.x + dir.x, pos.y), pos).x;
 	pos.y = collisionManager.ClampCircleOutsideRectangles(this->circleShape, sf::Vector2f(pos.x, pos.y + dir.y), pos).y;
 
-	sf::RectangleShape screen;
+	/*sf::RectangleShape screen;
 	screen.setSize(sf::Vector2f(window.getSize()));
 
 
@@ -78,7 +85,7 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 	{
 		screen.setSize(sf::Vector2f(1225, 560));
 		pos = collisionDetection.ClampCircleInsideRectangle(this->circleShape, screen, pos, this->circleShape.getPosition());
-	}
+	}*/
 
 	return pos;
 }
@@ -89,6 +96,10 @@ void Player::Update(sf::RenderWindow& window, float deltaTime)
 	circleShape.setPosition(MovePlayer(window, collisionDetection, deltaTime, 500.0f));
 	fvCorner1.setPosition(circleShape.getPosition());
 	window.draw(circleShape);
+
+	_light->SetPosition(circleShape.getPosition());
+	//_light->UpdateLight(window, deltaTime);
+
 	//window.draw(fvCorner1);
 }
 

@@ -9,6 +9,7 @@ enum EntityType
     Objectif_Entity,
     Building_Entity,
     None_Entity,
+    Light_Entity,
 };
 
 enum Faction

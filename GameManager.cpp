@@ -209,7 +209,7 @@ void GameManager::StartLevel(int levelNumber)
 
 	if (_player == nullptr) {
 		std::cout << "add player" << std::endl;
-		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(100, 0));
+		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(300, 270));
 		managerEntity.AddEntity(_player);
 	}
 
@@ -219,6 +219,18 @@ void GameManager::StartLevel(int levelNumber)
 			_mapManager->LoadMap("Level1.json", managerEntity, collisionDetection);
 			_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(120, 640), sf::Vector2f(1000, 80), sf::Vector2f(600, 80),  sf::Vector2f(600, 640) };
 		break;
+
+		case 2:
+			std::cout << "case 2" << std::endl;
+			_mapManager->LoadMap("Level2.json", managerEntity, collisionDetection);
+			_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(120, 640), sf::Vector2f(1000, 80), sf::Vector2f(600, 80),  sf::Vector2f(600, 640) };
+			break;
+
+		case 3:
+			std::cout << "case 3" << std::endl;
+			//_mapManager->LoadMap("Level1.json", managerEntity, collisionDetection);
+			_enemiesStartPositions = { sf::Vector2f(600, 640) };
+			break;
 	}
 
 	std::cout << _enemiesStartPositions.size() << std::endl;

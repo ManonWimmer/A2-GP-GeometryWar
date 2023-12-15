@@ -10,7 +10,7 @@
 
 class ManagerEntity;
 class Weapon;
-
+class Light;
 
 class Player: public Entity
 {
@@ -33,6 +33,9 @@ public :
 	float invincibilityTime;
 	bool isInvincible;
 	sf::CircleShape fvCorner1;
+
+
+	Light* _light;
 
 };
 
