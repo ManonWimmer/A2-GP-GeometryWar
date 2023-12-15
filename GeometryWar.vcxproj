@@ -104,6 +104,8 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="SaveAndLoadMap.cpp" />
+    <ClCompile Include="SoundEmitter.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +127,9 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="RayCast.h" />
     <ClInclude Include="SaveAndLoadMap.h" />
+    <ClInclude Include="SoundEmitter.h" />
+    <ClInclude Include="SoundEnums.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>

@@ -94,6 +94,15 @@
     <Filter Include="Systems\MathLibrary\Header">
       <UniqueIdentifier>{90c561c2-ef52-4ca7-a21f-86bbf3e6f39a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Systems\SoundSystem">
+      <UniqueIdentifier>{3f662800-7f8f-40df-9e6c-530b1e3f58ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\SoundSystem\Header">
+      <UniqueIdentifier>{932b93b0-0d06-4bd8-8709-eb023f12bd3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\SoundSystem\Sources">
+      <UniqueIdentifier>{6ae8c118-a5b2-4a79-b96b-3330a118e37d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -153,6 +162,12 @@
     <ClCompile Include="MathLib.cpp">
       <Filter>Systems\MathLibrary\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Systems\SoundSystem\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEmitter.cpp">
+      <Filter>Systems\SoundSystem\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Building.h">
@@ -211,6 +226,15 @@
     </ClInclude>
     <ClInclude Include="MathLib.h">
       <Filter>Systems\MathLibrary\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Systems\SoundSystem\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEnums.h">
+      <Filter>Systems\SoundSystem\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEmitter.h">
+      <Filter>Systems\SoundSystem\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
