@@ -37,7 +37,7 @@ void Light::UpdateLight(sf::RenderWindow& window, float deltaTime)
 
 void Light::Update(sf::RenderWindow& window, float deltaTime)
 {
-	window.draw(_lightShape);
+	//window.draw(_lightShape);
 
 	bool everyRayCollide = true;
 
@@ -262,6 +262,7 @@ for (currentit = _rays.begin(); currentit != _rays.end(); currentit++)
 
 
 	if (currentit == _rays.begin()) {
+		
 		// If the current ray is getting contact but he is isolated (between two null ray points).
 		if (!_rays.back().GetContact() && currentit->GetContact() && !std::next(currentit)->GetContact()) {
 			// Do nothing yet;
@@ -269,15 +270,68 @@ for (currentit = _rays.begin(); currentit != _rays.end(); currentit++)
 
 		//If the current and next ray is getting contact but the previous ray is null.
 		if (!_rays.back().GetContact() && currentit->GetContact() && std::next(currentit)->GetContact()) {
+
 			sf::ConvexShape middleTriangle;
-			middleTriangle.setPosition(currentit->GetImpactPoint());
-			middleTriangle.setOrigin(0, 0);
 			middleTriangle.setPointCount(3);
+			middleTriangle.setPoint(0, sf::Vector2f(0, 0));
+			middleTriangle.setPoint(1, MathLib::NormalizedVector(currentit->GetImpactPoint() - _lightShape.getPosition()) * _shadowLength);
+			middleTriangle.setPoint(2, MathLib::NormalizedVector(std::next(currentit)->GetImpactPoint() - _lightShape.getPosition()) * _shadowLength);
+			middleTriangle.setOrigin(middleTriangle.getPoint(0));
+			middleTriangle.setPosition(currentit->GetImpactPoint());
 			middleTriangle.setFillColor(lightShadowColor);
 
+			shadowTriangles.push_back(middleTriangle);
+		}
+
+
+		//If the current and previous ray is getting contact but the next ray is null.
+		if (_rays.back().GetContact() && currentit->GetContact() && !std::next(currentit)->GetContact()) {
+
+			sf::ConvexShape leftTriangle;
+			leftTriangle.setPointCount(3);
+			leftTriangle.setPoint(0, sf::Vector2f(0, 0));
+			leftTriangle.setPoint(1, MathLib::NormalizedVector(currentit->GetImpactPoint() - _lightShape.getPosition()) * _shadowLength);
+			leftTriangle.setPoint(2, currentit->GetImpactPoint() - _rays.back().GetImpactPoint());
+			leftTriangle.setOrigin(leftTriangle.getPoint(0));
+			leftTriangle.setPosition(_rays.back().GetImpactPoint());
+			leftTriangle.setFillColor(lightShadowColor);
+
+
+			shadowTriangles.push_back(leftTriangle);
+		}
+
+
+
+
+
+		//If all the rays are getting contacts.
+		if (_rays.back().GetContact() && currentit->GetContact() && std::next(currentit)->GetContact()) {
+
+
+			sf::ConvexShape leftTriangle;
+			leftTriangle.setPointCount(3);
+			leftTriangle.setPoint(0, sf::Vector2f(0, 0));
+			leftTriangle.setPoint(1, MathLib::NormalizedVector(currentit->GetImpactPoint() - _lightShape.getPosition()) * _shadowLength);
+			leftTriangle.setPoint(2, currentit->GetImpactPoint() - _rays.back().GetImpactPoint());
+			leftTriangle.setOrigin(leftTriangle.getPoint(0));
+			leftTriangle.setPosition(_rays.back().GetImpactPoint());
+			leftTriangle.setFillColor(shadowColor);
+
+
+
+			sf::ConvexShape middleTriangle;
+
+			sf::Vector2f leftPoint = leftTriangle.getPoint(1) + leftTriangle.getPosition();
+			middleTriangle.setPointCount(3);
 			middleTriangle.setPoint(0, sf::Vector2f(0, 0));
-			middleTriangle.setPoint(1, currentit->GetLocalDirection() * _shadowLength);
-			middleTriangle.setPoint(2, std::next(currentit)->GetLocalDirection() * _shadowLength);
+			middleTriangle.setPoint(1, MathLib::NormalizedVector(leftPoint - currentit->GetImpactPoint()) * _shadowLength);
+			middleTriangle.setPoint(2, MathLib::NormalizedVector(std::next(currentit)->GetImpactPoint() - _lightShape.getPosition()) * _shadowLength);
+			middleTriangle.setOrigin(middleTriangle.getPoint(0));
+			middleTriangle.setPosition(currentit->GetImpactPoint());
+			middleTriangle.setFillColor(shadowColor);
+
+
+			shadowTriangles.push_back(leftTriangle);
 			shadowTriangles.push_back(middleTriangle);
 		}
 	}
@@ -546,29 +600,6 @@ for (currentit = _rays.begin(); currentit != _rays.end(); currentit++)
 
 
 
-
-for (currentit = _rays.begin(); currentit != _rays.end(); currentit++)
-{
-	if (currentit != _rays.begin() && currentit == std::prev(_rays.end())) {
-
-		//std::cout << "Impact Position: " << currentit->GetImpactPoint().x << " ; " << currentit->GetImpactPoint().y << std::endl;
-
-		//If the current and next ray is getting contact but the previous ray is null.
-		if (!std::prev(currentit)->GetContact() && currentit->GetContact() && std::next(currentit)->GetContact()) {
-			sf::ConvexShape middleTriangle;
-			middleTriangle.setPosition(currentit->GetImpactPoint());
-			middleTriangle.setOrigin(0, 0);
-			middleTriangle.setPointCount(3);
-			middleTriangle.setFillColor(sf::Color::Red);
-
-			middleTriangle.setPoint(0, sf::Vector2f(0, 0));
-			middleTriangle.setPoint(1, currentit->GetLocalDirection() * _shadowLength);
-			middleTriangle.setPoint(2, std::next(currentit)->GetLocalDirection() * _shadowLength);
-			shadowTriangles.push_back(middleTriangle);
-		}
-	}
-	
-}
 
 
 

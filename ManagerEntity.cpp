@@ -38,9 +38,13 @@ bool ManagerEntity::IsEntityActive(Entity* entity) {
 
 void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime, ManagerEntity& managerEntity) {
 
-    // Updating Player & All Ai for first drawed layer
+    // Updating Player & All AI & Weapons & Bullets for first drawed layer (under shadow layer)
     for (auto& pair : entityDictionary) {
-        if (pair.first->GetEntityType() != EntityType::AI_Entity && pair.first->GetEntityType() != EntityType::Player_Entity) continue;
+        if (pair.first->GetEntityType() != EntityType::AI_Entity && 
+            pair.first->GetEntityType() != EntityType::Player_Entity && 
+            pair.first->GetEntityType() != EntityType::Weapon_Entity && 
+            pair.first->GetEntityType() != EntityType::Projectile_Entity
+            ) continue;
 
         if (pair.second) {
             pair.first->Update(window, deltaTime);
@@ -59,9 +63,14 @@ void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime,
         }
     }
 
-    // Updating others
+    // Updating others for third layer (Buildings)
     for (auto& pair : entityDictionary) {
-        if (pair.first->GetEntityType() == EntityType::Light_Entity || pair.first->GetEntityType() == EntityType::AI_Entity || pair.first->GetEntityType() == EntityType::Player_Entity) continue;
+        if (pair.first->GetEntityType() == EntityType::Light_Entity || 
+            pair.first->GetEntityType() == EntityType::AI_Entity || 
+            pair.first->GetEntityType() == EntityType::Player_Entity || 
+            pair.first->GetEntityType() == EntityType::Weapon_Entity || 
+            pair.first->GetEntityType() == EntityType::Projectile_Entity
+            ) continue;
 
         if (pair.second) {
             pair.first->Update(window, deltaTime);

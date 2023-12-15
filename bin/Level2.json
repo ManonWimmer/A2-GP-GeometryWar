@@ -1,0 +1,74 @@
+[
+  {
+    "name": "RectangularWall",
+    "position": [
+      1492.0,
+      84.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      892.8724975585938,
+      -163.77542114257813
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      1390.0,
+      250.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      99.27560424804688,
+      280.4167175292969
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      1134.0,
+      515.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      632.240478515625,
+      72.29238891601563
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      -246.0,
+      326.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      152.56838989257813,
+      479.725830078125
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      1402.0,
+      693.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      80.77761840820313,
+      358.323974609375
+    ]
+  },
+  {
+    "name": "RectangularWall",
+    "position": [
+      1644.0,
+      355.0
+    ],
+    "rotation": 0.0,
+    "size": [
+      195.8490753173828,
+      195.8490753173828
+    ]
+  }
+]

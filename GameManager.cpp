@@ -209,7 +209,7 @@ void GameManager::StartLevel(int levelNumber)
 
 	if (_player == nullptr) {
 		std::cout << "add player" << std::endl;
-		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(300, 270));
+		_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(700, 270));
 		managerEntity.AddEntity(_player);
 	}
 

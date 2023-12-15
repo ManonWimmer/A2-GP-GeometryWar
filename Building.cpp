@@ -7,8 +7,9 @@
 Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::Vector2f spawnPoint, std::string buildingName)
 	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), buildingName(buildingName)
 {
+	sf::Color buildingsColor = sf::Color(60, 60, 60);
 	if (buildingName == "CircularWall") {
-		buildingCircleShape.setFillColor(sf::Color::White);
+		buildingCircleShape.setFillColor(buildingsColor);
 		buildingCircleShape.setRadius(30.0f);
 		buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
 		buildingCircleShape.setPosition(spawnPoint);
@@ -17,7 +18,7 @@ Building::Building(ManagerEntity& managerEntity, CollisionDetection& collisionDe
 	}
 	
 	if (buildingName == "RectangularWall") {
-		buildingRectangleShape.setFillColor(sf::Color::White);
+		buildingRectangleShape.setFillColor(buildingsColor);
 		buildingRectangleShape.setSize(sf::Vector2f(30.0f, 30.0f));
 		buildingRectangleShape.setOrigin(buildingRectangleShape.getSize().x / 2, buildingRectangleShape.getSize().y / 2);
 		buildingRectangleShape.setPosition(spawnPoint);

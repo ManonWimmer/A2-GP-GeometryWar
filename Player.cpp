@@ -25,7 +25,7 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	circleShape.setOrigin(circleShape.getRadius(), circleShape.getRadius());
 
 	
-	_light = new Light(managerEntity, collisionDetection, EntityType::Light_Entity, Faction::None_Faction, CollisionType::None_CollisionType, 1000.0f);
+	_light = new Light(managerEntity, collisionDetection, EntityType::Light_Entity, Faction::None_Faction, CollisionType::None_CollisionType, 500.0f);
 	managerEntity.AddEntity(_light);
 
 
