@@ -178,6 +178,7 @@ Building*  Building::LoadBuilding(json& jsonData, ManagerEntity& managerEntity, 
 			jsonData.value("position", json::array({0.0, 0.0}))[0],
 			jsonData.value("position", json::array({0.0, 0.0}))[1]
 		};
+		position = sf::Vector2f(managerEntity.GetRenderWindow().mapCoordsToPixel(position));
 
 		sf::Vector2f size = {
 			jsonData.value("size", json::array({0.0, 0.0}))[0],
