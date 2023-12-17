@@ -196,13 +196,14 @@ void AI_Agent::Chase(sf::RenderWindow& window, float deltaTime) {
             currentShootTimer = 0;
         }
 
-        sf::Vector2f targetPosition = _target->getPosition();
-        sf::Vector2f objectPosition = _circle.getPosition();
-        sf::Vector2f direction = MathLib::NormalizedVector(targetPosition - objectPosition);
+        if (MathLib::GetDistanceBetweenVectors(_circle.getPosition(), _target->getPosition()) >  35.0f) {
+            sf::Vector2f targetPosition = _target->getPosition();
+            sf::Vector2f objectPosition = _circle.getPosition();
+            sf::Vector2f direction = MathLib::NormalizedVector(targetPosition - objectPosition);
 
-
-        _circle.move(direction * _speed * deltaTime);
-
+            _circle.move(direction * _speed * deltaTime);
+        }
+       
     }
 }
 

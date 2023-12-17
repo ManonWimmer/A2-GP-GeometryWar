@@ -113,6 +113,7 @@ void Player::CheckInvincibility(float deltaTime)
 void Player::OnDestroy()
 {
 	if (ptrPistol != nullptr)   ptrPistol->DestroyItSelf();
+	if (_light != nullptr) _light->DestroyItSelf();
 }
 
 sf::CircleShape& Player::GetEntityCircleShape()
