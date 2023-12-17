@@ -43,5 +43,7 @@ public:
 
 private:
 	int _bulletSpeed;
+	sf::RectangleShape SetAimRectangle();
+	sf::CircleShape SetProjectileShape();
 	
 };

@@ -13,22 +13,18 @@ Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	switch (weaponType)
 	{
 	case WeaponType::Pistol:
-		this->FireRate = 0.25;
-		this->_bulletSpeed = 800;
-		this->FireTime = 2;
+		FireRate = 0.25;
+		_bulletSpeed = 800;
+		FireTime = 2;
 		this->ownerObject = &ownerObject;
 
-		aimRectangle.setFillColor(sf::Color::White);
-		aimRectangle.setPosition(640, 360);
-		aimRectangle.setSize(sf::Vector2f(20, 50));
-		aimRectangle.setOrigin(aimRectangle.getSize().x / 2, 0);
-
+		aimRectangle = SetAimRectangle();
 		break;
 
 	default:
-		this->FireRate = 0.5;
-		this->_bulletSpeed = 0;
-		this->FireTime = 0;
+		FireRate = 0.5;
+		_bulletSpeed = 0;
+		FireTime = 0;
 		this->ownerObject = &ownerObject;
 		break;
 	}
@@ -40,24 +36,41 @@ Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	switch (weaponType)
 	{
 	case WeaponType::Pistol:
-		this->FireRate = 0.25;
-		this->_bulletSpeed = 800;
-		this->FireTime = 2;
+		FireRate = 0.25;
+		_bulletSpeed = 800;
+		FireTime = 2;
 		this->ownerObject = &ownerObject;
 
-		aimRectangle.setFillColor(sf::Color::White);
-		aimRectangle.setPosition(640, 360);
-		aimRectangle.setSize(sf::Vector2f(20, 50));
-		aimRectangle.setOrigin(aimRectangle.getSize().x / 2, 0);
+		aimRectangle = SetAimRectangle();
 		break;
 
 	default:
-		this->FireRate = 0.5;
-		this->_bulletSpeed = 0;
-		this->FireTime = 0;
+		FireRate = 0.5;
+		_bulletSpeed = 0;
+		FireTime = 0;
 		this->ownerObject = &ownerObject;
 		break;
 	}
+}
+
+sf::RectangleShape Weapon::SetAimRectangle()
+{
+	sf::RectangleShape tempRect;
+	tempRect.setFillColor(sf::Color::White);
+	tempRect.setPosition(640, 360);
+	tempRect.setSize(sf::Vector2f(20, 50));
+	tempRect.setOrigin(tempRect.getSize().x / 2, 0);
+	return tempRect;
+}
+sf::CircleShape Weapon::SetProjectileShape()
+{
+	sf::CircleShape projectileShape;
+	projectileShape.setOutlineColor(sf::Color(255, 204, 229, 255));
+	projectileShape.setFillColor(sf::Color::White);
+	projectileShape.setOutlineThickness(4);
+	projectileShape.setRadius(6);
+
+	return projectileShape;
 }
 
 void Weapon::Shoot(sf::RenderWindow& window)
@@ -69,10 +82,7 @@ void Weapon::Shoot(sf::RenderWindow& window)
 
 	// Projectile shape
 	sf::CircleShape projectileShape;
-	projectileShape.setOutlineColor(sf::Color(255, 204, 229, 255));
-	projectileShape.setFillColor(sf::Color::White);
-	projectileShape.setOutlineThickness(4);
-	projectileShape.setRadius(6);
+	projectileShape = SetProjectileShape();
 
 	sf::Vector2f targetPosition;
 	sf::Vector2f bulletOrigin;
@@ -119,42 +129,10 @@ void Weapon::Shoot(sf::RenderWindow& window)
 		default:
 			break;
 	}
-
 }
-
 
 void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& window)
 {
-	/*
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-	sf::Vector2f origin = sf::Vector2f(aimShape.getPosition().x + aimShape.getSize().x / 2, aimShape.getPosition().y + aimShape.getSize().y / 2);
-	//aimShape.setOrigin(aimShape.getSize().x / 2, aimShape.getSize().y / 2);
-	sf::Vector2f down = sf::Vector2f(0, 1);
-
-	sf::Vector2f bulletDirection = static_cast<sf::Vector2f>(mousePosition) - origin;
-
-	// Normaliser le vecteur de direction
-	float length = std::sqrt(bulletDirection.x * bulletDirection.x + bulletDirection.y * bulletDirection.y);
-	if (length != 0) {
-		bulletDirection /= length;
-	}
-
-	//float angle = atan2(down.y, down.x) - atan2(bulletDirection.y, bulletDirection.x);
-	float angle = atan2((mousePosition.y - origin.y), (mousePosition.x - origin.x));
-
-	// Conversion de l'angle en degrés
-	angle = angle * 180.0 / atan(1) * 4; // (atan(1) * 4 = pi)
-
-	if (angle < 0)
-	{
-		angle = 360 -(-angle);
-
-	}
-
-	std::cout << "angle : " << angle << std::endl;
-
-	aimShape.setRotation(angle);*/
-
 	sf::Vector2f curPos;
 	curPos.x = aimShape.getGlobalBounds().left;
 	curPos.y = aimShape.getGlobalBounds().top;
@@ -168,8 +146,6 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 		position = sf::Vector2i(_target->getPosition().x, _target->getPosition().y);
 	}
 
-	
-
 	const float PI = 3.14159265;
 
 	float dx = curPos.x - position.x;
@@ -179,8 +155,6 @@ void Weapon::CheckRotationAim(sf::RectangleShape& aimShape, sf::RenderWindow& wi
 	aimShape.setRotation(rotation + 90);
 }
 
-
-
 void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 	
 	if (_target == nullptr) {
@@ -189,8 +163,6 @@ void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 	else {
 		aimRectangle.setPosition(ownerObject->getPosition().x + (ownerObject->getRadius() * 1.0f), ownerObject->getPosition().y + (ownerObject->getRadius() * 1.0f));
 	}
-
-
 
 	if (_target == nullptr) {
 		// Verif si il peut tirer (en fonction de fire rate)
@@ -214,7 +186,6 @@ void Weapon::Update(sf::RenderWindow& window, float deltaTime) {
 		}
 	}
 	
-
 	CheckRotationAim(aimRectangle, window);
 	window.draw(aimRectangle);
 }
