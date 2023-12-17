@@ -1,9 +1,10 @@
 #include "EditeurManager.h"
 #include "Building.h"
+
 #include <iostream>
 
 EditeurManager::EditeurManager(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType)
-	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), hoveredBuilding(nullptr)
+	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _hoveredBuilding(nullptr)
 {
 
 }
@@ -23,86 +24,58 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	// M pour charger la Map
 
 
-	// IMPORTANT
-	// Le chargement de la map fonctionne pas !! Regarder du côté de la récupération des données depuis le txt.
-
 	BaseEditeurStuff(window, deltaTime);
 	std::string level1 = "Level1.json";
 	std::string level2 = "Level2.json";
 	std::string level3 = "Level3.json";
 
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-		mapManager.SaveToJSON(buildings, level1);
+		_mapManager.SaveToJSON(_buildings, level1);
 	}
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-		buildings = mapManager.LoadFromJSON(level1, managerEntity, collisionDetection, true);
+		_buildings = _mapManager.LoadFromJSON(level1, managerEntity, collisionDetection, true);
 	}
 
 
-
-	if (draggedBuilding == nullptr) {
-		HoveringAnObject(window);
-		SpawningAnObject(window);
-
-		if (hoveredBuilding != nullptr) {
-			SelectingAnObject(window);
-		}
-
-		if (selectedBuilding != nullptr) {
-			ResizeAnObject(window, deltaTime);
-			StartDraggingAnObject(window, deltaTime);
-			DeletingAnObject();
-		}
-
-	}
-	else {
-
-		sf::Vector2i pixelPos = sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()));
-
-		std::cout << "Draged Object Pixel Pos: " << pixelPos.x << " ; " << pixelPos.y << std::endl;
-
-		std::cout << "Draged Object Pos: " << draggedBuilding->GetEntityCircleShape().getPosition().x << " ; " << draggedBuilding->GetEntityCircleShape().getPosition().y << std::endl;
-		DraggingAnObject(window, deltaTime);
-	}
+	ObjectsInteraction(window, deltaTime);
 	
-
 	EndOfUpdateStuff(window, deltaTime);
 }
 
 void EditeurManager::DeletingAnObject()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && selectedBuilding != nullptr) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && _selectedBuilding != nullptr) {
 
-		for (auto it = buildings.begin(); it != buildings.end();) {
-			if (*it == selectedBuilding) {
+		for (auto it = _buildings.begin(); it != _buildings.end();) {
+			if (*it == _selectedBuilding) {
 				delete* it; 
-				it = buildings.erase(it);
+				it = _buildings.erase(it);
 			}
 			else {
 				++it;
 			}
 		}
 
-		selectedBuilding = nullptr;
+		_selectedBuilding = nullptr;
 	}
 	
 }
 
 void EditeurManager::SpawningAnObject(sf::RenderWindow& window)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && currentPressKeyTime >= pressKeyCoolDown) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "CircularWall"));
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C) && _currentPressKeyTime >= _pressKeyCoolDown) {
+		_buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "CircularWall"));
 		PressedAKey();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && currentPressKeyTime >= pressKeyCoolDown) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "RectangularWall"));
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && _currentPressKeyTime >= _pressKeyCoolDown) {
+		_buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "RectangularWall"));
 		PressedAKey();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && currentPressKeyTime >= pressKeyCoolDown) {
-		buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "AI_Fixe"));
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I) && _currentPressKeyTime >= _pressKeyCoolDown) {
+		_buildings.push_back(new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()))), "AI_Fixe"));
 		PressedAKey();
 	}
 
@@ -113,23 +86,23 @@ void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 
-		if (cursor.loadFromSystem(sf::Cursor::NotAllowed)) {
-			window.setMouseCursor(cursor);
+		if (_cursor.loadFromSystem(sf::Cursor::NotAllowed)) {
+			window.setMouseCursor(_cursor);
 		}
 
 		sf::Vector2f mousePosition = sf::Vector2f(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView())));
-		switch (draggedBuilding->GetEntityCollisionType()) {
+		switch (_draggedBuilding->GetEntityCollisionType()) {
 			case CollisionType::Circle:
-				draggedBuilding->GetEntityCircleShape().setPosition(mousePosition);
+				_draggedBuilding->GetEntityCircleShape().setPosition(mousePosition);
 				break;
 			case CollisionType::Rectangle:
-				draggedBuilding->GetEntityRectangleShape().setPosition(mousePosition);
+				_draggedBuilding->GetEntityRectangleShape().setPosition(mousePosition);
 				break;
 		}
 	}
 	else {
-		selectedBuilding = draggedBuilding;
-		draggedBuilding = nullptr;
+		_selectedBuilding = _draggedBuilding;
+		_draggedBuilding = nullptr;
 		std::cout << "End Dragging working" << std::endl;
 	}
 
@@ -138,17 +111,17 @@ void EditeurManager::DraggingAnObject(sf::RenderWindow& window, float deltaTime)
 void EditeurManager::StartDraggingAnObject(sf::RenderWindow& window, float deltaTime)
 {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		draggingCurrentTime += deltaTime;
+		_draggingCurrentTime += deltaTime;
 
-		if (draggingCurrentTime >= draggingMinTime) {
-			draggingCurrentTime = 0;
+		if (_draggingCurrentTime >= _draggingMinTime) {
+			_draggingCurrentTime = 0;
 
-			draggedBuilding = selectedBuilding;
-			selectedBuilding = nullptr;
+			_draggedBuilding = _selectedBuilding;
+			_selectedBuilding = nullptr;
 		}
 	}
 	else {
-		draggingCurrentTime = 0;
+		_draggingCurrentTime = 0;
 	}
 }
 
@@ -157,30 +130,30 @@ void EditeurManager::SelectingAnObject(sf::RenderWindow& window)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 
-		if (cursor.loadFromSystem(sf::Cursor::Hand)) {
-			window.setMouseCursor(cursor);
+		if (_cursor.loadFromSystem(sf::Cursor::Hand)) {
+			window.setMouseCursor(_cursor);
 		}
 
-		if(selectedBuilding != nullptr) selectedBuilding->ResetColor();
+		if(_selectedBuilding != nullptr) _selectedBuilding->ResetColor();
 
-		hoveredBuilding->ResetColor();
+		_hoveredBuilding->ResetColor();
 
-		selectedBuilding = hoveredBuilding;
-		hoveredBuilding = nullptr;
+		_selectedBuilding = _hoveredBuilding;
+		_hoveredBuilding = nullptr;
 
 		sf::CircleShape* circleShape;
 		sf::RectangleShape* rectangleShape;
 
-		switch (selectedBuilding->GetEntityCollisionType())
+		switch (_selectedBuilding->GetEntityCollisionType())
 		{
 			case CollisionType::Circle:
-				circleShape = &selectedBuilding->GetEntityCircleShape();
-				circleShape->setOutlineColor(selectedOutlineColor);
+				circleShape = &_selectedBuilding->GetEntityCircleShape();
+				circleShape->setOutlineColor(_selectedOutlineColor);
 				break;
 
 			case CollisionType::Rectangle:
-				rectangleShape = &selectedBuilding->GetEntityRectangleShape();
-				rectangleShape->setOutlineColor(selectedOutlineColor);
+				rectangleShape = &_selectedBuilding->GetEntityRectangleShape();
+				rectangleShape->setOutlineColor(_selectedOutlineColor);
 				break;
 		}
 		
@@ -190,10 +163,10 @@ void EditeurManager::SelectingAnObject(sf::RenderWindow& window)
 void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 {
 
-	if (buildings.size() <= 0) return;
+	if (_buildings.size() <= 0) return;
 
-	if (hoveredBuilding != nullptr) {
-		hoveredBuilding->ResetColor();
+	if (_hoveredBuilding != nullptr) {
+		_hoveredBuilding->ResetColor();
 	}
 
 	std::list<Building*> hoveredBuildings;
@@ -203,7 +176,7 @@ void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 
 
 	// Taking only hovered Buildings.
-	for (it = buildings.begin(); it != buildings.end(); it++)
+	for (it = _buildings.begin(); it != _buildings.end(); it++)
 	{
 		switch ((*it)->GetEntityCollisionType())
 		{
@@ -224,7 +197,7 @@ void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 
 	if (hoveredBuildings.size() <= 0) return;
 
-	for (it = buildings.begin(); it != buildings.end(); it++)
+	for (it = _buildings.begin(); it != _buildings.end(); it++)
 	{
 		float currentDistance = FLT_MAX;
 		sf::Vector2f circleShapePosition;
@@ -248,33 +221,33 @@ void EditeurManager::HoveringAnObject(sf::RenderWindow& window)
 		if (currentDistance < closerDistance) 
 		{
 			closerDistance = currentDistance;
-			hoveredBuilding = (*it);
+			_hoveredBuilding = (*it);
 		}
 
 	}
 
 
-	if (hoveredBuilding == selectedBuilding) {
-		hoveredBuilding = nullptr;
+	if (_hoveredBuilding == _selectedBuilding) {
+		_hoveredBuilding = nullptr;
 		return;
 	}
 
-	if (hoveredBuilding != nullptr) {
+	if (_hoveredBuilding != nullptr) {
 
 		sf::CircleShape* circleShape;
 		sf::RectangleShape* rectangleShape;
 
-		switch (hoveredBuilding->GetEntityCollisionType())
+		switch (_hoveredBuilding->GetEntityCollisionType())
 		{
 			case CollisionType::Circle:
-				circleShape = &hoveredBuilding->GetEntityCircleShape();
-				circleShape->setOutlineColor(hoveredOutlineColor);
+				circleShape = &_hoveredBuilding->GetEntityCircleShape();
+				circleShape->setOutlineColor(_hoveredOutlineColor);
 				//circleShape->setOutlineThickness(circleShape->getRadius() / 7.0f);
 				break;
 
 			case CollisionType::Rectangle:
-				rectangleShape = &hoveredBuilding->GetEntityRectangleShape();
-				rectangleShape->setOutlineColor(hoveredOutlineColor);
+				rectangleShape = &_hoveredBuilding->GetEntityRectangleShape();
+				rectangleShape->setOutlineColor(_hoveredOutlineColor);
 				//rectangleShape->setOutlineThickness((rectangleShape->getSize().x / 2 + rectangleShape->getSize().y / 2) / 7.0f);
 				break;
 		}
@@ -297,14 +270,14 @@ void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 		float scaleChange = FLT_MAX;
 		float newRadius = FLT_MAX;
 
-		switch (selectedBuilding->GetEntityCollisionType())
+		switch (_selectedBuilding->GetEntityCollisionType())
 		{
 			case CollisionType::Circle:
-				circleShape = &selectedBuilding->GetEntityCircleShape();
+				circleShape = &_selectedBuilding->GetEntityCircleShape();
 
-				distance = GetDistance(framePassedMousePosition, sf::Vector2f(sf::Mouse::getPosition(window)));
+				distance = GetDistance(_framePassedMousePosition, sf::Vector2f(sf::Mouse::getPosition(window)));
 				scaleChange = distance * deltaTime * resizeSpeed;
-				newRadius = circleShape->getRadius() + (sf::Mouse::getPosition(window).x < framePassedMousePosition.x ? -scaleChange : scaleChange);
+				newRadius = circleShape->getRadius() + (sf::Mouse::getPosition(window).x < _framePassedMousePosition.x ? -scaleChange : scaleChange);
 
 				circleShape->setRadius(std::max(newRadius, 0.0f));
 
@@ -315,11 +288,11 @@ void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 			case CollisionType::Rectangle:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 				{
-					rectangleShape = &selectedBuilding->GetEntityRectangleShape();
-					scaleChange = GetDistance(framePassedMousePosition, sf::Vector2f(sf::Mouse::getPosition(window))) * deltaTime * resizeSpeed;
+					rectangleShape = &_selectedBuilding->GetEntityRectangleShape();
+					scaleChange = GetDistance(_framePassedMousePosition, sf::Vector2f(sf::Mouse::getPosition(window))) * deltaTime * resizeSpeed;
 
 					// vérifie si le souris s'approche ou s'éloigne
-					isNearer = GetDistance(sf::Vector2f(sf::Mouse::getPosition(window)), rectangleShape->getPosition()) < GetDistance(framePassedMousePosition, rectangleShape->getPosition());
+					isNearer = GetDistance(sf::Vector2f(sf::Mouse::getPosition(window)), rectangleShape->getPosition()) < GetDistance(_framePassedMousePosition, rectangleShape->getPosition());
 
 
 					if (isNearer)
@@ -335,8 +308,8 @@ void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 
 				}
 				else {
-					rectangleShape = &selectedBuilding->GetEntityRectangleShape();
-					incrementScale = (sf::Vector2f(sf::Mouse::getPosition(window)) - framePassedMousePosition) * deltaTime * resizeSpeed;
+					rectangleShape = &_selectedBuilding->GetEntityRectangleShape();
+					incrementScale = (sf::Vector2f(sf::Mouse::getPosition(window)) - _framePassedMousePosition) * deltaTime * resizeSpeed;
 					rectangleShape->setSize(rectangleShape->getSize() + incrementScale);
 				}
 
@@ -351,33 +324,62 @@ void EditeurManager::ResizeAnObject(sf::RenderWindow& window, float deltaTime)
 
 void EditeurManager::EndOfUpdateStuff(sf::RenderWindow& window, float deltaTime)
 {
-	framePassedMousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
+	_framePassedMousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
 }
 
 void EditeurManager::BaseEditeurStuff(sf::RenderWindow& window, float deltaTime)
 {
-	currentPressKeyTime += deltaTime;
-	cursorActualisation += deltaTime;
+	_currentPressKeyTime += deltaTime;
+	_cursorActualisation += deltaTime;
 
-	if (cursorActualisation >= 0.3f) {
-		cursorActualisation = 0;
-		if (cursor.loadFromSystem(sf::Cursor::Arrow)) {
-			window.setMouseCursor(cursor);
+	if (_cursorActualisation >= 0.3f) {
+		_cursorActualisation = 0;
+		if (_cursor.loadFromSystem(sf::Cursor::Arrow)) {
+			window.setMouseCursor(_cursor);
 		}
 	}
 	
 
 	std::list<Building*>::iterator it;
 
-	for (it = buildings.begin(); it != buildings.end(); it++)
+	for (it = _buildings.begin(); it != _buildings.end(); it++)
 	{
 		(*it)->Update(window, deltaTime);
 	}
 }
 
+void EditeurManager::ObjectsInteraction(sf::RenderWindow& window, float deltaTime)
+{
+
+	if (_draggedBuilding == nullptr) {
+		HoveringAnObject(window);
+		SpawningAnObject(window);
+
+		if (_hoveredBuilding != nullptr) {
+			SelectingAnObject(window);
+		}
+
+		if (_selectedBuilding != nullptr) {
+			ResizeAnObject(window, deltaTime);
+			StartDraggingAnObject(window, deltaTime);
+			DeletingAnObject();
+		}
+
+	}
+	else {
+
+		sf::Vector2i pixelPos = sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView()));
+
+		std::cout << "Draged Object Pixel Pos: " << pixelPos.x << " ; " << pixelPos.y << std::endl;
+		std::cout << "Draged Object Pos: " << _draggedBuilding->GetEntityCircleShape().getPosition().x << " ; " << _draggedBuilding->GetEntityCircleShape().getPosition().y << std::endl;
+		DraggingAnObject(window, deltaTime);
+	}
+
+}
+
 void EditeurManager::PressedAKey()
 {
-	currentPressKeyTime = 0;
+	_currentPressKeyTime = 0;
 }
 
 float EditeurManager::GetPositiveFloat(float value)

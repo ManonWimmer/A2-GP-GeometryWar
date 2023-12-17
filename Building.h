@@ -36,6 +36,5 @@ private:
 
 	sf::CircleShape patrolPointA;
 	sf::CircleShape patrolPointB;
-
 };
 

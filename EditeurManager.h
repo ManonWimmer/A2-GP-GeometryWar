@@ -28,6 +28,7 @@ private:
 
 	void EndOfUpdateStuff(sf::RenderWindow& window, float deltaTime);
 	void BaseEditeurStuff(sf::RenderWindow& window, float deltaTime);
+	void ObjectsInteraction(sf::RenderWindow& window, float deltaTime);
 	void PressedAKey();
 
 	float GetPositiveFloat(float value);
@@ -36,30 +37,29 @@ private:
 	bool IsPointInsideCircle(sf::CircleShape& circle, sf::Vector2f point);
 	bool IsPointInsideRectangle(sf::RectangleShape& rectangle, sf::Vector2f point);
 
-	float draggingMinTime = 0.175f;
-	float draggingCurrentTime;
+	float _draggingMinTime = 0.175f;
+	float _draggingCurrentTime;
 
-	float pressKeyCoolDown = 0.25f;
-	float currentPressKeyTime;
+	float _pressKeyCoolDown = 0.25f;
+	float _currentPressKeyTime;
 
-	float cursorActualisation;
-	sf::Cursor cursor;
-	sf::Vector2f framePassedMousePosition;
+	float _cursorActualisation;
+	sf::Cursor _cursor;
+	sf::Vector2f _framePassedMousePosition;
 
-	//std::list<Building*> buildings;
-	SaveAndLoadMap mapManager;
-	std::list<Building*> buildings;
+	SaveAndLoadMap _mapManager;
+	std::list<Building*> _buildings;
 
-	Building* draggedBuilding;
-	Building* selectedBuilding;
-	Building* hoveredBuilding;
+	Building* _draggedBuilding;
+	Building* _selectedBuilding;
+	Building* _hoveredBuilding;
 
-	sf::Color baseOutlineColor = sf::Color::Transparent;
-	sf::Color hoveredOutlineColor = sf::Color::Cyan;
-	sf::Color selectedOutlineColor = sf::Color::Green;
+	sf::Color _baseOutlineColor = sf::Color::Transparent;
+	sf::Color _hoveredOutlineColor = sf::Color::Cyan;
+	sf::Color _selectedOutlineColor = sf::Color::Green;
 
-	bool isHolding;
-	bool isHovering;
+	bool _isHolding;
+	bool _isHovering;
 
 };
 

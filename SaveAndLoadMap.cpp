@@ -8,7 +8,6 @@
 
 void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string fileName) {
 
-    // Create a JSON object
     json jsonData;
 
     //Load Data into Json
@@ -16,7 +15,7 @@ void SaveAndLoadMap::SaveToJSON(std::list<Building*>& buildingList, std::string 
         jsonData.push_back(building->SaveBuilding());
     }
 
-    // Save JSON data to a file
+    // Save JSON data into a file
     std::ofstream outputFile(fileName);
     if (outputFile.is_open()) {
         outputFile << jsonData.dump(2);
@@ -43,7 +42,7 @@ std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerE
         inputFile >> jsonData;
         inputFile.close();
 
-        // Process JSON data and create Building objects
+        // Get JSON data and create Building objects
         for (auto& buildingData : jsonData) {
             loadedBuildingList.push_back(Building::LoadBuilding(buildingData, managerEntity, collisionDetection, inEditor));
         }
@@ -76,5 +75,4 @@ void SaveAndLoadMap::ClearCurrentMap(ManagerEntity& managerEntity)
         managerEntity.RemoveEntity(*it);
         it = buildings.erase(it);
     }
-
 }

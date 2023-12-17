@@ -6,13 +6,8 @@
 
 
 RayCast::RayCast(sf::Vector2f origin, sf::Vector2f localDirection, float length, bool drawingOnContact)
+	: _origin(origin), _localDirection(localDirection), _length(length), _distance(_length), _drawingOnContact(drawingOnContact), _impactPoint(_origin + (_localDirection * _length))
 {
-	_origin = origin;
-	_localDirection = localDirection;
-	_length = length;
-	_distance = _length;
-	_drawingOnContact = drawingOnContact;
-	_impactPoint = _origin + (_localDirection * _length);
 
 	CalculNormalizedDirection();
 
@@ -26,29 +21,29 @@ void RayCast::DrawRayCast(sf::RenderWindow& window, ManagerEntity& managerEntity
 	CalculateImpactPoint(managerEntity);
 
 	if (_drawingOnContact) {
-
-		sf::Vertex line[] =
-		{
-			sf::Vertex(sf::Vector2f(_origin.x, _origin.y), sf::Color::White),
-			sf::Vertex(sf::Vector2f(_impactPoint.x, _impactPoint.y), sf::Color::Red)
-		};
-
-		window.draw(line, 2, sf::Lines);
-		
-		_contactShape.setPosition(_impactPoint);
-		window.draw(_contactShape);
+		DrawDebugRayCast(window);
 	}
 
 	//std::cout << "Impact Point: " << _impactPoint.x << " ; " << _impactPoint.y << std::endl;
+}
 
+void RayCast::DrawDebugRayCast(sf::RenderWindow& window)
+{
+	sf::Vertex line[] =
+	{
+		sf::Vertex(sf::Vector2f(_origin.x, _origin.y), sf::Color::White),
+		sf::Vertex(sf::Vector2f(_impactPoint.x, _impactPoint.y), sf::Color::Red)
+	};
+
+	window.draw(line, 2, sf::Lines);
+
+	_contactShape.setPosition(_impactPoint);
+	window.draw(_contactShape);
 }
 
 void RayCast::CalculNormalizedDirection()
 {
 	_normalizedDirection = MathLib::NormalizedVector(_localDirection);
-
-	//if (_localDirection == sf::Vector2f(0, 0)) std::cout << "COMMMMMMUNIST !!!!!!!!!" << std::endl;
-
 }
 
 void RayCast::CalculateImpactPoint(ManagerEntity& managerEntity)
@@ -68,7 +63,6 @@ void RayCast::CalculateImpactPoint(ManagerEntity& managerEntity)
 		//check if it's the player
 		if (x->first->GetEntityType() == EntityType::Player_Entity) continue;
 
-		//std::cout << "RAy cast working" << std::endl;
 
 		
 		
@@ -113,8 +107,6 @@ void RayCast::CalculateImpactPoint(ManagerEntity& managerEntity)
 			_impactPoint = _origin + (_normalizedDirection * _length);
 		}
 
-		
-
 	}
 
 	delete intersectionPoint;
@@ -133,7 +125,6 @@ bool RayCast::GetContact()
 sf::Vector2f RayCast::GetImpactPoint()
 {
 	//std::cout << "Impact Point: " << _impactPoint.x << " ; " << _impactPoint.y << std::endl;
-
 	return _impactPoint;
 }
 

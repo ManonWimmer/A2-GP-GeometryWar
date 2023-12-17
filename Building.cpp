@@ -59,11 +59,6 @@ void Building::Update(sf::RenderWindow& window, float deltaTime) {
 		case CollisionType::Circle:
 			buildingCircleShape.setOrigin(buildingCircleShape.getRadius(), buildingCircleShape.getRadius());
 			window.draw(buildingCircleShape);
-
-			if (buildingName == "AI") {
-				
-			}
-
 			break;
 
 		case CollisionType::Rectangle:

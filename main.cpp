@@ -29,20 +29,17 @@ int main()
 
 	ManagerEntity entityManager(&collisionDetection, &window);
 	entityManager.InitializedSystems();
+	entityManager.GetSoundManager().PlaySound(SoundEnums::MusicMainMenu);
 
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 	gameManager.InitializedGameManager(window, gameManager);
 	entityManager.AddEntity(&gameManager);
-
 	collisionDetection.SetGameManager(&gameManager);
-
-	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	bool hasBurst = false;
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation random
 
-	entityManager.GetSoundManager().PlaySound(SoundEnums::MusicMainMenu);
-
+	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	while (window.isOpen())
 	{
@@ -64,15 +61,12 @@ int main()
 		}
 
 		float deltaTime = frameClock.restart().asSeconds();
-		std::cout << 1.f / deltaTime << " FPS" << std::endl;
-
 
 		// Remise au noir de toute la fenêtre
 		window.clear(sf::Color(90, 90, 90, 255));
 		
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
-
 		//editeurManager.Update(window, deltaTime);
 
 		// On présente la fenêtre sur l'écran

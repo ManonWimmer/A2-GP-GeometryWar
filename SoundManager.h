@@ -17,7 +17,6 @@ public:
 	virtual void Update(sf::RenderWindow& window, float deltaTime) override;
 
 	void PlaySound(SoundEnums sound);
-	void RemoveSound(SoundEmitter& soundEmitter);
 	std::unordered_map<SoundEnums, sf::SoundBuffer*>& GetSoundBank();
 
 private:
@@ -32,8 +31,6 @@ private:
 	std::string _audioType = ".wav";
 
 	std::string fileName_MusicMainMenu = "007_James_Bond_Theme";
-	std::string fileName_MusicLevel1;
-	std::string fileName_MusicLevel2;
 
 	std::string fileName_ShotPistolSound = "pistol_shot";
 	std::string fileName_ImpactConcreteSound = "Concrete_4";

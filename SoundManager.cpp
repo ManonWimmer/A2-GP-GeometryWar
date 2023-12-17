@@ -13,11 +13,6 @@ SoundManager::SoundManager(ManagerEntity& managerEntity, CollisionDetection& col
 
 void SoundManager::Update(sf::RenderWindow& window, float deltaTime) {
 
-
-	/*for (SoundEmitter* emitter : _playedSounds) {
-		emitter->Update(window, deltaTime);
-	}*/
-
 }
 
 
@@ -49,12 +44,6 @@ void SoundManager::InitializedSoundBuffer(SoundEnums sound, std::string fileName
 	}
 }
 
-
-
-void SoundManager::RemoveSound(SoundEmitter& soundEmitter)
-{
-	//_playedSounds.remove(soundEmitter);
-}
 
 std::unordered_map<SoundEnums, sf::SoundBuffer*>& SoundManager::GetSoundBank()
 {

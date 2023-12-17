@@ -12,6 +12,7 @@ class RayCast
 public:
 	RayCast(sf::Vector2f origin, sf::Vector2f localDirection, float length, bool drawingOnContact);
 	void DrawRayCast(sf::RenderWindow& window, ManagerEntity& managerEntity);
+	void DrawDebugRayCast(sf::RenderWindow& window);
 	void CalculNormalizedDirection();
 	void CalculateImpactPoint(ManagerEntity& managerEntity);
 	void SetRayOrigin(sf::Vector2f vector);
