@@ -15,11 +15,11 @@ class GameManager;
 class SaveAndLoadMap
 {
 public:
-	void LoadMap(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
+	void LoadMap(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection, bool inEditor);
 	void ClearCurrentMap(ManagerEntity& managerEntity);
 
 	void SaveToJSON(std::list<Building*>& buildingList, std::string fileName);
-	std::list<Building*> LoadFromJSON(std::string filePath, ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
+	std::list<Building*> LoadFromJSON(std::string filePath, ManagerEntity& managerEntity, CollisionDetection& collisionDetection, bool inEditor);
 
 	std::list<Building*>& GetBuildings();
 

@@ -64,6 +64,8 @@ int main()
 		}
 
 		float deltaTime = frameClock.restart().asSeconds();
+		std::cout << 1.f / deltaTime << " FPS" << std::endl;
+
 
 		// Remise au noir de toute la fenêtre
 		window.clear(sf::Color(90, 90, 90, 255));
@@ -72,28 +74,6 @@ int main()
 		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
 
 		//editeurManager.Update(window, deltaTime);
-
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		//{
-		//	if (hasBurst == false)
-		//	{
-		//		//gameManager.SwitchMode();
-		//		hasBurst = true;
-
-		//		camera.ChangeToBig(window);
-
-		//		entityManager.GetParticleSystem().Burst(sf::Vector2f(100, 100), 5, 150, 0.1, 2, sf::Color::Yellow, sf::Vector2f(-1, -1), 360);	// Preset impact de balle
-		//	}
-		//}
-		//else
-		//{
-		//	hasBurst = false;
-		//}
-
-
-
-
-		//sf::Vector2f mousePosition(sf::Vector2i(window.mapPixelToCoords(sf::Mouse::getPosition(window), window.getView())));
 
 		// On présente la fenêtre sur l'écran
 		window.display();

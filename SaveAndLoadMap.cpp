@@ -33,7 +33,7 @@ std::list<Building*>& SaveAndLoadMap::GetBuildings()
     return buildings;
 }
 
-std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
+std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection, bool inEditor) {
     std::list<Building*> loadedBuildingList;
 
     // Load JSON data from the file
@@ -45,7 +45,7 @@ std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerE
 
         // Process JSON data and create Building objects
         for (auto& buildingData : jsonData) {
-            loadedBuildingList.push_back(Building::LoadBuilding(buildingData, managerEntity, collisionDetection));
+            loadedBuildingList.push_back(Building::LoadBuilding(buildingData, managerEntity, collisionDetection, inEditor));
         }
 
         std::cout << "JSON data loaded from '" << fileName << "'" << std::endl;
@@ -57,11 +57,11 @@ std::list<Building*> SaveAndLoadMap::LoadFromJSON(std::string fileName, ManagerE
     return loadedBuildingList;
 }
 
-void SaveAndLoadMap::LoadMap(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection)
+void SaveAndLoadMap::LoadMap(std::string fileName, ManagerEntity& managerEntity, CollisionDetection& collisionDetection, bool inEditor)
 {
-    ClearCurrentMap(managerEntity);
+    if(buildings.size() != 0)   ClearCurrentMap(managerEntity);
 
-    buildings = LoadFromJSON(fileName, managerEntity, collisionDetection);
+    buildings = LoadFromJSON(fileName, managerEntity, collisionDetection, inEditor);
 
     for (Building* building : buildings) {
         managerEntity.AddEntity(building);
@@ -70,7 +70,11 @@ void SaveAndLoadMap::LoadMap(std::string fileName, ManagerEntity& managerEntity,
 
 void SaveAndLoadMap::ClearCurrentMap(ManagerEntity& managerEntity)
 {
-    for (Building* building : buildings) {
-        managerEntity.RemoveEntity(building);
+    std::list<Building*>::iterator it;
+
+    for (it = buildings.begin(); it != buildings.end();) {
+        managerEntity.RemoveEntity(*it);
+        it = buildings.erase(it);
     }
+
 }

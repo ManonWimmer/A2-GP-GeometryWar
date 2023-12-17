@@ -15,8 +15,7 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	// Maintenir clique gauche pour drag un objet.
 	// R pour spawn un rectangle.
 	// C pour spawn un cercle.
-	// I pour spawn une IA avec des points de patrouille. (le point clair est le point A, le point foncé est le point B)
-	// K pour directement spawn une IA fixe.
+	// I pour directement spawn une IA fixe.
 	// S en ayant un objet sélectionner pour resize.
 	// S + Shift en ayant un objet sélectionner pour resize uniformément.
 	// F en ayant un objet de sélectionner pour supprimer.
@@ -33,11 +32,11 @@ void EditeurManager::Update(sf::RenderWindow& window, float deltaTime)
 	std::string level3 = "Level3.json";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-		mapManager.SaveToJSON(buildings, level2);
+		mapManager.SaveToJSON(buildings, level1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::M)) {
-		buildings = mapManager.LoadFromJSON(level2, managerEntity, collisionDetection);
+		buildings = mapManager.LoadFromJSON(level1, managerEntity, collisionDetection, true);
 	}
 
 

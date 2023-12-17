@@ -27,7 +27,7 @@ public:
 
 
 	json SaveBuilding();
-	static Building* LoadBuilding(json& file, ManagerEntity& managerEntity, CollisionDetection& collisionDetection);
+	static Building* LoadBuilding(json& file, ManagerEntity& managerEntity, CollisionDetection& collisionDetection, bool inEditor);
 	std::string buildingName;
 
 private:

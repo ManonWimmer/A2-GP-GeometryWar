@@ -175,6 +175,8 @@ void GameManager::CheckGameEnd()
 			_gameLose = true;
 			_inMenu = true;
 			_gameEnded = true;
+			_player = nullptr;
+			_mapManager->ClearCurrentMap(managerEntity);
 		}
 		else if (_allEnemiesDead)
 		{
@@ -182,6 +184,9 @@ void GameManager::CheckGameEnd()
 			_gameWon = true;
 			_inMenu = true;
 			_gameEnded = true;
+			managerEntity.RemoveEntity(_player);
+			_player = nullptr;
+			_mapManager->ClearCurrentMap(managerEntity);
 		}
 
 		if (_gameEnded) {
@@ -189,14 +194,21 @@ void GameManager::CheckGameEnd()
 
 			while (it2 != managerEntity.GetEntityDictionary().end())
 			{
-				if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Player_Entity || it2->first->GetEntityType() == EntityType::Building_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity || it2->first->GetEntityType() == EntityType::Weapon_Entity) && it2->second == true)
+				/*if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Building_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity) && it2->second == true)
 				{
-					it2->second = false;
+					managerEntity.RemoveEntity(it2->first);
 				}
+				it2++;*/
+
+				if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity || it2->first->GetEntityType() == EntityType::Weapon_Entity) && it2->second == true)
+				{
+					managerEntity.RemoveEntity(it2->first);
+				}
+				
 				it2++;
 			}
 		}
-		else {
+		/*else {
 			std::unordered_map<Entity*, bool>::iterator it2 = managerEntity.GetEntityDictionary().begin();
 
 			while (it2 != managerEntity.GetEntityDictionary().end())
@@ -207,7 +219,7 @@ void GameManager::CheckGameEnd()
 				}
 				it2++;
 			}
-		}
+		}*/
 	}
 }
 
@@ -230,7 +242,7 @@ void GameManager::StartLevel(int levelNumber)
 				_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(2000, 900));
 				managerEntity.AddEntity(_player);
 			}
-			_mapManager->LoadMap("Level1.json", managerEntity, collisionDetection);
+			_mapManager->LoadMap("Level1.json", managerEntity, collisionDetection, false);
 			//_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(120, 640), sf::Vector2f(1000, 80), sf::Vector2f(600, 80),  sf::Vector2f(600, 640) };
 		break;
 
@@ -241,7 +253,7 @@ void GameManager::StartLevel(int levelNumber)
 				_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(1000, 500));
 				managerEntity.AddEntity(_player);
 			}
-			_mapManager->LoadMap("Level2.json", managerEntity, collisionDetection);
+			_mapManager->LoadMap("Level2.json", managerEntity, collisionDetection, false);
 			//_enemiesStartPositions = { sf::Vector2f(1200, 80), sf::Vector2f(1200, 640), sf::Vector2f(120, 640), sf::Vector2f(1000, 80), sf::Vector2f(600, 80),  sf::Vector2f(600, 640) };
 			break;
 

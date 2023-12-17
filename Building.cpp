@@ -151,7 +151,7 @@ json Building::SaveBuilding()
 
 
 
-Building*  Building::LoadBuilding(json& jsonData, ManagerEntity& managerEntity, CollisionDetection& collisionDetection) {
+Building*  Building::LoadBuilding(json& jsonData, ManagerEntity& managerEntity, CollisionDetection& collisionDetection, bool inEditor) {
 	std::string newBuildingName = jsonData.value("name", "");
 
 	if (newBuildingName == "CircularWall") {
@@ -195,13 +195,29 @@ Building*  Building::LoadBuilding(json& jsonData, ManagerEntity& managerEntity, 
 		return newBuilding;
 	}
 	else if (newBuildingName == "AI_Fixe") {
+
 		sf::Vector2f position = {
 			jsonData.value("position", json::array({0.0, 0.0}))[0],
 			jsonData.value("position", json::array({0.0, 0.0}))[1]
 		};
 
-		AI_Agent* ptrEnemy = new AI_Agent(managerEntity, collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, 15.0f, position, 100.0f, *collisionDetection.GetGameManager().GetPlayer());
-		managerEntity.AddEntity(ptrEnemy);
+		if (inEditor) {
+			float radius = 15.0f;
+			float rotation = 0.0f;
+
+			Building* newBuilding = new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Circle, position, newBuildingName);
+			sf::CircleShape& newCircleShape = newBuilding->GetEntityCircleShape();
+			newCircleShape.setPosition(position);
+			newCircleShape.setRadius(radius);
+			newCircleShape.setRotation(rotation);
+
+			return newBuilding;
+		}
+		else {
+			AI_Agent* ptrEnemy = new AI_Agent(managerEntity, collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, 15.0f, position, 100.0f, *collisionDetection.GetGameManager().GetPlayer());
+			managerEntity.AddEntity(ptrEnemy);
+		}
+		
 	}
 
 	return new Building(managerEntity, collisionDetection, EntityType::Building_Entity, Faction::None_Faction, CollisionType::Rectangle, sf::Vector2f(0, 0), "ErrorBuilding");
