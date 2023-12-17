@@ -1,5 +1,4 @@
 #include "AI_Agent.h"
-
 #include <iostream>
 #include <math.h>
 #include <cmath>
@@ -10,36 +9,14 @@
 #include "Weapon.h"
 
 AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, float radius, sf::Vector2f spawnPosition, float speed, Player& player)
-    : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f)
+    : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _speed(speed), currentPlayer(player), _currentFieldViewRotation(0), _rotationSpeed(60.0f), coolDown(3.0f), currentShootTimer(0.0f)
 {
     _life = 100;
-    coolDown = 3.0f;
-    currentShootTimer = 0.0f;
 
-    _circle.setFillColor(sf::Color::Black);
-    _circle.setRadius(radius);
-    _circle.setOrigin(_circle.getRadius(), _circle.getRadius());
-
-    _circle.setOutlineThickness(radius / 5);
-    _circle.setOutlineColor(sf::Color(255, 255, 255, 180));
-
-    _circle.setRadius(radius);
-    _circle.setPosition(spawnPosition);
+    InitializedAgentShape(radius, spawnPosition);
+    InitializedAgentFieldView();
     
-
-    fieldView = sf::ConvexShape();
-    fieldView.setPointCount(3);
-
-    fieldView.setPoint(0, sf::Vector2f(0, 0));
-    fieldView.setPoint(1, sf::Vector2f(-100, 200));
-    fieldView.setPoint(2, sf::Vector2f(100, 200));
-
-    fieldView.setFillColor(sf::Color(255, 255, 255, 180));
-    fieldView.setOrigin(fieldView.getPoint(0));
-    fieldView.setPosition(_circle.getPosition());
-
     _target = nullptr;
-    //_target->setPosition(640, 360);
 
 
     fvCorner1.setRadius(7.0f);
@@ -55,11 +32,11 @@ AI_Agent::AI_Agent(ManagerEntity& managerEntity, CollisionDetection& collisionDe
 
 bool AI_Agent::CheckFieldOfViewCorners()
 {
-    if (GetDistanceBetweenVectors(GetFieldViewPointWorldCoordinates(fieldView.getPoint(0)), currentPlayer.circleShape.getPosition()) <= currentPlayer.circleShape.getRadius()) return true;
+    if (MathLib::GetDistanceBetweenVectors(GetFieldViewPointWorldCoordinates(fieldView.getPoint(0)), currentPlayer.circleShape.getPosition()) <= currentPlayer.circleShape.getRadius()) return true;
 
-    if (GetDistanceBetweenVectors(GetFieldViewPointWorldCoordinates(fieldView.getPoint(1)), currentPlayer.circleShape.getPosition()) <= currentPlayer.circleShape.getRadius()) return true;
+    if (MathLib::GetDistanceBetweenVectors(GetFieldViewPointWorldCoordinates(fieldView.getPoint(1)), currentPlayer.circleShape.getPosition()) <= currentPlayer.circleShape.getRadius()) return true;
 
-    if (GetDistanceBetweenVectors(GetFieldViewPointWorldCoordinates(fieldView.getPoint(2)), currentPlayer.circleShape.getPosition()) <= currentPlayer.circleShape.getRadius()) return true;
+    if (MathLib::GetDistanceBetweenVectors(GetFieldViewPointWorldCoordinates(fieldView.getPoint(2)), currentPlayer.circleShape.getPosition()) <= currentPlayer.circleShape.getRadius()) return true;
     
 
     return false;
@@ -140,52 +117,25 @@ bool AI_Agent::CheckFieldOfViewEdges()
 void AI_Agent::UpdateFieldView(sf::RenderWindow& window, float deltaTime)
 {
     fieldView.setPosition(_circle.getPosition());
-    //fieldView.setRotation(_circle.getRotation());
     RotateFieldView(deltaTime);
-
 
     if (CheckFieldOfViewCorners()) {
         std::cout << "Player Detected" << std::endl;
-        std::cout << "Player Detected" << std::endl;
-        std::cout << "Player Detected" << std::endl;
-        std::cout << "Player Detected" << std::endl;
-
         _target = &currentPlayer.circleShape;
         isChasing = true;
     }
     else if (CheckFieldOfViewEdges()) {
         std::cout << "Player Detected" << std::endl;
-        std::cout << "Player Detected" << std::endl;
-        std::cout << "Player Detected" << std::endl;
-        std::cout << "Player Detected" << std::endl;
-
         _target = &currentPlayer.circleShape;
         isChasing = true;
     }
 
 
     window.draw(fieldView);
-
 }
 
 void AI_Agent::RotateFieldView(float deltaTime)
 {
-
-    /*if (_target == nullptr) return;
-    sf::Vector2f targetPosition = _target->getPosition();
-    sf::Vector2f objectPosition = _circle.getPosition();
-    sf::Vector2f direction = NormalizedVector(targetPosition - objectPosition);
-
-    float rotationAngle = GetAngle(direction);
-
-    float currentRotation = 0;
-    float targetRotation = GetPositif(rotationAngle - 90);
-
-    float distanceToTarget = static_cast<float>(std::sqrt(std::pow(targetPosition.x - objectPosition.x, 2) + std::pow(targetPosition.y - objectPosition.y, 2)));
-
-
-    float interpolatedRotation = currentRotation + _rotationSpeed * deltaTime;*/
-
     float interpolatedRotation =  _rotationSpeed * deltaTime;
 
     sf::Transform rotationTransform;
@@ -196,50 +146,6 @@ void AI_Agent::RotateFieldView(float deltaTime)
 
     fieldView.setPoint(1, rotatedPoint1);
     fieldView.setPoint(2, rotatedPoint2);
-
-    //if (distanceToTarget > 0.15f) {
-
-    //    float interpolatedRotation = currentRotation + _rotationSpeed * deltaTime;
-
-    //    if (round(currentRotation) == round(targetRotation)) {
-    //        //_circle.setRotation(targetRotation);
-
-    //        /*_currentFieldViewRotation = targetRotation;
-
-    //        sf::Transform rotationTransform;
-    //        rotationTransform.rotate(targetRotation, fieldView.getOrigin());
-
-    //        sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
-    //        sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
-
-    //        fieldView.setPoint(1, rotatedPoint1);
-    //        fieldView.setPoint(2, rotatedPoint2);*/
-    //    }
-    //    else {
-    //        //_circle.setRotation(interpolatedRotation);
-    //        //std::cout << interpolatedRotation << std::endl;
-
-    //        //_currentFieldViewRotation = interpolatedRotation;
-    //        sf::Transform rotationTransform;
-    //        rotationTransform.rotate(interpolatedRotation, fieldView.getOrigin());
-
-    //        sf::Vector2f rotatedPoint1 = rotationTransform.transformPoint(fieldView.getPoint(1));
-    //        sf::Vector2f rotatedPoint2 = rotationTransform.transformPoint(fieldView.getPoint(2));
-
-    //        fieldView.setPoint(1, rotatedPoint1);
-    //        fieldView.setPoint(2, rotatedPoint2);
-    //    }
-
-    //}
-
-    //if (_currentFieldViewRotation >= 360) {
-    //    _currentFieldViewRotation = 0;
-    //}
-    //else if (_currentFieldViewRotation < 0) {
-    //    _currentFieldViewRotation = 360;
-    //}
-
-
 }
 
 void AI_Agent::DrawAgentRenderer(sf::RenderWindow& window)
@@ -292,7 +198,7 @@ void AI_Agent::Chase(sf::RenderWindow& window, float deltaTime) {
 
         sf::Vector2f targetPosition = _target->getPosition();
         sf::Vector2f objectPosition = _circle.getPosition();
-        sf::Vector2f direction = NormalizedVector(targetPosition - objectPosition);
+        sf::Vector2f direction = MathLib::NormalizedVector(targetPosition - objectPosition);
 
 
         _circle.move(direction * _speed * deltaTime);
@@ -302,35 +208,19 @@ void AI_Agent::Chase(sf::RenderWindow& window, float deltaTime) {
 
 
 
-float AI_Agent::GetMagnitude(sf::Vector2f vector)
-{
-    return std::sqrt(vector.x * vector.x + vector.y * vector.y);
-}
-
 float AI_Agent::GetDistanceFromAgent(sf::Vector2f vector)
 {
     return std::sqrt(static_cast<float>(std::pow(vector.x - _circle.getPosition().x, 2)) + static_cast<float>(std::pow(vector.y - _circle.getPosition().y, 2)));
 }
 
-float AI_Agent::GetDistanceBetweenVectors(sf::Vector2f vector1, sf::Vector2f vector2)
-{
-    return std::sqrt(static_cast<float>(std::pow(vector1.x - vector2.x, 2)) + static_cast<float>(std::pow(vector1.y - vector2.y, 2)));
-}
+
 
 sf::Vector2f AI_Agent::GetFieldViewPointWorldCoordinates(sf::Vector2f point)
 {
     return point + _circle.getPosition();
 }
 
-sf::Vector2f AI_Agent::NormalizedVector(sf::Vector2f source) {
-    float length = GetMagnitude(source);
 
-    if (length != 0) {
-        return source / length;
-    }
-
-    return source;
-}
 
 sf::CircleShape& AI_Agent::GetCircle() {
     return _circle;
@@ -342,18 +232,8 @@ sf::Vector2f& AI_Agent::GetDirection() {
 }
 
 
-
-void AI_Agent::Death()
-{
-    //isDead = true;
-    //managerEntity.RemoveEntity(this);
-
-}
-
 void AI_Agent::GetWeapon()
 {
-    //fieldView.setFillColor(sf::Color::Transparent);
-
     _ptrPistol = new Weapon(managerEntity, collisionDetection, EntityType::Weapon_Entity, entityFaction, CollisionType::None_CollisionType, WeaponType::Pistol, _circle, &currentPlayer.circleShape);
     managerEntity.AddEntity(_ptrPistol);
 }
@@ -385,4 +265,31 @@ void AI_Agent::OnDestroy()
 sf::CircleShape& AI_Agent::GetEntityCircleShape()
 {
     return _circle;
+}
+
+void AI_Agent::InitializedAgentShape(float radius, sf::Vector2f spawnPosition)
+{
+    _circle.setFillColor(sf::Color::Black);
+    _circle.setRadius(radius);
+    _circle.setOrigin(_circle.getRadius(), _circle.getRadius());
+
+    _circle.setOutlineThickness(radius / 5);
+    _circle.setOutlineColor(sf::Color(255, 255, 255, 180));
+
+    _circle.setRadius(radius);
+    _circle.setPosition(spawnPosition);
+}
+
+void AI_Agent::InitializedAgentFieldView()
+{
+    fieldView = sf::ConvexShape();
+    fieldView.setPointCount(3);
+
+    fieldView.setPoint(0, sf::Vector2f(0, 0));
+    fieldView.setPoint(1, sf::Vector2f(-100, 200));
+    fieldView.setPoint(2, sf::Vector2f(100, 200));
+
+    fieldView.setFillColor(sf::Color(255, 255, 255, 180));
+    fieldView.setOrigin(fieldView.getPoint(0));
+    fieldView.setPosition(_circle.getPosition());
 }

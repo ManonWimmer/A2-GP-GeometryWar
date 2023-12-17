@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "ManagerEntity.h"
+#include "MathLib.h"
 
 class Weapon;
 
@@ -22,15 +23,11 @@ public:
     float GetAngle(sf::Vector2f targetedVector);
     static float GetPositif(float value);
     void Chase(sf::RenderWindow& window, float deltaTime);
-    static float GetMagnitude(sf::Vector2f vector);
     float GetDistanceFromAgent(sf::Vector2f vector);
-    float GetDistanceBetweenVectors(sf::Vector2f vector1, sf::Vector2f vector2);
     sf::Vector2f GetFieldViewPointWorldCoordinates(sf::Vector2f point);
-    static sf::Vector2f NormalizedVector(sf::Vector2f source);
     sf::CircleShape& GetCircle();
     sf::Vector2f& GetDirection();
 
-    void Death();
     void GetWeapon();
 
     //Function coming from Entity

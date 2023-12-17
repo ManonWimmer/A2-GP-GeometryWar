@@ -89,7 +89,7 @@ bool CollisionDetection::CircleIsInCircle(sf::CircleShape& circle1, sf::CircleSh
 
 void CollisionDetection::KeepCircleOutsideCircle(sf::CircleShape& circle1, sf::CircleShape& circle2)
 {
-	sf::Vector2f vecteurDirecteur = AI_Agent::NormalizedVector(circle1.getPosition() - circle2.getPosition());
+	sf::Vector2f vecteurDirecteur = MathLib::NormalizedVector(circle1.getPosition() - circle2.getPosition());
 
 	float currentDistance = static_cast<float>(sqrt(pow(circle1.getPosition().x - circle2.getPosition().x, 2) + pow(circle1.getPosition().y - circle2.getPosition().y, 2)));
 	float maxDistance = circle1.getRadius() + circle2.getRadius();
@@ -243,7 +243,7 @@ sf::Vector2f CollisionDetection::ClampCircleOutsideRectangles(sf::CircleShape& c
 	std::list<sf::RectangleShape*> listRectangles;
 
 	// Getting all rectangles type building
-	while (it != buildingsList.end())	// Parcours Liste
+	while (it != buildingsList.end())
 	{
 		if ((*it)->GetEntityCollisionType() == CollisionType::Rectangle) {
 			listRectangles.push_back(&(*it)->GetEntityRectangleShape());
@@ -273,7 +273,6 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 	return currentPosition;
 }
 
-// gestion bullet walls
 bool CollisionDetection::BulletTouchWall(Projectile& bullet)
 {
 	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
@@ -318,9 +317,7 @@ void CollisionDetection::WeaponBulletsCollideWall(std::list<Weapon*> weaponsList
 	}*/
 }
 
-// Fin bulletwalls!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// Gestion bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 bool CollisionDetection::BulletsTouchPlayerCheck(Player& player, std::list<Projectile*>& bulletsList)
 {
 	std::list<Projectile*>::iterator it = bulletsList.begin();
@@ -361,7 +358,6 @@ void CollisionDetection::WeaponBulletsTouchPlayerCheck(Player& player, std::list
 	//	it++;
 	//}
 }
-// Fin bulletsPlayer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 GameManager& CollisionDetection::GetGameManager()
 {

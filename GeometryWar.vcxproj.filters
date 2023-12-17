@@ -236,6 +236,9 @@
     <ClInclude Include="SoundEmitter.h">
       <Filter>Systems\SoundSystem\Header</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleEnums.h">
+      <Filter>Systems\Particles\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
