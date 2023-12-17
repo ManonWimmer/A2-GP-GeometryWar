@@ -36,6 +36,9 @@ public:
     sf::CircleShape& GetEntityCircleShape() override;
 
 private:
+    void InitializedAgentShape(float radius, sf::Vector2f spawnPosition);
+    void InitializedAgentFieldView();
+
     Player& currentPlayer;
     Weapon* _ptrPistol;
     sf::CircleShape _circle;
