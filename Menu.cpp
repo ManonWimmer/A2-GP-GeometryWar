@@ -63,7 +63,7 @@ Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection,
 
 	this->_game3Text = new sf::Text;
 	(*_game3Text).setFont((*_font));
-	(*_game3Text).setString("LEVEL III");
+	(*_game3Text).setString("EDITOR");
 	(*_game3Text).setCharacterSize(80);
 	(*_game3Text).setFillColor(sf::Color::White);
 	textBounds = (*_game3Text).getLocalBounds();

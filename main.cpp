@@ -36,7 +36,7 @@ int main()
 
 	collisionDetection.SetGameManager(&gameManager);
 
-	EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+	//EditeurManager editeurManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 
 	bool hasBurst = false;
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation random
@@ -71,7 +71,7 @@ int main()
 		// Affichage
 		entityManager.UpdateAllEntities(window, deltaTime, entityManager);
 
-		editeurManager.Update(window, deltaTime);
+		//editeurManager.Update(window, deltaTime);
 
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		//{

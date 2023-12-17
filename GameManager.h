@@ -62,6 +62,7 @@ private:
     std::list<sf::Vector2f> _enemiesStartPositions;
 
     bool _inMenu;
+    bool _inEditor;
     bool _isShootEmUp;
 
     int _currentLevel;
