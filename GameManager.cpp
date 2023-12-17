@@ -250,7 +250,7 @@ void GameManager::StartLevel(int levelNumber)
 			std::cout << "Level 2" << std::endl;
 			if (_player == nullptr) {
 				std::cout << "Player Spawned" << std::endl;
-				_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(1000, 500));
+				_player = new Player(managerEntity, collisionDetection, EntityType::Player_Entity, Faction::PlayerFaction, CollisionType::Circle, sf::Vector2f(-180, -120));
 				managerEntity.AddEntity(_player);
 			}
 			_mapManager->LoadMap("Level2.json", managerEntity, collisionDetection, false);
