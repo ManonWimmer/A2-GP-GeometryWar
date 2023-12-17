@@ -24,7 +24,7 @@ Light::Light(ManagerEntity& managerEntity, CollisionDetection& collisionDetectio
 		sf::Vector2f target = sf::Vector2f(x, y);
 		sf::Vector2f localDirection = target;
 
-		_rays.push_back(RayCast(origin, localDirection, _radius, true));
+		_rays.push_back(RayCast(origin, localDirection, _radius, false));
 	}
 }
 

@@ -8,6 +8,7 @@ SoundEmitter::SoundEmitter(ManagerEntity& managerEntity, CollisionDetection& col
 	: Entity(managerEntity, collisionDetection, entityType), _soundManager(soundManager)
 {
 	_sound = new sf::Sound();
+	_sound->setVolume(15.0f);
 	_sound->setBuffer(*soundBuffer);
 	_sound->play();          
 }
@@ -16,6 +17,7 @@ SoundEmitter::SoundEmitter(ManagerEntity& managerEntity, CollisionDetection& col
 	: Entity(managerEntity, collisionDetection, entityType), _soundManager(soundManager)
 {
 	_sound = new sf::Sound();
+	_sound->setVolume(15.0f);
 	_sound->setLoop(loopMode);
 	_sound->setBuffer(*soundBuffer);
 	_sound->play();
