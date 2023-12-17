@@ -98,6 +98,9 @@ void Player::Update(sf::RenderWindow& window, float deltaTime)
 	window.draw(circleShape);
 
 	_light->SetPosition(circleShape.getPosition());
+	//std::cout << "Player Pos: " << circleShape.getPosition().x << " ; " << circleShape.getPosition().y << std::endl;
+
+
 	//_light->UpdateLight(window, deltaTime);
 
 	//window.draw(fvCorner1);

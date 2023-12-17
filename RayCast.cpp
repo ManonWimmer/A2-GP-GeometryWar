@@ -12,7 +12,7 @@ RayCast::RayCast(sf::Vector2f origin, sf::Vector2f localDirection, float length,
 	_length = length;
 	_distance = _length;
 	_drawingOnContact = drawingOnContact;
-	_impactPoint = sf::Vector2f(0, 0);
+	_impactPoint = _origin + (_localDirection * _length);
 
 	CalculNormalizedDirection();
 
@@ -46,11 +46,15 @@ void RayCast::DrawRayCast(sf::RenderWindow& window, ManagerEntity& managerEntity
 void RayCast::CalculNormalizedDirection()
 {
 	_normalizedDirection = MathLib::NormalizedVector(_localDirection);
+
+	//if (_localDirection == sf::Vector2f(0, 0)) std::cout << "COMMMMMMUNIST !!!!!!!!!" << std::endl;
+
 }
 
 void RayCast::CalculateImpactPoint(ManagerEntity& managerEntity)
 {
 	sf::Vector2f* intersectionPoint = new sf::Vector2f();
+	*intersectionPoint = _origin + (_localDirection * _length);
 	_contact = false;
 
 
@@ -67,19 +71,20 @@ void RayCast::CalculateImpactPoint(ManagerEntity& managerEntity)
 		//std::cout << "RAy cast working" << std::endl;
 
 		
+		
 		switch (x->first->GetEntityCollisionType()) {
 			case CollisionType::Circle:
-				if (MathLib::IsRayCircleIntersection(_origin, _localDirection, x->first->GetEntityCircleShape(), *intersectionPoint)) {
+				//if (MathLib::IsRayCircleIntersection(_origin, _localDirection, x->first->GetEntityCircleShape(), *intersectionPoint)) {
 
-					//std::cout << "Ray contact with circle" << std::endl;
-					newDistance = MathLib::GetDistanceBetweenVectors(_origin, *intersectionPoint);
+				//	//std::cout << "Ray contact with circle" << std::endl;
+				//	newDistance = MathLib::GetDistanceBetweenVectors(_origin, *intersectionPoint);
 
-					if (newDistance < _length) {
-						_contact = true;
-					}
-					std::cout << "Distance Circle: " << newDistance << std::endl;
+				//	if (newDistance < _length) {
+				//		_contact = true;
+				//	}
+				//	std::cout << "Distance Circle: " << newDistance << std::endl;
 
-				}
+				//}
 				break;
 
 			case CollisionType::Rectangle:
@@ -90,12 +95,10 @@ void RayCast::CalculateImpactPoint(ManagerEntity& managerEntity)
 					if (newDistance < _length) {
 						_contact = true;
 					}
-					//std::cout << "Distance Rectangle: " << newDistance << std::endl;
-					//std::cout << "Impact Point: " << intersectionPoint->x << " ; " << intersectionPoint->y << std::endl;
-
 				}
 				break;
 		}
+		
 
 
 		if (_contact && newDistance < _distance) {

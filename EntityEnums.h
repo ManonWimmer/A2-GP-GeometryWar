@@ -10,6 +10,7 @@ enum EntityType
     Building_Entity,
     None_Entity,
     Light_Entity,
+    Audio_Entity,
 };
 
 enum Faction

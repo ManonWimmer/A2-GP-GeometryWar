@@ -10,6 +10,7 @@ class CollisionDetection;
 class ParticleSystem;
 class Player;
 class Building;
+class SoundManager;
 
 //enum EntityType
 //{
@@ -32,11 +33,12 @@ public:
     void ClearEntityGarbage();
     void DebugEntities(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, Player& player);
 
-    void InitializedParticles(ManagerEntity& managerEntity);
+    void InitializedSystems();
 
     std::unordered_map<Entity*, bool>& GetEntityDictionary();
     std::set<Entity*>& GetEntityGarbage();
 
+    SoundManager& GetSoundManager();
     ParticleSystem& GetParticleSystem();
     sf::RenderWindow& GetRenderWindow();
 
@@ -44,6 +46,7 @@ public:
 private:
     ParticleSystem* _particleSystem;
     CollisionDetection* collisionDetection;
+    SoundManager* _soundManager;
     sf::RenderWindow* _window;
 
     std::unordered_map<Entity*, bool> entityDictionary;

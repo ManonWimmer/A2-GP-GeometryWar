@@ -3,17 +3,19 @@
 
 #include <SFML/Graphics.hpp>
 #include "EntityEnums.h"
+#include "SoundEnums.h"
 
 class GameManager;
 class CollisionDetection;
 class ManagerEntity;
-
+class SoundManager;
 
 
 
 
 class Entity {
 public:
+    Entity(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType);
     Entity(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType);
     virtual ~Entity();
 

@@ -85,15 +85,6 @@
     <Filter Include="Systems\Lights\Header">
       <UniqueIdentifier>{7fff84bb-2bc0-495b-97ca-e9832f48cd8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Systems\MathLibrary">
-      <UniqueIdentifier>{1ce30ce1-a576-42e7-b97e-ababc7ac72e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\MathLibrary\Sources">
-      <UniqueIdentifier>{7aa106a5-fe0e-409a-9857-af8483ff4138}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Systems\MathLibrary\Header">
-      <UniqueIdentifier>{90c561c2-ef52-4ca7-a21f-86bbf3e6f39a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Systems\SoundSystem">
       <UniqueIdentifier>{3f662800-7f8f-40df-9e6c-530b1e3f58ac}</UniqueIdentifier>
     </Filter>
@@ -102,6 +93,15 @@
     </Filter>
     <Filter Include="Systems\SoundSystem\Sources">
       <UniqueIdentifier>{6ae8c118-a5b2-4a79-b96b-3330a118e37d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\MyMathLibrary">
+      <UniqueIdentifier>{1ce30ce1-a576-42e7-b97e-ababc7ac72e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\MyMathLibrary\Sources">
+      <UniqueIdentifier>{7aa106a5-fe0e-409a-9857-af8483ff4138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems\MyMathLibrary\Header">
+      <UniqueIdentifier>{90c561c2-ef52-4ca7-a21f-86bbf3e6f39a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +160,7 @@
       <Filter>Systems\Lights\Sources</Filter>
     </ClCompile>
     <ClCompile Include="MathLib.cpp">
-      <Filter>Systems\MathLibrary\Sources</Filter>
+      <Filter>Systems\MyMathLibrary\Sources</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Systems\SoundSystem\Sources</Filter>
@@ -225,7 +225,7 @@
       <Filter>Systems\Lights\Header</Filter>
     </ClInclude>
     <ClInclude Include="MathLib.h">
-      <Filter>Systems\MathLibrary\Header</Filter>
+      <Filter>Systems\MyMathLibrary\Header</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Systems\SoundSystem\Header</Filter>

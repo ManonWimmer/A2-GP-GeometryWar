@@ -1,4 +1,5 @@
 #include "MathLib.h"
+#include <iostream>
 
 
 sf::Vector2f MathLib::NormalizedVector(sf::Vector2f vector) {
@@ -126,19 +127,46 @@ bool MathLib::IsRayCircleIntersection(sf::Vector2f rayOrigin, sf::Vector2f rayDi
 
 bool MathLib::IsRayRectangleIntersection(sf::Vector2f rayOrigin, sf::Vector2f rayDirection, sf::RectangleShape& rectangle, sf::Vector2f& intersectionPoint)
 {
+    rayDirection = NormalizedVector(rayDirection);
     float closestDistance = FLT_MAX;
     float newDistance = FLT_MAX;
-    sf::Vector2f temporaryVector;
+    sf::Vector2f temporaryVector = intersectionPoint;  // Initialize to ray origin
     bool contact = false;
 
-    for (int i = 0; i < 4; i++) {
+    // Check if the ray origin is inside the rectangle
+    if (rectangle.getGlobalBounds().contains(rayOrigin))
+    {
+        intersectionPoint = rayOrigin;
+        return true;
+    }
 
-        if (i != 3) {
+    for (int i = 0; i <= 3; i++) {
+
+
+        /*sf::Vector2f sizeOffset = sf::Vector2f(0, 0);
+
+        sizeOffset.x = rectangle.getSize().x * 0.5f;
+        sizeOffset.y = rectangle.getSize().y * 0.5f;
+        if (rectangle.getPoint(i).x > 0) sizeOffset.x = sizeOffset.x;
+        if (rectangle.getPoint(i).x < 0) sizeOffset.x = -sizeOffset.x;
+        if (rectangle.getPoint(i).y > 0) sizeOffset.y = sizeOffset.y;
+        if (rectangle.getPoint(i).y < 0) sizeOffset.y = -sizeOffset.y;
+
+        if (i < 3) {
+            if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(i) + sizeOffset, rectangle.getPosition() + rectangle.getPoint(i + 1) + sizeOffset, temporaryVector)) contact = true;
+        }
+        else {
+            if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(i) + sizeOffset, rectangle.getPosition() + rectangle.getPoint(0) + sizeOffset, temporaryVector)) contact = true;
+        }*/
+
+        if (i < 3) {
             if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(i) - (rectangle.getSize() * 0.5f), rectangle.getPosition() + rectangle.getPoint(i + 1) - (rectangle.getSize() * 0.5f), temporaryVector)) contact = true;
         }
         else {
             if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(i) - (rectangle.getSize() * 0.5f), rectangle.getPosition() + rectangle.getPoint(0) - (rectangle.getSize() * 0.5f), temporaryVector)) contact = true;
         }
+
+
 
         newDistance = GetDistanceBetweenVectors(rayOrigin, temporaryVector);
 
@@ -150,18 +178,6 @@ bool MathLib::IsRayRectangleIntersection(sf::Vector2f rayOrigin, sf::Vector2f ra
     }
 
     return contact;
-
-
-
-    //if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(0), rectangle.getPosition() + rectangle.getPoint(1), intersectionPoint)) return true;
-
-    //if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(1), rectangle.getPosition() + rectangle.getPoint(2), intersectionPoint)) return true;
-
-    //if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(2), rectangle.getPosition() + rectangle.getPoint(3), intersectionPoint)) return true;
-
-    //if (IsRaySegmentIntersection(rayOrigin, rayDirection, rectangle.getPosition() + rectangle.getPoint(3), rectangle.getPosition() + rectangle.getPoint(0), intersectionPoint)) return true;
-
-    //return contact;
 }
 
 bool MathLib::IsRaySegmentIntersection(sf::Vector2f rayOrigin, sf::Vector2f rayDirection, sf::Vector2f pointA, sf::Vector2f pointB, sf::Vector2f& intersectionPoint)

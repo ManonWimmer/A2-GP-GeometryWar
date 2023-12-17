@@ -4,6 +4,7 @@
 #include "AI_Agent.h"
 #include "CollisionDetection.h" 
 #include "ParticleSystem.h"
+#include "SoundManager.h"
 
 
 ManagerEntity::ManagerEntity(CollisionDetection* collisionDetection, sf::RenderWindow* window) 
@@ -51,6 +52,7 @@ void ManagerEntity::UpdateAllEntities(sf::RenderWindow& window, float deltaTime,
             pair.first->UpdateBaseEntity(window, deltaTime);
         }
     }
+
 
 
     // Updating Light & Shadows for second drawed layer
@@ -107,10 +109,13 @@ void ManagerEntity::DebugEntities(ManagerEntity& managerEntity, CollisionDetecti
     AddEntity(new AI_Agent(managerEntity, collisionDetection, EntityType::AI_Entity, Faction::EnemiesFaction, CollisionType::Circle, 17.0f, sf::Vector2f(600, 600), 75.0f, player));
 }
 
-void ManagerEntity::InitializedParticles(ManagerEntity& managerEntity)
+void ManagerEntity::InitializedSystems()
 {
-    _particleSystem = new ParticleSystem(managerEntity, *collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+    _particleSystem = new ParticleSystem(*this, *collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
     AddEntity(_particleSystem);
+
+    _soundManager = new SoundManager(*this, *collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
+    AddEntity(_soundManager);
 }
 
 std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityDictionary()
@@ -121,6 +126,11 @@ std::unordered_map<Entity*, bool>& ManagerEntity::GetEntityDictionary()
 std::set<Entity*>& ManagerEntity::GetEntityGarbage()
 {
     return entityGarbage;
+}
+
+SoundManager& ManagerEntity::GetSoundManager()
+{
+    return *_soundManager;
 }
 
 ParticleSystem& ManagerEntity::GetParticleSystem()

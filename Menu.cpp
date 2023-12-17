@@ -2,6 +2,7 @@
 #include "ManagerEntity.h"
 #include "EntityEnums.h"
 #include "Entity.h"
+#include "SoundManager.h"
 
 Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::RenderWindow& window, GameManager& gameManager) : Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType), _window(window), _gameManager(gameManager)
 {
@@ -194,77 +195,121 @@ bool Menu::MouseInRectangle(sf::Vector2i mousePosition, sf::RectangleShape recta
 
 void Menu::CheckMouseInButtonsMenu() 
 {
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
-	bool inRectangle = false;
+	//sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
+	sf::Vector2i mousePosition(_window.mapPixelToCoords(sf::Mouse::getPosition(_window), _window.getView()));
 
 	if (MouseInRectangle(mousePosition, (*_game1Rectangle))) {
-		//std::cout << "hover rectangle 1" << std::endl;
-		_game1Rectangle->setOutlineColor(sf::Color::Yellow);
-		_game1Text->setFillColor(sf::Color::Yellow);
-		_titleText->setFillColor(sf::Color::Yellow);
-		inRectangle = true;
+
+		if (!ButtonSetUp_1) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonHoverSound);
+			_game1Rectangle->setOutlineColor(sf::Color::Yellow);
+			_game1Text->setFillColor(sf::Color::Yellow);
+			_titleText->setFillColor(sf::Color::Yellow);
+
+			ButtonSetUp_1 = true;
+		}
+		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			std::cout << "click rectangle 1" << std::endl;
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
 			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(1);
 		}
+
 	}
 	else {
-		_game1Rectangle->setOutlineColor(sf::Color::White);
-		_game1Text->setFillColor(sf::Color::White);
+		if (ButtonSetUp_1) {
+			_game1Rectangle->setOutlineColor(sf::Color::White);
+			_game1Text->setFillColor(sf::Color::White);
+			ButtonSetUp_1 = false;
+		}
 	}
 
 	if (MouseInRectangle(mousePosition, (*_game2Rectangle))) {
-		//std::cout << "hover rectangle 2" << std::endl;
-		_game2Rectangle->setOutlineColor(sf::Color::Cyan);
-		_game2Text->setFillColor(sf::Color::Cyan);
-		_titleText->setFillColor(sf::Color::Cyan);
-		inRectangle = true;
+		if (!ButtonSetUp_2) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonHoverSound);
+			_game2Rectangle->setOutlineColor(sf::Color::Cyan);
+			_game2Text->setFillColor(sf::Color::Cyan);
+			_titleText->setFillColor(sf::Color::Cyan);
+
+			ButtonSetUp_2 = true;
+		}
+		
+		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
 			std::cout << "click rectangle 2" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(2);
 		}
+
 	}
 	else {
-		_game2Rectangle->setOutlineColor(sf::Color::White);
-		_game2Text->setFillColor(sf::Color::White);
+
+		if (ButtonSetUp_2) {
+			_game2Rectangle->setOutlineColor(sf::Color::White);
+			_game2Text->setFillColor(sf::Color::White);
+
+			ButtonSetUp_2 = false;
+		}
 	}
 
 	if (MouseInRectangle(mousePosition, (*_game3Rectangle))) {
-		//std::cout << "hover rectangle 3" << std::endl;
-		_game3Rectangle->setOutlineColor(sf::Color::Magenta);
-		_game3Text->setFillColor(sf::Color::Magenta);
-		_titleText->setFillColor(sf::Color::Magenta);
-		inRectangle = true;
+
+		if (!ButtonSetUp_3) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonHoverSound);
+			_game3Rectangle->setOutlineColor(sf::Color::Magenta);
+			_game3Text->setFillColor(sf::Color::Magenta);
+			_titleText->setFillColor(sf::Color::Magenta);
+
+			ButtonSetUp_3 = true;
+		}
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
 			std::cout << "click rectangle 3" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(3);
 		}
 	}
 	else {
-		_game3Rectangle->setOutlineColor(sf::Color::White);
-		_game3Text->setFillColor(sf::Color::White);
+
+		if (ButtonSetUp_3) {
+			_game3Rectangle->setOutlineColor(sf::Color::White);
+			_game3Text->setFillColor(sf::Color::White);
+
+			ButtonSetUp_3 = false;
+		}
 	}
 
 	if (MouseInRectangle(mousePosition, (*_quitRectangle))) {
-		//std::cout << "hover quit" << std::endl;
-		_quitRectangle->setOutlineColor(sf::Color::Red);
-		_quitText->setFillColor(sf::Color::Red);
-		_titleText->setFillColor(sf::Color::Red);
-		inRectangle = true;
+		if (!ButtonSetUp_Quit) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonHoverSound);
+			_quitRectangle->setOutlineColor(sf::Color::Red);
+			_quitText->setFillColor(sf::Color::Red);
+			_titleText->setFillColor(sf::Color::Red);
+
+			ButtonSetUp_Quit = true;
+		}
+		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
 			std::cout << "click quit" << std::endl;
 			_window.close();
 		}
+
 	}
 	else {
-		_quitRectangle->setOutlineColor(sf::Color::White);
-		_quitText->setFillColor(sf::Color::White);
+
+		if (ButtonSetUp_Quit) {
+			_quitRectangle->setOutlineColor(sf::Color::White);
+			_quitText->setFillColor(sf::Color::White);
+
+			ButtonSetUp_Quit = false;
+		}
 	}
 
-	if (!inRectangle) {
+	if (!ButtonSetUp_1 && !ButtonSetUp_2 && !ButtonSetUp_3 && !ButtonSetUp_Quit) {
 		_titleText->setFillColor(sf::Color::White);
 	}
 }

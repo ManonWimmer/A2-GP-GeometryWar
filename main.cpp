@@ -14,6 +14,8 @@
 #include "ParticleSystem.h"
 #include "Menu.h"
 #include "Light.h"
+#include "SoundManager.h"
+#include "SoundEmitter.h"
 
 int main()
 {
@@ -26,7 +28,7 @@ int main()
 	CollisionDetection collisionDetection;
 
 	ManagerEntity entityManager(&collisionDetection, &window);
-	entityManager.InitializedParticles(entityManager);
+	entityManager.InitializedSystems();
 
 	GameManager gameManager(entityManager, collisionDetection, EntityType::None_Entity, Faction::None_Faction, CollisionType::None_CollisionType);
 	gameManager.InitializedGameManager(window, gameManager);
@@ -39,6 +41,7 @@ int main()
 	bool hasBurst = false;
 	std::srand(static_cast<unsigned int>(std::time(nullptr))); // Initialisation random
 
+	entityManager.GetSoundManager().PlaySound(SoundEnums::MusicMainMenu);
 
 
 	while (window.isOpen())

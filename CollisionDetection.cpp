@@ -9,7 +9,7 @@
 #include "SaveAndLoadMap.h"
 #include "Building.h"
 #include "GameManager.h"
-
+#include "SoundManager.h"
 
 
 
@@ -221,6 +221,7 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 					x->first->DecreaseLife(AI_AGENT_DMG);
 
 					managerEntity.GetParticleSystem().Burst(x->first->GetEntityCircleShape().getPosition() + sf::Vector2f(x->first->GetEntityCircleShape().getRadius(), x->first->GetEntityCircleShape().getRadius()), 35, 100, 0.2, 2, sf::Color::Red, i->first->GetEntityCircleShape().getPosition() + sf::Vector2f(i->first->GetEntityCircleShape().getRadius(), i->first->GetEntityCircleShape().getRadius()), 70);
+					managerEntity.GetSoundManager().PlaySound(SoundEnums::ImpactBloodSound);
 					break;
 				}
 			}
@@ -234,6 +235,8 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 					x->first->DecreaseLife(PLAYER_DMG);
 
 					managerEntity.GetParticleSystem().Burst(x->first->GetEntityCircleShape().getPosition() + sf::Vector2f(x->first->GetEntityCircleShape().getRadius(), x->first->GetEntityCircleShape().getRadius()), 35, 100, 0.2, 2, sf::Color::Red, i->first->GetEntityCircleShape().getPosition() + sf::Vector2f(i->first->GetEntityCircleShape().getRadius(), i->first->GetEntityCircleShape().getRadius()), 70);
+
+					managerEntity.GetSoundManager().PlaySound(SoundEnums::ImpactBloodSound);
 					break;
 				}
 			}
@@ -245,12 +248,15 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 					managerEntity.GetParticleSystem().Burst(i->first->GetEntityCircleShape().getPosition(), 10, 200, 0.1, 2, sf::Color::White, sf::Vector2f(-1, -1), 360);
 					managerEntity.RemoveEntity(i->first);
 					
+					managerEntity.GetSoundManager().PlaySound(SoundEnums::ImpactConcreteSound);
 					break;
 				}
 
 				if (x->first->GetEntityCollisionType() == CollisionType::Circle && CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape())) {
 					std::cout << "Collision avec mur circulaire" << std::endl;
 					managerEntity.RemoveEntity(i->first);
+
+					managerEntity.GetSoundManager().PlaySound(SoundEnums::ImpactConcreteSound);
 					break;
 				}
 			}

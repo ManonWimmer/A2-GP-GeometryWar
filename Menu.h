@@ -4,8 +4,10 @@
 #include "EntityEnums.h"
 #include "Entity.h"
 #include "GameManager.h"
+#include "SoundEnums.h"
 
 class ManagerEntity;
+class SoundManager;
 
 class Menu : public Entity
 {
@@ -31,6 +33,10 @@ private:
 	sf::RectangleShape* _game2Rectangle;
 	sf::RectangleShape* _game3Rectangle;
 	sf::RectangleShape* _quitRectangle;
+	bool ButtonSetUp_1;
+	bool ButtonSetUp_2;
+	bool ButtonSetUp_3;
+	bool ButtonSetUp_Quit;
 
 	sf::Text* _wonTitleText;
 	sf::Text* _loseTitleText;

@@ -5,6 +5,8 @@
 
 #include <math.h>
 
+#include "SoundManager.h"
+
 Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, WeaponType weaponType, sf::CircleShape& ownerObject)
 	: Entity(managerEntity, collisionDetection, entityType, entityFaction, collisionType)
 {
@@ -61,6 +63,9 @@ Weapon::Weapon(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 void Weapon::Shoot(sf::RenderWindow& window)
 {
 	std::cout << "shoot" << std::endl;
+	//Play Shoot Sound
+	managerEntity.GetSoundManager().PlaySound(SoundEnums::ShotPistolSound);
+
 
 	// Projectile shape
 	sf::CircleShape projectileShape;

@@ -10,6 +10,8 @@
 #include "CollisionDetection.h"
 
 
+#include "SoundEnums.h"
+class SoundManager;
 
 enum WeaponType
 {

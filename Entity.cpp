@@ -2,8 +2,13 @@
 #include "ManagerEntity.h"
 #include "CollisionDetection.h" 
 #include "GameManager.h"
+#include "SoundManager.h"
+Entity::Entity(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType)
+    : managerEntity(managerEntity), collisionDetection(collisionDetection), entityType(entityType), entityFaction(Faction::None_Faction), collisionType(CollisionType::None_CollisionType) {}
 
-Entity::Entity(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType) 
+
+
+Entity::Entity(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType)
     : managerEntity(managerEntity), collisionDetection(collisionDetection), entityType(entityType), entityFaction(entityFaction), collisionType(collisionType) {}
 
 
@@ -58,7 +63,7 @@ void Entity::DecreaseLife(int value)
     _life = ClampInteger(_life -= value, 0, 100);
 
     if (_life <= 0) {
-
+        if(entityType == EntityType::AI_Entity || entityType == EntityType::Player_Entity) 	managerEntity.GetSoundManager().PlaySound(SoundEnums::DeathSound);
         DestroyItSelf();
     }
 }

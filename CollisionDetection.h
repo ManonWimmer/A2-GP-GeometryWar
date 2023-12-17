@@ -5,6 +5,7 @@
 #include <list>
 
 #include "EntityEnums.h"
+#include "SoundEnums.h"
 
 class Player;
 class AI_Agent;
@@ -15,7 +16,7 @@ class Entity;
 class SaveAndLoadMap;
 class Building;
 class GameManager;
-
+class SoundManager;
 
 class CollisionDetection
 {
