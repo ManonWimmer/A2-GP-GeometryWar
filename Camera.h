@@ -21,6 +21,5 @@ public:
 private:
 	bool _shake;
 	GameManager& _gameManager;
-	//float _shakeInterval;
 };
 

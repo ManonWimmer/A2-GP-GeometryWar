@@ -7,9 +7,6 @@
 class Particle
 {
 public:
-	Particle();
-	Particle(float);
-	Particle(float, float);
 	Particle(sf::Vector2f position, float speed, float lifeTime, float size, sf::Color color, sf::Vector2f target, float angle);
 
 	void Move(float deltaTime);
@@ -22,5 +19,11 @@ public:
 	float speed;
 
 	sf::Vector2f dir;
+
+private:
+	sf::CircleShape InitializeCircleShape(sf::Vector2f position, float size, sf::Color color);
+	float InitializeRandomSpeed(float speed);
+	sf::Vector2f InitializeRandomDir(sf::Vector2f position, sf::Vector2f target, float angle);
+	float InitializeLifeTime(float lifeTime);
 };
 

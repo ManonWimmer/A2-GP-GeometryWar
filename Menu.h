@@ -12,7 +12,7 @@ class SoundManager;
 class Menu : public Entity
 {
 public:
-	//Camera(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, Player* player, sf::View& mapView, sf::View& playerView);
+	
 	Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection, EntityType entityType, Faction entityFaction, CollisionType collisionType, sf::RenderWindow& window, GameManager& gameManager);
 	
 	void Update(sf::RenderWindow& window, float deltaTime);

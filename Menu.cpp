@@ -197,7 +197,6 @@ bool Menu::MouseInRectangle(sf::Vector2i mousePosition, sf::RectangleShape recta
 
 void Menu::CheckMouseInButtonsMenu() 
 {
-	//sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
 	sf::Vector2i mousePosition(_window.mapPixelToCoords(sf::Mouse::getPosition(_window), _window.getView()));
 
 	if (MouseInRectangle(mousePosition, (*_game1Rectangle))) {
@@ -212,7 +211,7 @@ void Menu::CheckMouseInButtonsMenu()
 		}
 		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			std::cout << "click rectangle 1" << std::endl;
+			//std::cout << "click rectangle 1" << std::endl;
 			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
 			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(1);
@@ -240,7 +239,7 @@ void Menu::CheckMouseInButtonsMenu()
 		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
-			std::cout << "click rectangle 2" << std::endl;
+			//std::cout << "click rectangle 2" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(2);
 		}
@@ -269,7 +268,7 @@ void Menu::CheckMouseInButtonsMenu()
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
-			std::cout << "click rectangle 3" << std::endl;
+			//std::cout << "click rectangle 3" << std::endl;
 			_window.create(sf::VideoMode(720, 480), "James Bond");
 			_gameManager.StartLevel(3);
 		}
@@ -296,7 +295,7 @@ void Menu::CheckMouseInButtonsMenu()
 		
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			managerEntity.GetSoundManager().PlaySound(SoundEnums::UIButtonClickSound);
-			std::cout << "click quit" << std::endl;
+			//std::cout << "click quit" << std::endl;
 			_window.close();
 		}
 
@@ -322,13 +321,11 @@ void Menu::CheckMouseInBackToMenu()
 	bool inRectangle = false;
 
 	if (MouseInRectangle(mousePosition, (*_backToMenuRectangle))) {
-		//std::cout << "hover rectangle 1" << std::endl;
 		_backToMenuRectangle->setOutlineColor(sf::Color::Yellow);
 		_backToMenuText->setFillColor(sf::Color::Yellow);
-		//_titleText->setFillColor(sf::Color::Yellow);
 		inRectangle = true;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-			std::cout << "click back to menu" << std::endl;
+			//std::cout << "click back to menu" << std::endl;
 			_gameManager.SetWinAndLoseFalse();
 		}
 	}

@@ -29,12 +29,12 @@ Player::Player(ManagerEntity& managerEntity, CollisionDetection& collisionDetect
 	managerEntity.AddEntity(_light);
 
 
-	this->pv = 4;
+	pv = 4;
 
-	this->invincibilityCooldown = 2;
-	this->invincibilityTime = this->invincibilityCooldown;
+	invincibilityCooldown = 2;
+	invincibilityTime = invincibilityCooldown;
 
-	this->isInvincible = false;
+	isInvincible = false;
 
 	fvCorner1.setRadius(7.0f);
 	fvCorner1.setFillColor(sf::Color::Red);
@@ -77,16 +77,6 @@ sf::Vector2f Player::MovePlayer(sf::RenderWindow& window, CollisionDetection col
 	pos.x = collisionManager.ClampCircleOutsideRectangles(this->circleShape, sf::Vector2f(pos.x + dir.x, pos.y), pos).x;
 	pos.y = collisionManager.ClampCircleOutsideRectangles(this->circleShape, sf::Vector2f(pos.x, pos.y + dir.y), pos).y;
 
-	/*sf::RectangleShape screen;
-	screen.setSize(sf::Vector2f(window.getSize()));
-
-
-	if (window.getSize() == sf::Vector2u(720, 480))
-	{
-		screen.setSize(sf::Vector2f(1225, 560));
-		pos = collisionDetection.ClampCircleInsideRectangle(this->circleShape, screen, pos, this->circleShape.getPosition());
-	}*/
-
 	return pos;
 }
 
@@ -98,12 +88,6 @@ void Player::Update(sf::RenderWindow& window, float deltaTime)
 	window.draw(circleShape);
 
 	_light->SetPosition(circleShape.getPosition());
-	//std::cout << "Player Pos: " << circleShape.getPosition().x << " ; " << circleShape.getPosition().y << std::endl;
-
-
-	//_light->UpdateLight(window, deltaTime);
-
-	//window.draw(fvCorner1);
 }
 
 

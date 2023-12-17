@@ -1,6 +1,6 @@
 #include "CollisionDetection.h"
-#include "Player.h"		// -> re include dans le cpp car class incomplet
-#include "AI_Agent.h"	// -> re include dans le cpp car class incomplet
+#include "Player.h"
+#include "AI_Agent.h"
 #include "Projectile.h"
 #include "Weapon.h"
 #include "ManagerEntity.h"
@@ -12,12 +12,6 @@
 #include "SoundManager.h"
 
 
-
-
-//bool CollisionDetection::PointInsideSquare(float x, float y, sf::RectangleShape rect)
-//{
-//
-//}
 constexpr int PLAYER_DMG = 34;
 constexpr int AI_AGENT_DMG = 20;
 
@@ -56,44 +50,6 @@ float CollisionDetection::SimpleClamp(float value, float low, float high)
 
 bool CollisionDetection::CirclePartialyInSquare(sf::CircleShape circle, sf::RectangleShape rect, sf::Vector2f nextPosition)
 {
-	//float rw = rect.getSize().x;
-	//float rh = rect.getSize().y;
-
-	//
-	//float rxTL = rect.getPosition().x;
-	//
-	//float ryTR = rect.getPosition().y;
-
-
-	//float cr = circle.getRadius();
-
-	//
-	//float cx = nextPosition.x + cr;
-	//
-	//float cy = nextPosition.y + cr;
-
-
-
-	//if ((cx - cr >= rxTL && cx - cr <= rxTL + rw) && (cy - cr >= ryTR && cy - cr <= ryTR + rh))	// Si point gauche haut cercle dans rectangle
-	//{
-	//	return true;
-	//}
-	//else if ((cx + cr >= rxTL && cx + cr <= rxTL + rw) && (cy - cr >= ryTR && cy - cr <= ryTR + rh))	// Si point droit haut cercle dans rectangle
-	//{
-	//	return true;
-	//}
-	//else if ((cx - cr >= rxTL && cx - cr <= rxTL + rw) && (cy + cr >= ryTR && cy + cr <= ryTR + rh))	// Si point bas gauche cercle dans rectangle
-	//{
-	//	return true;
-	//}
-	//else if ((cx + cr >= rxTL && cx + cr <= rxTL + rw) && (cy + cr >= ryTR && cy + cr <= ryTR + rh))	// Si point bas droit cercle dans rectangle
-	//{
-	//	return true;
-	//}
-	//return false;
-
-
-
 	float rw = rect.getSize().x;
 	float rh = rect.getSize().y;
 
@@ -244,7 +200,7 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 			if (i->first->GetEntityType() == EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Building_Entity)
 			{
 				if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
-					std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
+					//std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
 					managerEntity.GetParticleSystem().Burst(i->first->GetEntityCircleShape().getPosition(), 10, 200, 0.1, 2, sf::Color::White, sf::Vector2f(-1, -1), 360);
 					managerEntity.RemoveEntity(i->first);
 					
@@ -253,7 +209,7 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 				}
 
 				if (x->first->GetEntityCollisionType() == CollisionType::Circle && CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape())) {
-					std::cout << "Collision avec mur circulaire" << std::endl;
+					//std::cout << "Collision avec mur circulaire" << std::endl;
 					managerEntity.RemoveEntity(i->first);
 
 					managerEntity.GetSoundManager().PlaySound(SoundEnums::ImpactConcreteSound);
@@ -263,14 +219,6 @@ void CollisionDetection::CheckAllEntitiesCollisions(ManagerEntity& managerEntity
 			
 			
 			if (i->first->GetEntityType() != EntityType::Projectile_Entity && x->first->GetEntityType() == EntityType::Building_Entity) {
-
-				//if (x->first->GetEntityCollisionType() == CollisionType::Rectangle && CirclePartialyInSquare(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape(), i->first->GetEntityCircleShape().getPosition())) {
-				//	std::cout << "Collision avec mur rectangulaire ou carre" << std::endl;
-
-				//	//KeepCircleOutsideRectangle(i->first->GetEntityCircleShape(), x->first->GetEntityRectangleShape());
-				//	break;
-				//}
-
 
 				if (x->first->GetEntityCollisionType() == CollisionType::Circle && CircleIsInCircle(i->first->GetEntityCircleShape(), x->first->GetEntityCircleShape())) {
 					//std::cout << "Collision avec mur circulaire" << std::endl;
@@ -325,7 +273,7 @@ sf::Vector2f CollisionDetection::ClampCircleInsideRectangle(sf::CircleShape& cir
 	return currentPosition;
 }
 
-// gestion bullet walls !!!!!!!!!!!!!!!!!!!!!!
+// gestion bullet walls
 bool CollisionDetection::BulletTouchWall(Projectile& bullet)
 {
 	std::list<sf::RectangleShape>::iterator it = this->rectList.begin();
@@ -351,7 +299,6 @@ void CollisionDetection::BulletsCollideWall(std::list<Projectile*>& bulletsList)
 	{
 		if (BulletTouchWall(*(*(it))))
 		{
-			// Detruire bullet
 			it = bulletsList.erase(it);
 		}
 

@@ -25,7 +25,7 @@ public:
     void SpawnEnemy(float, sf::Vector2f, float);
     void CheckEnemiesLife();
     void CheckPlayerLife();
-    void CheckGameEnd(); // A changer plus tard par CheckLevelEnd ?
+    void CheckGameEnd();
     void StartLevel(int);
     void SwitchMode();
     void SwitchToShootEmUp();
@@ -40,7 +40,6 @@ public:
     bool GetWin();
     bool GetMenuState();
     int GetCurrentLevel();
-    //std::list<AI_Agent*> _enemies;
 
     Player* GetPlayer();
     SaveAndLoadMap& GetMapManager();

@@ -15,11 +15,8 @@ void Camera::Update(sf::RenderWindow& window, float deltaTime)
 
 	Player* _player = _gameManager.GetPlayer();
 	if (_player != nullptr) {
-		//std::cout << "player pos " << _player->circleShape.getPosition().x << " " << _player->circleShape.getPosition().y << std::endl;
 
 		sf::Vector2i _playerPos = sf::Vector2i(_player->circleShape.getPosition().x, _player->circleShape.getPosition().y);
-
-		//window.setPosition(_playerPos);
 
 		if (window.getSize() == sf::Vector2u(720, 480))
 		{
@@ -34,14 +31,12 @@ void Camera::Update(sf::RenderWindow& window, float deltaTime)
 			window.setPosition(sf::Vector2i(0, 0));
 			
 			sf::View playerView = sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y));
-			//playerView.setCenter(sf::Vector2f(592, 300));
 			if (_gameManager.GetMenuState()) {
 				playerView.setCenter(sf::Vector2f(1920 / 2, 1080 / 2));
 			}
 			else {
 				playerView.setCenter(sf::Vector2f(592, 300));
 			}
-			//playerView.setCenter(sf::Vector2f(1920/2, 1080/2));
 			window.setView(playerView);
 		}
 

@@ -16,7 +16,7 @@ void ParticleSystem::Burst(sf::Vector2f position, int number, float speed, float
 		Particle* particle = new Particle(position, speed, lifeTime, size, color, target, angle);
 		newParticles->push_back(particle);
 	}
-	this->burstLists.push_back(newParticles);
+	burstLists.push_back(newParticles);
 }
 
 void ParticleSystem::MoveParticles(std::list<Particle*>& particlesList, float deltaTime, sf::RenderWindow& window)
@@ -32,7 +32,6 @@ void ParticleSystem::MoveParticles(std::list<Particle*>& particlesList, float de
 		}
 		else 
 		{
-			//std::cout << "X : " << (*it)->circleShape.getPosition().x << " ; Y : " << (*it)->circleShape.getPosition().y << std::endl;
 			(*it)->circleShape.getPosition();
 			(*it)->Move(deltaTime);
 			(*it)->currenLifeTime += deltaTime;
@@ -50,7 +49,8 @@ void ParticleSystem::Update(sf::RenderWindow& window, float deltaTime)
 	{
 		if ((*it)->size() <= 0)
 		{
-			it = this->burstLists.erase(it);
+			delete* it;
+			it = burstLists.erase(it);
 		}
 		else 
 		{
