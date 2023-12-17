@@ -195,6 +195,18 @@ void GameManager::CheckGameEnd()
 				it2++;
 			}
 		}
+		else {
+			std::unordered_map<Entity*, bool>::iterator it2 = managerEntity.GetEntityDictionary().begin();
+
+			while (it2 != managerEntity.GetEntityDictionary().end())
+			{
+				if ((it2->first->GetEntityType() == EntityType::AI_Entity || it2->first->GetEntityType() == EntityType::Player_Entity || it2->first->GetEntityType() == EntityType::Building_Entity || it2->first->GetEntityType() == EntityType::Projectile_Entity || it2->first->GetEntityType() == EntityType::Weapon_Entity) && it2->second == false)
+				{
+					it2->second = true;
+				}
+				it2++;
+			}
+		}
 	}
 }
 

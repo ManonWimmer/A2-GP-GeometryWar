@@ -133,6 +133,7 @@ Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection,
 	textBounds = (*_backToMenuText).getLocalBounds();
 	x = (window.getSize().x - textBounds.width) / 2;
 	y = (window.getSize().y - textBounds.height) / 2 + 150;
+	y -= 500; // ajustement sur le haut pour éviter bug return menu
 	(*_backToMenuText).setPosition(x, y);
 
 	this->_backToMenuRectangle = new sf::RectangleShape;
@@ -143,6 +144,7 @@ Menu::Menu(ManagerEntity& managerEntity, CollisionDetection& collisionDetection,
 	rectangleBounds = ((*_backToMenuRectangle)).getLocalBounds();
 	x = (window.getSize().x - rectangleBounds.width) / 2 + 5;
 	y = (window.getSize().y - rectangleBounds.height) / 2 + 145 + textBounds.height / 2;
+	y -= 500; // ajustement sur le haut pour éviter bug return menu
 	(*_backToMenuRectangle).setPosition(x, y);
 }
 
