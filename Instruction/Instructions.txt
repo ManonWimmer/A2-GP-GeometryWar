@@ -1,0 +1,47 @@
+Hello, Bond is a Top Down game using SFML library. 
+
+
+The game was made in 2 weeks by:
+-Ibrahim Mallouka, 
+-Corentin Remot, 
+-Manon Wimer
+
+
+The project content is:
+
+- A Level 1 configured for a screen size of 2560 x 1440
+
+- A Level 2 configured for a screen size of 1920 x 1080
+
+- A Level Editor made to build level.
+
+
+
+/!\ Level Editor Instruction /!\
+
+If you want to use the editor:
+
+1. You need to go to the main.cpp, at line 70 take off the commentary and do the same at line 42.
+
+2. In EditeurManager.cpp, in the update function, you'll find 2 if statements one for the P Key and one for the M key.
+	Inside those if statements the current std::string variable represent the level your loading and saving to when inside the editor.
+
+2. Now if you run and you press the "Editor" button, you will load a clear canvas.
+	You can press M to load the current selected level.
+	You can press P to save the current selected level.
+
+
+
+
+3. Here is the Level Editor KeyBindings:
+
+Clique Gauche | Pour sélectionner.
+Maintenir clique gauche | Pour drag un objet.
+R | Pour spawn un rectangle.
+C | pour spawn un cercle.
+I | pour directement spawn une IA fixe.
+S + un objet sélectionner | Pour resize.
+S + Shift + un objet sélectionner | Pour resize uniformément.
+F + un objet de sélectionner | Pour supprimer.
+P | Pour sauvegarder la Map
+M | Pour charger la Map
