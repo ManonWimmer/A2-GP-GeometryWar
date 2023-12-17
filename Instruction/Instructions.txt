@@ -7,6 +7,11 @@ The game was made in 2 weeks by:
 -Manon Wimer
 
 
+/!\ ATTENTION /!\
+Due to a bug with the raycast impact point calculation.
+The shadows made from the light can sometimes show a weird behaviour, if it happens, please restart the game until it's good.
+/!\ ATTENTION /!\
+
 The project content is:
 
 - A Level 1 configured for a screen size of 2560 x 1440
